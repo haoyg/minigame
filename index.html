@@ -4,8 +4,9 @@
   <!-- Basic SEO -->
   <meta charset="UTF-8" />
   <title>Pokopie - 100+ Free Online Browser Games | Play Instantly No Download</title>
-  <meta name="description" content="Play 100+ free HTML5 games online at Pokopie.com! Arcade, puzzle, action, racing, sports, strategy, and more. Instant play on mobile or desktop – no downloads needed!" />
-  <meta name="keywords" content="free online games, browser games, html5 games, play free games, pokopie, arcade games, puzzle games" />
+  <meta name="description" content="Play 100+ free HTML5 browser games online at Pokopie.com — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download." />
+  <meta name="keywords" content="pokopie, pokopie games, pokopie.com, free online games, free browser games, html5 games, web games, instant play, no download games, puzzle games, arcade games, racing games, strategy games, action games" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#ffb347" />
 
@@ -17,6 +18,8 @@
   <meta property="og:url" content="https://www.pokopie.com" />
   <meta property="og:title" content="Pokopie - Free Online Browser Games" />
   <meta property="og:description" content="Play 100+ free HTML5 games online on Pokopie. Arcade, puzzle, action, racing and more. No download, instant fun!" />
+  <meta property="og:site_name" content="Pokopie" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=Pokopie+Games+Portal" />
 
   <!-- Twitter Card -->
@@ -24,6 +27,35 @@
   <meta name="twitter:title" content="Pokopie - Free Online Browser Games" />
   <meta name="twitter:description" content="Play free HTML5 browser games instantly on Pokopie. No download needed!" />
   <meta name="twitter:image" content="https://via.placeholder.com/1200x630.png?text=Pokopie+Games+Portal" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.pokopie.com/#website",
+        "url": "https://www.pokopie.com/",
+        "name": "Pokopie",
+        "description": "Free online HTML5 browser games. Instant play, no download.",
+        "inLanguage": "en",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.pokopie.com/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://www.pokopie.com/#organization",
+        "name": "Pokopie",
+        "url": "https://www.pokopie.com/",
+        "logo": "https://via.placeholder.com/512x512.png?text=Pokopie"
+      }
+    ]
+  }
+  </script>
 
   <!-- Simple emoji favicon (base64 SVG) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMic+PHRleHQgeD0nMTYnIHk9JzI0JyBmb250LXNpemU9JzI0JyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz7wn5iKPC90ZXh0Pjwvc3ZnPg==" />
@@ -1243,7 +1275,7 @@
 
     (function buildCustomIframeGames() {
       // Magic Bottles（来自你之前提供的 iframe）
-      const magicUrl = "https://html5.gamedistribution.com/d91602efd33a46d59afe4eea53f6eacf/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const magicUrl = "https://html5.gamedistribution.com/d91602efd33a46d59afe4eea53f6eacf/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-magic-bottles",
         title: "Magic Bottles",
@@ -1256,7 +1288,7 @@
       });
 
       // Collosotraun（你刚提供的游戏）
-      const collosotraunUrl = "https://html5.gamedistribution.com/8abe45cf20dc4b1289e69801640ed0f0/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const collosotraunUrl = "https://html5.gamedistribution.com/8abe45cf20dc4b1289e69801640ed0f0/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-collosotraun",
         title: "Collosotraun",
@@ -1269,7 +1301,7 @@
       });
 
       // Stack Tower Pro（你新提供的游戏）
-      const stackTowerUrl = "https://html5.gamedistribution.com/732542dbfb7f4804b95a8ece1e56545a/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const stackTowerUrl = "https://html5.gamedistribution.com/732542dbfb7f4804b95a8ece1e56545a/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-stack-tower-pro",
         title: "Stack Tower Pro",
@@ -1282,7 +1314,7 @@
       });
 
       // Rich Choice Run（你新提供的游戏）
-      const richChoiceRunUrl = "https://html5.gamedistribution.com/bef6a857d80a4337a57fab57c4b70c48/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const richChoiceRunUrl = "https://html5.gamedistribution.com/bef6a857d80a4337a57fab57c4b70c48/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-rich-choice-run",
         title: "Rich Choice Run",
@@ -1295,7 +1327,7 @@
       });
 
       // 2048 Merge World（你新提供的游戏）
-      const mergeWorldUrl = "https://html5.gamedistribution.com/a8ecea31288d4f6581ae36db798ce9ac/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const mergeWorldUrl = "https://html5.gamedistribution.com/a8ecea31288d4f6581ae36db798ce9ac/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-2048-merge-world",
         title: "2048 Merge World",
@@ -1308,7 +1340,7 @@
       });
 
       // Cool SuperCars Stunts PvP（你新提供的游戏）
-      const coolSuperCarsUrl = "https://html5.gamedistribution.com/c0ec7c50918143e8b7ba4b32282ed0e9/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const coolSuperCarsUrl = "https://html5.gamedistribution.com/c0ec7c50918143e8b7ba4b32282ed0e9/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-cool-supercars-stunts-pvp",
         title: "Cool SuperCars Stunts PvP",
@@ -1321,7 +1353,7 @@
       });
 
       // Energy Factory Idle（你新提供的游戏）
-      const energyFactoryIdleUrl = "https://html5.gamedistribution.com/edd5ca4613f745e991fe13019f29ef93/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const energyFactoryIdleUrl = "https://html5.gamedistribution.com/edd5ca4613f745e991fe13019f29ef93/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-energy-factory-idle",
         title: "Energy Factory Idle",
@@ -1334,7 +1366,7 @@
       });
 
       // Police Traffic Racer（你新提供的游戏）
-      const policeTrafficRacerUrl = "https://html5.gamedistribution.com/8748f54767044b99bc5373fc61596123/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}";
+      const policeTrafficRacerUrl = "https://html5.gamedistribution.com/8748f54767044b99bc5373fc61596123/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
       customIframeGames.push({
         id: "custom-police-traffic-racer",
         title: "Police Traffic Racer",
