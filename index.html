@@ -1180,16 +1180,23 @@
       <div class="footer-top">
         <div>© 2026 Pokopie.com – Play free browser games anytime, anywhere!</div>
         <div class="footer-links">
-          <a href="#" onclick="alert('About Pokopie: A playful portal for free browser games.'); return false;">About</a>
-          <a href="#" onclick="alert('Privacy Policy: This is a demo site. Add your real policy here.'); return false;">Privacy Policy</a>
-          <a href="mailto:hello@pokopie.com">Contact</a>
+          <a href="#about">About</a>
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#contact">Contact</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        Pokopie is an online games portal inspired by modern HTML5 gaming hubs. Games may be provided by third‑party platforms and may have their own terms of use.
-        <br />
-        Open‑source local games included (licenses in games/*/LICENSE*):
-        2048 (MIT, Gabriele Cirulli) • Canvas Snake (MIT, Rory Drysdale) • Minesweeper (MIT, Faisal Akhtar) • Memory Game (MIT, MTrajK) • JavaScript Breakout (MIT, Jake Gordon)
+      <div class="footer-bottom" id="about">
+        <strong>About Pokopie</strong><br />
+        Pokopie is a small browser‑game hub focused on fast, family‑friendly HTML5 games. All games run directly in your web browser – no downloads, no account, just click and play.
+        We carefully curate external game providers and open‑source mini‑games to keep the experience lightweight and safe on both desktop and mobile.
+        <br /><br />
+        <strong id="privacy">Privacy Policy</strong><br />
+        Pokopie does not require registration or collect personal information to play games. Basic anonymous analytics and standard web server logs may be used to understand traffic patterns and improve the site.
+        Some games are embedded from third‑party platforms (for example GameDistribution); those providers may set their own cookies or tracking according to their policies. By playing such games you agree to their respective terms.
+        If you want your content removed or have a privacy question, please contact us.
+        <br /><br />
+        <strong id="contact">Contact</strong><br />
+        For partnership, DMCA, or support requests, please email <a href="mailto:hughhao7@gmail.com">hughhao7@gmail.com</a>.
       </div>
     </footer>
   </main>
@@ -1374,6 +1381,45 @@
         category: normalizeCategoryByTitle("Police Traffic Racer", "Racing"),
         thumbnail: "assets/police-traffic-racer.png",
         playUrl: policeTrafficRacerUrl,
+        popular: true,
+        recent: true
+      });
+
+      // M5 City Driver（你新提供的游戏）
+      const m5CityDriverUrl = "https://html5.gamedistribution.com/ce70177ea1894fcb9421898b1e56a290/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-m5-city-driver",
+        title: "M5 City Driver",
+        description: "M5 City Driver via GameDistribution. Opens in a new browser tab.",
+        category: "Racing",
+        thumbnail: "assets/m5-city-driver.png",
+        playUrl: m5CityDriverUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Xeno Defense Protocol（你新提供的游戏）
+      const xenoDefenseUrl = "https://html5.gamedistribution.com/1ae04723ea2f42bab930af8997f01e72/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-xeno-defense-protocol",
+        title: "Xeno Defense Protocol",
+        description: "Xeno Defense Protocol via GameDistribution. Opens in a new browser tab.",
+        category: "Strategy",
+        thumbnail: "assets/xeno-defense-protocol.png",
+        playUrl: xenoDefenseUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Avenger Guard（你新提供的游戏）
+      const avengerGuardUrl = "https://html5.gamedistribution.com/c89b6590d54245c390eb27cc7d8048c9/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-avenger-guard",
+        title: "Avenger Guard",
+        description: "Avenger Guard via GameDistribution. Opens in a new browser tab.",
+        category: "Action",
+        thumbnail: "assets/avenger-guard.png",
+        playUrl: avengerGuardUrl,
         popular: true,
         recent: true
       });
