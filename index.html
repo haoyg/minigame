@@ -2556,6 +2556,24 @@
       allGames = customIframeGames.slice();
       statusSource.textContent = "Custom iframe game list";
       statusTotal.textContent = allGames.length + " games available";
+
+      // 根据实际游戏数据，动态决定要展示哪些分类按钮
+      const availableCats = new Set(
+        allGames
+          .map((g) => (g.category || "").toLowerCase())
+          .filter((c) => !!c)
+      );
+      const navBtns = navCategories.querySelectorAll(".nav-pill");
+      navBtns.forEach((btn) => {
+        const cat = (btn.getAttribute("data-category") || "").toLowerCase();
+        if (cat === "all") {
+          btn.hidden = false;
+          return;
+        }
+        // 如果当前分类在游戏里一个都没有，就隐藏这个按钮，避免“分类和游戏对不上”的感觉
+        btn.hidden = !availableCats.has(cat);
+      });
+
       renderAllSections();
     }
 
