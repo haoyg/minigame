@@ -1590,6 +1590,132 @@
         popular: true,
         recent: true
       });
+
+      // Dungeon Master – Cult & Craft（你新提供的游戏）
+      const dungeonMasterUrl =
+        "https://html5.gamedistribution.com/c112cbcec8bc49db9e5faf0f7a81b022/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-dungeon-master-cult-craft",
+        title: "Dungeon Master – Cult & Craft",
+        description: "Dungeon Master – Cult & Craft via GameDistribution. Opens in a new browser tab.",
+        category: "Strategy",
+        thumbnail: "assets/dungeon-master-cult-craft.png",
+        playUrl: dungeonMasterUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Authentic Football（你新提供的游戏）
+      const authenticFootballUrl =
+        "https://html5.gamedistribution.com/3e23038b06ea4d39b882713fe059e595/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-authentic-football",
+        title: "Authentic Football",
+        description: "Authentic Football via GameDistribution. Opens in a new browser tab.",
+        category: "Sports",
+        thumbnail: "assets/authentic-football.png",
+        playUrl: authenticFootballUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Apex Football Battle（你新提供的游戏）
+      const apexFootballBattleUrl =
+        "https://html5.gamedistribution.com/154c5754a5264da2bcd50a72e95df2c0/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-apex-football-battle",
+        title: "Apex Football Battle",
+        description: "Apex Football Battle via GameDistribution. Opens in a new browser tab.",
+        category: "Sports",
+        thumbnail: "assets/apex-football-battle.png",
+        playUrl: apexFootballBattleUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Real Freekick 3D（你新提供的游戏）
+      const realFreekick3dUrl =
+        "https://html5.gamedistribution.com/527ae66f4e664fdc8847e7ce952165dc/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-real-freekick-3d",
+        title: "Real Freekick 3D",
+        description: "Real Freekick 3D via GameDistribution. Opens in a new browser tab.",
+        category: "Sports",
+        thumbnail: "assets/real-freekick-3d.png",
+        playUrl: realFreekick3dUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Soccer Tournament（你新提供的游戏）
+      const soccerTournamentUrl =
+        "https://html5.gamedistribution.com/66da87c150bf4e7c9f2abef8cdbd2f7a/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-soccer-tournament",
+        title: "Soccer Tournament",
+        description: "Soccer Tournament via GameDistribution. Opens in a new browser tab.",
+        category: "Sports",
+        thumbnail: "assets/soccer-tournament.png",
+        playUrl: soccerTournamentUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Obby & Dead River（你新提供的游戏）
+      const obbyDeadRiverUrl =
+        "https://html5.gamedistribution.com/e84bda3da9da4301b9949e164cde2d87/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-obby-dead-river",
+        title: "Obby & Dead River",
+        description: "Obby & Dead River via GameDistribution. Opens in a new browser tab.",
+        category: "Action",
+        thumbnail: "assets/obby-dead-river.png",
+        playUrl: obbyDeadRiverUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Heroic Knight（你新提供的游戏）
+      const heroicKnightUrl =
+        "https://html5.gamedistribution.com/ea9a40f010ad4d9486290e8eb9c177a8/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-heroic-knight",
+        title: "Heroic Knight",
+        description: "Heroic Knight via GameDistribution. Opens in a new browser tab.",
+        category: "Action",
+        thumbnail: "assets/heroic-knight.png",
+        playUrl: heroicKnightUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Battle Simulator - Sandbox（你新提供的游戏）
+      const battleSimulatorUrl =
+        "https://html5.gamedistribution.com/3e212271911e454c924dedbe7f8999d3/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-battle-simulator-sandbox",
+        title: "Battle Simulator - Sandbox",
+        description: "Battle Simulator - Sandbox via GameDistribution. Opens in a new browser tab.",
+        category: "Strategy",
+        thumbnail: "assets/battle-simulator-sandbox.png",
+        playUrl: battleSimulatorUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Tricky Castle（你新提供的游戏）
+      const trickyCastleUrl =
+        "https://html5.gamedistribution.com/41f72b2235934807bda0d1f334087f27/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-tricky-castle",
+        title: "Tricky Castle",
+        description: "Tricky Castle via GameDistribution. Opens in a new browser tab.",
+        category: "Puzzle",
+        thumbnail: "assets/tricky-castle.png",
+        playUrl: trickyCastleUrl,
+        popular: true,
+        recent: true
+      });
     })();
 
     let allGames = [];
@@ -1657,9 +1783,22 @@
     }
 
     function getReferrerForEmbed() {
-      // Many GameDistribution embeds要求 gd_sdk_referrer_url 与白名单域名一致。
-      // 既然你已经将 www.pokopie.com 加入白名单，这里强制使用该域名，
-      // 避免 www / 根域名 / 子域名差异导致的校验失败。
+      // GameDistribution 官方要求：gd_sdk_referrer_url 必须是“实际游戏页面的完整 URL”。
+      // 这里我们在正式环境下返回当前页面的完整地址，并附带一个 ?game=ID 方便区分不同游戏，
+      // 在本地预览或出错时则回退到主站首页。
+      try {
+        const loc = window.location;
+        const host = (loc.hostname || "").toLowerCase();
+        if (host === "www.pokopie.com" || host === "pokopie.com") {
+          let url = loc.protocol + "//" + loc.host + "/";
+          if (currentModalGame && currentModalGame.id) {
+            url += "?game=" + encodeURIComponent(currentModalGame.id);
+          }
+          return url;
+        }
+      } catch {
+        // ignore
+      }
       return "https://www.pokopie.com/";
     }
 
@@ -1697,7 +1836,7 @@
 
     function isEmbeddableUrl(rawUrl) {
       // Many providers block iframe embedding via X-Frame-Options / CSP.
-      // We'll preemptively open those in a new tab instead of showing a broken iframe.
+      // 我们只对“非常确定可以 iframe 的站点”返回 true，其他一律新标签打开。
       if (!rawUrl || typeof rawUrl !== "string") return false;
       try {
         const u = new URL(rawUrl, window.location.href);
@@ -1706,9 +1845,10 @@
         // FreeToGame 官网页面禁止 iframe。
         if (host === "www.freetogame.com" || host === "freetogame.com") return false;
 
-        // GameDistribution：统一视为不可 iframe，在外面给说明并直接新开。
+        // GameDistribution：恢复旧策略——一律视为不可 iframe，直接新标签打开，避免用户再看到各种内部报错页。
         if (host === "html5.gamedistribution.com") return false;
 
+        // 其他站点默认允许（目前主要是本地自带游戏等）。
         return true;
       } catch {
         return false;
@@ -2913,15 +3053,17 @@
 
     function openGameModal(game) {
       currentModalGame = game;
-      // 对于 GameDistribution 之类只推荐新标签打开的游戏，直接跳转而不展示覆盖层。
+
+      // 对 GameDistribution 恢复“直接新标签打开”的模式，不再展示 iframe 弹窗。
       try {
-        const rawUrl = game.playUrl || "";
-        if (rawUrl && new URL(rawUrl, window.location.href).hostname.toLowerCase().includes("html5.gamedistribution.com")) {
+        const raw = game.playUrl || "";
+        const host = raw ? new URL(raw, window.location.href).hostname.toLowerCase() : "";
+        if (host.includes("html5.gamedistribution.com")) {
           openGameInNewTab();
           return;
         }
       } catch {
-        // 忽略 URL 解析错误，按正常流程走
+        // URL 解析失败时按正常流程走
       }
 
       modalGameTitle.textContent = game.title;
@@ -2952,7 +3094,7 @@
 
       setTimeout(() => {
         const rawUrl = game.playUrl || "https://www.freetogame.com/";
-        // 如果不可 iframe（包括所有 GameDistribution），直接外部说明 + 新标签打开。
+        // 如果不可 iframe（例如 FreeToGame 等），直接外部说明 + 新标签打开。
         if (!isEmbeddableUrl(rawUrl)) {
           modalLoading.style.display = "none";
           embedNotice.classList.add("visible");
