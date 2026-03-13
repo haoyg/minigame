@@ -1356,23 +1356,14 @@
       <div class="footer-top">
         <div>© 2026 Pokopie.com – Play free browser games anytime, anywhere!</div>
         <div class="footer-links">
-          <a href="#about">About</a>
-          <a href="#privacy">Privacy Policy</a>
-          <a href="#contact">Contact</a>
+          <a href="/about.html">About</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/terms.html">Terms</a>
         </div>
       </div>
-      <div class="footer-bottom" id="about">
-        <strong>About Pokopie</strong><br />
-        Pokopie is a small browser‑game hub focused on fast, family‑friendly HTML5 games. All games run directly in your web browser – no downloads, no account, just click and play.
-        We carefully curate external game providers and open‑source mini‑games to keep the experience lightweight and safe on both desktop and mobile.
-        <br /><br />
-        <strong id="privacy">Privacy Policy</strong><br />
-        Pokopie does not require registration or collect personal information to play games. Basic anonymous analytics and standard web server logs may be used to understand traffic patterns and improve the site.
-        Some games are embedded from third‑party platforms (for example GameDistribution); those providers may set their own cookies or tracking according to their policies. By playing such games you agree to their respective terms.
-        If you want your content removed or have a privacy question, please contact us.
-        <br /><br />
-        <strong id="contact">Contact</strong><br />
-        For partnership, DMCA, or support requests, please email <a href="mailto:hughhao7@gmail.com">hughhao7@gmail.com</a>.
+      <div class="footer-bottom">
+        <strong>Pokopie</strong> – Free online HTML5 browser games. Visit our About, Privacy, Contact and Terms pages to learn more.
       </div>
     </footer>
   </main>
@@ -2042,6 +2033,20 @@
         category: "Action",
         thumbnail: "assets/ninjaroof.png",
         playUrl: ninjaRoofUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Xytrian Runner（你新提供的游戏）
+      const xytrianRunnerUrl =
+        "https://html5.gamedistribution.com/280e627746f74fc6aabc06fcf57aeb84/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-xytrian-runner",
+        title: "Xytrian Runner",
+        description: "Xytrian Runner via GameDistribution. Opens in a new browser tab.",
+        category: "Arcade",
+        thumbnail: "assets/xytrian-runner.png",
+        playUrl: xytrianRunnerUrl,
         popular: true,
         recent: true
       });
