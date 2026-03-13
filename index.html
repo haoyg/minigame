@@ -1990,6 +1990,62 @@
         recent: true
       });
 
+      // Moto Traffic Rider（你新提供的游戏）
+      const motoTrafficRiderUrl =
+        "https://html5.gamedistribution.com/9bde41f232834eff9ea81554ecee8279/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-moto-traffic-rider",
+        title: "Moto Traffic Rider",
+        description: "Moto Traffic Rider via GameDistribution. Opens in a new browser tab.",
+        category: "Racing",
+        thumbnail: "assets/moto-traffic-rider.png",
+        playUrl: motoTrafficRiderUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Blue Hedgehog Hill Dash Ride（你新提供的游戏）
+      const blueHedgehogHillDashRideUrl =
+        "https://html5.gamedistribution.com/6134a1778c0f4929a68bf7dc9cd51398/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-blue-hedgehog-hill-dash-ride",
+        title: "Blue Hedgehog Hill Dash Ride",
+        description: "Blue Hedgehog Hill Dash Ride via GameDistribution. Opens in a new browser tab.",
+        category: "Racing",
+        thumbnail: "assets/blue-hedgehog-hill-dash-ride.png",
+        playUrl: blueHedgehogHillDashRideUrl,
+        popular: true,
+        recent: true
+      });
+
+      // The Flowers: Merge and Sell Bouquets（你新提供的游戏）
+      const flowersMergeSellUrl =
+        "https://html5.gamedistribution.com/d2e7b617f09a449db7f7a89e0fdc0a28/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-the-flowers-merge-and-sell-bouquets",
+        title: "The Flowers: Merge and Sell Bouquets",
+        description: "The Flowers: Merge and Sell Bouquets via GameDistribution. Opens in a new browser tab.",
+        category: "Puzzle",
+        thumbnail: "assets/the-flowers-merge-and-sell-bouquets.png",
+        playUrl: flowersMergeSellUrl,
+        popular: true,
+        recent: true
+      });
+
+      // NinjaRoof（你新提供的游戏）
+      const ninjaRoofUrl =
+        "https://html5.gamedistribution.com/6bfd6b77827c418eb5dc2d33be6bc911/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-ninjaroof",
+        title: "NinjaRoof",
+        description: "NinjaRoof via GameDistribution. Opens in a new browser tab.",
+        category: "Action",
+        thumbnail: "assets/ninjaroof.png",
+        playUrl: ninjaRoofUrl,
+        popular: true,
+        recent: true
+      });
+
       // Hawaii Match 5（你新提供的游戏）
       const hawaiiMatch5Url =
         "https://html5.gamedistribution.com/bfd9e939e8cd458fbb03df9b598959f4/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
@@ -2374,17 +2430,26 @@
 
     function getReferrerForEmbed() {
       // GameDistribution 官方要求：gd_sdk_referrer_url 必须是“实际游戏页面的完整 URL”。
-      // 这里我们在正式环境下返回当前页面的完整地址，并附带一个 ?game=ID 方便区分不同游戏，
+      // 这里我们在正式环境下返回“当前页面的完整地址”：
+      // - 如果 URL 里已经有 ?game=xxx，就直接使用当前地址；
+      // - 否则在首页 / 上根据 currentModalGame.id 拼一个 ?game=xxx。
       // 在本地预览或出错时则回退到主站首页。
       try {
         const loc = window.location;
         const host = (loc.hostname || "").toLowerCase();
         if (host === "www.pokopie.com" || host === "pokopie.com") {
-          let url = loc.protocol + "//" + loc.host + "/";
-          if (currentModalGame && currentModalGame.id) {
-            url += "?game=" + encodeURIComponent(currentModalGame.id);
+          const href = loc.protocol + "//" + loc.host + loc.pathname + loc.search;
+          const params = new URLSearchParams(loc.search || "");
+          if (params.get("game")) {
+            // 详情页场景：直接返回当前 URL（不带哈希）
+            return href;
           }
-          return url;
+          // 首页 + 弹窗场景：根据 currentModalGame 拼接一个 ?game=ID
+          let base = loc.protocol + "//" + loc.host + "/";
+          if (currentModalGame && currentModalGame.id) {
+            base += "?game=" + encodeURIComponent(currentModalGame.id);
+          }
+          return base;
         }
       } catch {
         // ignore
