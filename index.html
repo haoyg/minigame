@@ -1086,8 +1086,8 @@
   </header>
 
   <main class="page" id="top">
-    <!-- Hero -->
-    <section class="hero" aria-labelledby="hero-heading">
+    <!-- Hero (hidden visually but kept for JS wiring) -->
+    <section class="hero" aria-labelledby="hero-heading" style="display:none;">
       <div class="hero-left">
         <div class="hero-chip-row">
           <div class="hero-chip">
@@ -1134,8 +1134,8 @@
       </div>
     </section>
 
-    <!-- Popular Games -->
-    <section class="section" aria-labelledby="popular-heading">
+    <!-- Popular Games (hidden) -->
+    <section class="section" aria-labelledby="popular-heading" style="display:none;">
       <div class="section-header">
         <div>
           <div class="section-title"><span class="emoji">🔥</span><span id="popular-heading">Popular Games</span></div>
@@ -1145,8 +1145,8 @@
       <div class="games-row" id="popularRow"></div>
     </section>
 
-    <!-- New Games -->
-    <section class="section" aria-labelledby="new-heading">
+    <!-- New Games (hidden) -->
+    <section class="section" aria-labelledby="new-heading" style="display:none;">
       <div class="section-header">
         <div>
           <div class="section-title"><span class="emoji">⭐</span><span id="new-heading">New &amp; Fresh Games</span></div>
@@ -1444,15 +1444,10 @@
     }
 
     function getReferrerForEmbed() {
-      // Many embeds validate referrer/origin.
-      // Use location.origin (not full href). For file:// origin is "null".
-      try {
-        const origin = window.location && window.location.origin;
-        if (!origin || origin === "null") return "https://www.pokopie.com/";
-        return origin + "/";
-      } catch {
-        return "https://www.pokopie.com/";
-      }
+      // Many GameDistribution embeds要求 gd_sdk_referrer_url 与白名单域名一致。
+      // 既然你已经将 www.pokopie.com 加入白名单，这里强制使用该域名，
+      // 避免 www / 根域名 / 子域名差异导致的校验失败。
+      return "https://www.pokopie.com/";
     }
 
     function withGdReferrer(url) {
@@ -2556,24 +2551,6 @@
       allGames = customIframeGames.slice();
       statusSource.textContent = "Custom iframe game list";
       statusTotal.textContent = allGames.length + " games available";
-
-      // 根据实际游戏数据，动态决定要展示哪些分类按钮
-      const availableCats = new Set(
-        allGames
-          .map((g) => (g.category || "").toLowerCase())
-          .filter((c) => !!c)
-      );
-      const navBtns = navCategories.querySelectorAll(".nav-pill");
-      navBtns.forEach((btn) => {
-        const cat = (btn.getAttribute("data-category") || "").toLowerCase();
-        if (cat === "all") {
-          btn.hidden = false;
-          return;
-        }
-        // 如果当前分类在游戏里一个都没有，就隐藏这个按钮，避免“分类和游戏对不上”的感觉
-        btn.hidden = !availableCats.has(cat);
-      });
-
       renderAllSections();
     }
 
@@ -2586,6 +2563,12 @@
       });
 
       statusFilter.textContent = currentCategory === "All" ? "All categories" : "Category: " + currentCategory;
+
+      // 同步更新 All Games 区块标题，使其与当前菜单保持一致
+      const allGamesHeading = document.getElementById("all-games-heading");
+      if (allGamesHeading) {
+        allGamesHeading.textContent = currentCategory === "All" ? "All Games" : currentCategory + " Games";
+      }
     }
 
     function renderAllSections() {
