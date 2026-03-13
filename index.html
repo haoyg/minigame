@@ -737,6 +737,167 @@
 
     .empty-message { font-size: 13px; color: var(--text-soft); padding: 14px 0; }
 
+    /* Game detail page */
+    .game-detail-page {
+      margin-top: 18px;
+    }
+
+    .game-detail-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .game-detail-left,
+    .game-detail-right {
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 65%),
+                  var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.7);
+      padding: 16px 16px 18px;
+    }
+
+    .game-detail-header {
+      margin-bottom: 10px;
+    }
+
+    .game-detail-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .game-detail-meta {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .detail-iframe-wrapper {
+      position: relative;
+      width: 100%;
+      margin-top: 12px;
+      padding-top: 56.25%;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 1));
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.9);
+    }
+
+    .detail-iframe-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .game-detail-description {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .game-detail-actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .detail-btn {
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: var(--glass-90);
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    }
+
+    .detail-btn.primary {
+      border-color: rgba(248, 250, 252, 0.8);
+      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      color: #0f172a;
+      box-shadow: 0 14px 32px rgba(34, 197, 94, 0.7);
+      font-weight: 600;
+    }
+
+    .detail-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.7);
+    }
+
+    .detail-btn.primary:hover {
+      box-shadow: 0 20px 40px rgba(34, 197, 94, 0.9);
+    }
+
+    .game-detail-right-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .game-detail-right-subtitle {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .detail-similar-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .detail-similar-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      transition: transform 0.15s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .detail-similar-card:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--shadow-glow);
+      border-color: rgba(248, 250, 252, 0.7);
+    }
+
+    .detail-similar-thumb {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .detail-similar-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 4px 6px;
+      font-size: 11px;
+      font-weight: 600;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+      color: #f9fafb;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
     /* Modal */
     .modal-backdrop {
       position: fixed;
@@ -1020,7 +1181,14 @@
     .footer-bottom { font-size: 10px; color: rgba(148, 163, 184, 0.9); }
 
     /* Responsive */
-    @media (max-width: 960px) { .hero { grid-template-columns: minmax(0, 1fr); } .hero-left { order: 1; } .hero-right { order: 2; } }
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: minmax(0, 1fr); }
+      .hero-left { order: 1; }
+      .hero-right { order: 2; }
+      .game-detail-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
 
     @media (max-width: 780px) {
       .nav { flex-wrap: wrap; gap: 10px; }
@@ -1031,6 +1199,10 @@
       .hero-title { font-size: 26px; }
       .hero-featured-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .modal { max-width: 100%; border-radius: 0; max-height: 100vh; }
+      .game-detail-left,
+      .game-detail-right {
+        padding: 14px 12px 16px;
+      }
     }
 
     @media (max-width: 520px) {
@@ -1203,6 +1375,37 @@
         For partnership, DMCA, or support requests, please email <a href="mailto:hughhao7@gmail.com">hughhao7@gmail.com</a>.
       </div>
     </footer>
+  </main>
+
+  <!-- Game detail page (single game view) -->
+  <main class="page game-detail-page" id="gameDetailPage" style="display:none;">
+    <section class="game-detail-layout" aria-label="Game detail view">
+      <div class="game-detail-left">
+        <header class="game-detail-header">
+          <h1 class="game-detail-title" id="detailTitle">Loading game…</h1>
+          <div class="game-detail-meta" id="detailMeta"></div>
+        </header>
+        <div class="detail-iframe-wrapper">
+          <iframe id="detailIframe" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <p class="game-detail-description" id="detailDescription"></p>
+        <div class="game-detail-actions">
+          <button type="button" class="detail-btn" id="detailBackHome">
+            <span>← Back to all games</span>
+          </button>
+        </div>
+      </div>
+
+      <aside class="game-detail-right" aria-label="Similar games">
+        <div class="game-detail-right-title">
+          <span>Similar Games</span>
+        </div>
+        <div class="game-detail-right-subtitle">
+          More games you might like from the same category on Pokopie.
+        </div>
+        <div class="detail-similar-list" id="detailSimilarList" aria-live="polite"></div>
+      </aside>
+    </section>
   </main>
 
   <!-- Modal -->
@@ -1857,6 +2060,20 @@
         recent: true
       });
 
+      // Penguin Farm - Ice Merge（你新提供的游戏）
+      const penguinFarmUrl =
+        "https://html5.gamedistribution.com/59d85983ebf14a37944e13672cb28b76/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-penguin-farm-ice-merge",
+        title: "Penguin Farm - Ice Merge",
+        description: "Penguin Farm - Ice Merge via GameDistribution. Opens in a new browser tab.",
+        category: "Puzzle",
+        thumbnail: "assets/penguin-farm-ice-merge.png",
+        playUrl: penguinFarmUrl,
+        popular: true,
+        recent: true
+      });
+
       // Emerland Solitaire（你新提供的游戏）
       const emerlandSolitaireUrl =
         "https://html5.gamedistribution.com/a8d2dd3ae70d464d9e36029a038ffb09/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
@@ -1881,6 +2098,20 @@
         category: "Arcade",
         thumbnail: "assets/kaboom-miner.png",
         playUrl: kaboomMinerUrl,
+        popular: true,
+        recent: true
+      });
+
+      // Flag Master: World Flags Quiz（你新提供的游戏）
+      const flagMasterUrl =
+        "https://html5.gamedistribution.com/3b80180a914c4db699ee0e0b8840d620/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-flag-master-world-flags-quiz",
+        title: "Flag Master: World Flags Quiz",
+        description: "Flag Master: World Flags Quiz via GameDistribution. Opens in a new browser tab.",
+        category: "Puzzle",
+        thumbnail: "assets/flag-master-world-flags-quiz.png",
+        playUrl: flagMasterUrl,
         popular: true,
         recent: true
       });
@@ -1968,6 +2199,20 @@
         popular: true,
         recent: true
       });
+
+      // Arrows Puzzle Escape（你新提供的游戏）
+      const arrowsPuzzleEscapeUrl =
+        "https://html5.gamedistribution.com/d41e8014aea74629934290991b008c7a/?gd_sdk_referrer_url=https://www.pokopie.com/games/{game-path}";
+      customIframeGames.push({
+        id: "custom-arrows-puzzle-escape",
+        title: "Arrows Puzzle Escape",
+        description: "Arrows Puzzle Escape via GameDistribution. Opens in a new browser tab.",
+        category: "Puzzle",
+        thumbnail: "assets/arrows-puzzle-escape.png",
+        playUrl: arrowsPuzzleEscapeUrl,
+        popular: true,
+        recent: true
+      });
     })();
 
     let allGames = [];
@@ -1975,6 +2220,9 @@
     let currentCategory = "All";
     let currentSort = "popular";
     let searchQuery = "";
+
+    const homePage = document.getElementById("top");
+    const gameDetailPage = document.getElementById("gameDetailPage");
 
     const featuredGrid = document.getElementById("featuredGrid");
     const popularRow = document.getElementById("popularRow");
@@ -2010,6 +2258,14 @@
     const modalFullscreen = document.getElementById("modalFullscreen");
     const modalOpenNew = document.getElementById("modalOpenNew");
 
+    // Game detail elements
+    const detailTitle = document.getElementById("detailTitle");
+    const detailMeta = document.getElementById("detailMeta");
+    const detailDescription = document.getElementById("detailDescription");
+    const detailIframe = document.getElementById("detailIframe");
+    const detailSimilarList = document.getElementById("detailSimilarList");
+    const detailBackHome = document.getElementById("detailBackHome");
+
     let currentModalGame = null;
     let isModalMaximized = false;
     let embedWatchdog = null;
@@ -2027,6 +2283,88 @@
         }
       }
       return node;
+    }
+
+    function navigateToGame(game) {
+      if (!game || !game.id) return;
+      const url = new URL(window.location.href);
+      url.searchParams.set("game", game.id);
+      window.location.href = url.toString();
+    }
+
+    function showHomePage() {
+      homePage.style.display = "";
+      gameDetailPage.style.display = "none";
+    }
+
+    function renderSimilarGames(game) {
+      if (!detailSimilarList) return;
+      detailSimilarList.innerHTML = "";
+      if (!allGames.length) return;
+
+      const sameCategory = allGames.filter(
+        (g) => g.id !== game.id && g.category === game.category
+      );
+      const pool = sameCategory.length ? sameCategory : allGames.filter((g) => g.id !== game.id);
+
+      pool.slice(0, 6).forEach((sim) => {
+        const card = el("article", "detail-similar-card");
+        card.setAttribute("data-game-id", sim.id);
+
+        const img = el("img", "detail-similar-thumb", {
+          src: sim.thumbnail || FALLBACK_THUMB,
+          alt: sim.title + " thumbnail",
+          loading: "lazy"
+        });
+        img.onerror = () => {
+          img.src = FALLBACK_THUMB;
+          img.onerror = null;
+        };
+        card.appendChild(img);
+
+        const caption = el("div", "detail-similar-caption", {
+          text: truncate(sim.title, 24)
+        });
+        card.appendChild(caption);
+
+        card.addEventListener("click", () => navigateToGame(sim));
+        detailSimilarList.appendChild(card);
+      });
+    }
+
+    function showGameDetail(game) {
+      if (!gameDetailPage || !homePage) return;
+      homePage.style.display = "none";
+      gameDetailPage.style.display = "block";
+
+      if (detailTitle) detailTitle.textContent = game.title;
+      if (detailMeta) {
+        const cat = game.category || "Arcade";
+        detailMeta.textContent = cat + " • HTML5 browser game on Pokopie";
+      }
+      if (detailDescription) {
+        detailDescription.textContent =
+          game.description ||
+          "Instant browser mini game on Pokopie. Click play to start in your browser – no download.";
+      }
+
+      const rawUrl = game.playUrl || "https://www.freetogame.com/";
+      if (detailIframe) {
+        // 详情页里始终尝试加载 iframe，让你在本地和线上都能直接看到游戏或平台页面
+        detailIframe.src = withGdReferrer(rawUrl);
+      }
+
+      if (detailBackHome) {
+        detailBackHome.onclick = () => {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("game");
+          history.pushState({}, "", url.toString());
+          showHomePage();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+      }
+
+      renderSimilarGames(game);
     }
 
     function truncate(text, max) {
@@ -2088,7 +2426,7 @@
 
     function isEmbeddableUrl(rawUrl) {
       // Many providers block iframe embedding via X-Frame-Options / CSP.
-      // 我们只对“非常确定可以 iframe 的站点”返回 true，其他一律新标签打开。
+      // 仅在“非常确定可以 iframe”时返回 true，其余情况统一用新标签页。
       if (!rawUrl || typeof rawUrl !== "string") return false;
       try {
         const u = new URL(rawUrl, window.location.href);
@@ -2097,8 +2435,10 @@
         // FreeToGame 官网页面禁止 iframe。
         if (host === "www.freetogame.com" || host === "freetogame.com") return false;
 
-        // GameDistribution：恢复旧策略——一律视为不可 iframe，直接新标签打开，避免用户再看到各种内部报错页。
-        if (host === "html5.gamedistribution.com") return false;
+        // GameDistribution：只在正式域名（已加入白名单）上尝试 iframe，其余环境一律视为不可 iframe。
+        if (host === "html5.gamedistribution.com") {
+          return isAllowedEmbedHost();
+        }
 
         // 其他站点默认允许（目前主要是本地自带游戏等）。
         return true;
@@ -3244,8 +3584,11 @@
       btn.appendChild(el("span", "icon", { text: "▶" }));
       btn.appendChild(el("span", null, { text: "Play Now" }));
 
-      btn.addEventListener("click", (e) => { e.stopPropagation(); openGameModal(game); });
-      card.addEventListener("click", () => openGameModal(game));
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navigateToGame(game);
+      });
+      card.addEventListener("click", () => navigateToGame(game));
 
       content.appendChild(title);
       content.appendChild(desc);
@@ -3279,7 +3622,7 @@
         meta.appendChild(el("span", "play", { text: "▶ Play" }));
         overlay.appendChild(meta);
         card.appendChild(overlay);
-        card.addEventListener("click", () => openGameModal(game));
+        card.addEventListener("click", () => navigateToGame(game));
         featuredGrid.appendChild(card);
       });
     }
@@ -3403,6 +3746,22 @@
       window.open(withGdReferrer(rawUrl), "_blank", "noopener");
     }
 
+    function handleInitialRoute() {
+      const params = new URLSearchParams(window.location.search);
+      const gameId = params.get("game");
+      if (!gameId) {
+        showHomePage();
+        return;
+      }
+      const game = allGames.find((g) => g.id === gameId);
+      if (!game) {
+        showHomePage();
+        return;
+      }
+      showGameDetail(game);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     function setupEvents() {
       navCategories.addEventListener("click", (e) => {
         const btn = e.target.closest(".nav-pill");
@@ -3412,6 +3771,14 @@
         currentCategory = cat;
         updateCategoryUI();
         applyFilters();
+
+        // 如果当前在游戏详情页，点击顶部菜单时先回到首页列表视图
+        if (gameDetailPage && gameDetailPage.style.display !== "none") {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("game");
+          history.pushState({}, "", url.toString());
+          showHomePage();
+        }
 
         // 点击顶层分类时，自动平滑滚动到主游戏区域
         const mainSection = document.querySelector(".section[aria-labelledby='all-games-heading']");
@@ -3438,7 +3805,7 @@
       heroPlayBtn.addEventListener("click", () => {
         const list = filteredGames.length ? filteredGames : allGames;
         if (!list.length) return;
-        openGameModal(list[Math.floor(Math.random() * list.length)]);
+        navigateToGame(list[Math.floor(Math.random() * list.length)]);
       });
 
       modalClose.addEventListener("click", closeGameModal);
@@ -3448,7 +3815,7 @@
       noticeTryAnother.addEventListener("click", () => {
         const list = filteredGames.length ? filteredGames : allGames;
         if (!list.length) return;
-        openGameModal(list[Math.floor(Math.random() * list.length)]);
+        navigateToGame(list[Math.floor(Math.random() * list.length)]);
       });
       modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeGameModal(); });
       gameIframe.addEventListener("load", () => { modalLoading.style.display = "none"; });
@@ -3498,9 +3865,10 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
       setupEvents();
-      loadGames();
+      await loadGames();
+      handleInitialRoute();
     });
   </script>
 </body>
