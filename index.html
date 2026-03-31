@@ -3045,6 +3045,15 @@
         .slice(0, 80) || "game";
     }
 
+    function resolveThumbSrc(src) {
+      const s = (src || "").trim();
+      if (!s) return "";
+      if (/^(https?:|data:|blob:)/i.test(s)) return s;
+      if (s.startsWith("/")) return s;
+      // Make relative paths work on sub-routes like /puzzle-games/
+      return "/" + s.replace(/^\/+/, "");
+    }
+
     function getCanonicalOrigin() {
       const host = (window.location.hostname || "").toLowerCase();
       if (host === "www.pokopie.com" || host === "pokopie.com") return "https://www.pokopie.com";
@@ -3101,7 +3110,7 @@
           "applicationCategory": "Game",
           "operatingSystem": "Web",
           "description": description,
-          "image": game.thumbnail ? (origin + "/" + String(game.thumbnail).replace(/^\/+/, "")) : undefined,
+          "image": game.thumbnail ? (origin + resolveThumbSrc(String(game.thumbnail))) : undefined,
           "publisher": { "@type": "Organization", "name": "Pokopie", "url": origin + "/" }
         };
         Object.keys(json).forEach((k) => json[k] === undefined && delete json[k]);
@@ -3183,7 +3192,7 @@
         card.setAttribute("data-game-id", sim.id);
 
         const img = el("img", "detail-similar-thumb", {
-          src: sim.thumbnail || FALLBACK_THUMB,
+          src: resolveThumbSrc(sim.thumbnail) || FALLBACK_THUMB,
           alt: sim.title + " thumbnail",
           loading: "lazy"
         });
@@ -4525,7 +4534,7 @@
 
       const thumbWrap = el("div", "game-thumb-wrap");
       const img = el("img", "game-thumb", {
-        src: game.thumbnail || FALLBACK_THUMB,
+        src: resolveThumbSrc(game.thumbnail) || FALLBACK_THUMB,
         alt: game.title + " thumbnail",
         loading: "lazy"
       });
@@ -4581,7 +4590,7 @@
       featured.forEach((game) => {
         const card = el("article", "featured-card", { "data-game-id": game.id });
         const img = el("img", "featured-thumb", {
-          src: game.thumbnail || FALLBACK_THUMB,
+          src: resolveThumbSrc(game.thumbnail) || FALLBACK_THUMB,
           alt: game.title + " thumbnail",
           loading: "lazy"
         });
