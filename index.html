@@ -598,6 +598,104 @@
 
     .section-subtitle { font-size: 12px; color: var(--text-soft); }
 
+    /* Category landing (SEO category page content) */
+    .category-landing {
+      margin-top: 18px;
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 65%),
+                  var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.65);
+      padding: 16px 16px 18px;
+    }
+
+    .category-landing h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 2px 0 8px;
+    }
+
+    .category-landing p {
+      margin: 8px 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(226, 232, 240, 0.92);
+    }
+
+    .category-landing h2 {
+      margin: 14px 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-strong);
+    }
+
+    .landing-top-list,
+    .landing-new-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .landing-item {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .landing-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(248, 250, 252, 0.55);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.55);
+    }
+
+    .landing-thumb {
+      width: 86px;
+      height: 56px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: rgba(2, 6, 23, 0.6);
+    }
+
+    .landing-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .landing-desc {
+      font-size: 12px;
+      color: rgba(226, 232, 240, 0.82);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .landing-why {
+      margin-top: 10px;
+      padding-left: 18px;
+      color: rgba(226, 232, 240, 0.92);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 780px) {
+      .landing-top-list,
+      .landing-new-list { grid-template-columns: 1fr; }
+    }
+
     /* Horizontal sections (Popular / New) */
     .games-row {
       display: flex;
@@ -792,6 +890,34 @@
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    .detail-iframe-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 1));
+      color: rgba(226, 232, 240, 0.9);
+      font-size: 13px;
+      gap: 10px;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .detail-iframe-loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .detail-iframe-loading .spinner {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 2px solid rgba(148, 163, 184, 0.6);
+      border-top-color: #facc15;
+      animation: spin 0.7s linear infinite;
     }
 
     .game-detail-description {
@@ -1376,6 +1502,21 @@
         <div class="status-pill"><span class="status-dot red"></span><span id="statusSource">Using FreeToGame API…</span></div>
       </div>
 
+      <!-- Category landing content (shown on /puzzle-games/ etc for SEO) -->
+      <section class="category-landing" id="categoryLanding" hidden aria-label="Category landing">
+        <h1 id="landingH1">Best Games Online</h1>
+        <p id="landingIntro"></p>
+
+        <h2 id="landingTopTitle">Top Games</h2>
+        <div class="landing-top-list" id="landingTopList"></div>
+
+        <h2 id="landingWhyTitle">Why Play Games</h2>
+        <ul class="landing-why" id="landingWhyList"></ul>
+
+        <h2 id="landingNewTitle">New Games</h2>
+        <div class="landing-new-list" id="landingNewList"></div>
+      </section>
+
       <div class="main-grid" id="mainGrid" aria-live="polite"></div>
       <div class="empty-message" id="emptyMessage" hidden>No games match your search yet. Try clearing your filters or using a different keyword.</div>
     </section>
@@ -1407,6 +1548,10 @@
         </header>
         <div class="detail-iframe-wrapper">
           <iframe id="detailIframe" loading="lazy" allowfullscreen></iframe>
+          <div class="detail-iframe-loading" id="detailIframeLoading">
+            <div class="spinner"></div>
+            <span>Loading game…</span>
+          </div>
         </div>
         <p class="game-detail-description" id="detailDescription"></p>
         <div class="game-detail-extra" id="detailExtra"></div>
@@ -3013,8 +3158,20 @@
     const detailDescription = document.getElementById("detailDescription");
     const detailExtra = document.getElementById("detailExtra");
     const detailIframe = document.getElementById("detailIframe");
+    const detailIframeLoading = document.getElementById("detailIframeLoading");
     const detailSimilarList = document.getElementById("detailSimilarList");
     const detailBackHome = document.getElementById("detailBackHome");
+
+    // Category landing elements
+    const categoryLanding = document.getElementById("categoryLanding");
+    const landingH1 = document.getElementById("landingH1");
+    const landingIntro = document.getElementById("landingIntro");
+    const landingTopTitle = document.getElementById("landingTopTitle");
+    const landingTopList = document.getElementById("landingTopList");
+    const landingWhyTitle = document.getElementById("landingWhyTitle");
+    const landingWhyList = document.getElementById("landingWhyList");
+    const landingNewTitle = document.getElementById("landingNewTitle");
+    const landingNewList = document.getElementById("landingNewList");
 
     let currentModalGame = null;
     let isModalMaximized = false;
@@ -3052,6 +3209,97 @@
       if (s.startsWith("/")) return s;
       // Make relative paths work on sub-routes like /puzzle-games/
       return "/" + s.replace(/^\/+/, "");
+    }
+
+    function setCategoryLandingVisible(visible) {
+      if (!categoryLanding) return;
+      categoryLanding.hidden = !visible;
+    }
+
+    function renderCategoryLanding(category) {
+      if (!categoryLanding) return;
+      if (!category || category === "All") {
+        setCategoryLandingVisible(false);
+        return;
+      }
+
+      const cat = category;
+      const subtype1 = cat === "Puzzle" ? "logic puzzles" : cat === "Action" ? "shooting challenges" : cat === "Racing" ? "car stunts" : cat === "Sports" ? "skill matches" : "incremental upgrades";
+      const subtype2 = cat === "Puzzle" ? "match & merge games" : cat === "Action" ? "sniper missions" : cat === "Racing" ? "traffic racing" : cat === "Sports" ? "quick arcade sports" : "tycoon-style progress";
+
+      if (landingH1) landingH1.textContent = `Best ${cat} Games Online`;
+      if (landingIntro) {
+        landingIntro.textContent =
+          `Discover the best free ${cat.toLowerCase()} games you can play online. These games are easy to start, require no download, and work on any device. Whether you enjoy ${subtype1} or ${subtype2}, there is something for everyone.`;
+      }
+      if (landingTopTitle) landingTopTitle.textContent = `Top ${cat} Games`;
+      if (landingWhyTitle) landingWhyTitle.textContent = `Why Play ${cat} Games`;
+      if (landingNewTitle) landingNewTitle.textContent = `New ${cat} Games`;
+
+      const listAll = allGames.filter((g) => (g.category || "").toLowerCase() === cat.toLowerCase());
+      const topList = listAll
+        .slice()
+        .sort((a, b) => {
+          const ap = a.popular ? 1 : 0;
+          const bp = b.popular ? 1 : 0;
+          if (bp !== ap) return bp - ap;
+          return (a.title || "").localeCompare(b.title || "");
+        })
+        .slice(0, 20);
+
+      const newList = listAll
+        .filter((g) => g.recent)
+        .slice(0, 12);
+
+      if (landingTopList) {
+        landingTopList.innerHTML = "";
+        topList.forEach((g) => {
+          const item = el("article", "landing-item");
+          const img = el("img", "landing-thumb", { src: resolveThumbSrc(g.thumbnail) || FALLBACK_THUMB, alt: g.title + " thumbnail", loading: "lazy" });
+          img.onerror = () => { img.src = FALLBACK_THUMB; img.onerror = null; };
+          const right = el("div", "");
+          right.appendChild(el("div", "landing-title", { text: g.title }));
+          const oneLine = g.description || `Play ${g.title} free online. No download required.`;
+          right.appendChild(el("div", "landing-desc", { text: oneLine }));
+          item.appendChild(img);
+          item.appendChild(right);
+          item.addEventListener("click", () => navigateToGame(g));
+          landingTopList.appendChild(item);
+        });
+      }
+
+      if (landingWhyList) {
+        landingWhyList.innerHTML = "";
+        const benefits =
+          cat === "Puzzle"
+            ? ["Improve skills like logic and problem solving", "Relax and have fun", "Play anytime without installation"]
+            : cat === "Action"
+              ? ["Improve skills like reaction time and aiming", "Fast, exciting gameplay", "Play anytime without installation"]
+              : cat === "Racing"
+                ? ["Improve skills like timing and control", "Quick sessions with satisfying wins", "Play anytime without installation"]
+                : cat === "Sports"
+                  ? ["Improve skills like precision and timing", "Short matches, instant fun", "Play anytime without installation"]
+                  : ["Improve skills like planning and optimization", "Relax and watch your progress grow", "Play anytime without installation"];
+        benefits.forEach((b) => landingWhyList.appendChild(el("li", "", { text: b })));
+      }
+
+      if (landingNewList) {
+        landingNewList.innerHTML = "";
+        (newList.length ? newList : topList.slice(0, 6)).forEach((g) => {
+          const item = el("article", "landing-item");
+          const img = el("img", "landing-thumb", { src: resolveThumbSrc(g.thumbnail) || FALLBACK_THUMB, alt: g.title + " thumbnail", loading: "lazy" });
+          img.onerror = () => { img.src = FALLBACK_THUMB; img.onerror = null; };
+          const right = el("div", "");
+          right.appendChild(el("div", "landing-title", { text: g.title }));
+          right.appendChild(el("div", "landing-desc", { text: g.description || `New ${cat.toLowerCase()} game on Pokopie. Play instantly in browser.` }));
+          item.appendChild(img);
+          item.appendChild(right);
+          item.addEventListener("click", () => navigateToGame(g));
+          landingNewList.appendChild(item);
+        });
+      }
+
+      setCategoryLandingVisible(true);
     }
 
     function getCanonicalOrigin() {
@@ -3313,6 +3561,7 @@
 
       const rawUrl = game.playUrl || "https://www.freetogame.com/";
       if (detailIframe) {
+        if (detailIframeLoading) detailIframeLoading.classList.remove("hidden");
         // 详情页里始终尝试加载 iframe，让你在本地和线上都能直接看到游戏或平台页面
         detailIframe.src = withGdReferrer(rawUrl);
       }
@@ -4536,7 +4785,9 @@
       const img = el("img", "game-thumb", {
         src: resolveThumbSrc(game.thumbnail) || FALLBACK_THUMB,
         alt: game.title + " thumbnail",
-        loading: "lazy"
+        loading: "lazy",
+        decoding: "async",
+        fetchpriority: "low"
       });
       img.onerror = () => {
         img.src = FALLBACK_THUMB;
@@ -4592,7 +4843,9 @@
         const img = el("img", "featured-thumb", {
           src: resolveThumbSrc(game.thumbnail) || FALLBACK_THUMB,
           alt: game.title + " thumbnail",
-          loading: "lazy"
+          loading: "lazy",
+          decoding: "async",
+          fetchpriority: "low"
         });
         img.onerror = () => {
           img.src = FALLBACK_THUMB;
@@ -4793,6 +5046,7 @@
           currentCategory = cat;
           updateCategoryUI();
           applyFilters();
+          renderCategoryLanding(cat);
           setSeoForCategory(cat);
           const mainSection = document.querySelector(".section[aria-labelledby='all-games-heading']");
           if (mainSection) mainSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -4801,6 +5055,7 @@
 
         // Home
         showHomePage();
+        renderCategoryLanding("All");
         if (currentCategory !== "All") {
           currentCategory = "All";
           updateCategoryUI();
@@ -4809,6 +5064,7 @@
         setSeoForHome();
       } catch (_) {
         showHomePage();
+        renderCategoryLanding("All");
         setSeoForHome();
       }
     }
@@ -4881,6 +5137,12 @@
         if (window.scrollY > 350) backToTop.classList.add("visible");
         else backToTop.classList.remove("visible");
       });
+
+      if (detailIframe && detailIframeLoading) {
+        detailIframe.addEventListener("load", () => {
+          detailIframeLoading.classList.add("hidden");
+        });
+      }
 
       backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
