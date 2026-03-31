@@ -800,6 +800,35 @@
       color: var(--text-soft);
     }
 
+    .game-detail-extra {
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    .game-detail-extra h2 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-strong);
+    }
+
+    .game-detail-extra p + h2 {
+      margin-top: 10px;
+    }
+
+    .detail-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: rgba(226, 232, 240, 0.95);
+    }
+
+    .detail-list li { margin: 6px 0; }
+
+    .detail-link { color: rgba(147, 197, 253, 0.95); text-decoration: none; }
+    .detail-link:hover { text-decoration: underline; }
+
     .game-detail-actions {
       margin-top: 14px;
       display: flex;
@@ -1380,6 +1409,7 @@
           <iframe id="detailIframe" loading="lazy" allowfullscreen></iframe>
         </div>
         <p class="game-detail-description" id="detailDescription"></p>
+        <div class="game-detail-extra" id="detailExtra"></div>
         <div class="game-detail-actions">
           <button type="button" class="detail-btn" id="detailBackHome">
             <span>← Back to all games</span>
@@ -2981,6 +3011,7 @@
     const detailTitle = document.getElementById("detailTitle");
     const detailMeta = document.getElementById("detailMeta");
     const detailDescription = document.getElementById("detailDescription");
+    const detailExtra = document.getElementById("detailExtra");
     const detailIframe = document.getElementById("detailIframe");
     const detailSimilarList = document.getElementById("detailSimilarList");
     const detailBackHome = document.getElementById("detailBackHome");
@@ -3004,11 +3035,132 @@
       return node;
     }
 
+    function slugify(text) {
+      return (text || "")
+        .toLowerCase()
+        .trim()
+        .replace(/['’]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 80) || "game";
+    }
+
+    function getCanonicalOrigin() {
+      const host = (window.location.hostname || "").toLowerCase();
+      if (host === "www.pokopie.com" || host === "pokopie.com") return "https://www.pokopie.com";
+      return window.location.origin;
+    }
+
+    function setSeoForPage({ title, description, canonicalPath }) {
+      try {
+        const origin = getCanonicalOrigin();
+        const canonicalUrl = origin + canonicalPath;
+
+        document.title = title;
+
+        const desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute("content", description);
+
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.setAttribute("href", canonicalUrl);
+
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute("content", title);
+
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.setAttribute("content", description);
+
+        const twTitle = document.querySelector('meta[name="twitter:title"]');
+        if (twTitle) twTitle.setAttribute("content", title);
+
+        const twDesc = document.querySelector('meta[name="twitter:description"]');
+        if (twDesc) twDesc.setAttribute("content", description);
+      } catch (_) {}
+    }
+
+    function setSeoForGame(game) {
+      const cat = (game.category || "Arcade");
+      const canonicalPath = `/games/${game.slug || slugify(game.title)}`;
+      const title = `Play ${game.title} Online Free No Download`;
+      const description = `Play ${game.title} online for free. No download needed. Learn how to play, tips, and similar games. Works on PC, mobile, and tablet.`;
+
+      setSeoForPage({ title, description, canonicalPath });
+
+      // Optional: add/replace a Game JSON-LD block for richer snippets
+      try {
+        const origin = getCanonicalOrigin();
+        const json = {
+          "@context": "https://schema.org",
+          "@type": "VideoGame",
+          "name": game.title,
+          "url": origin + canonicalPath,
+          "genre": cat,
+          "applicationCategory": "Game",
+          "operatingSystem": "Web",
+          "description": description,
+          "image": game.thumbnail ? (origin + "/" + String(game.thumbnail).replace(/^\/+/, "")) : undefined,
+          "publisher": { "@type": "Organization", "name": "Pokopie", "url": origin + "/" }
+        };
+        Object.keys(json).forEach((k) => json[k] === undefined && delete json[k]);
+        let node = document.getElementById("pokopie-game-jsonld");
+        if (!node) {
+          node = document.createElement("script");
+          node.type = "application/ld+json";
+          node.id = "pokopie-game-jsonld";
+          document.head.appendChild(node);
+        }
+        node.textContent = JSON.stringify(json);
+      } catch (_) {}
+    }
+
+    function clearGameSeoJsonLd() {
+      const node = document.getElementById("pokopie-game-jsonld");
+      if (node) node.remove();
+    }
+
+    const CATEGORY_ROUTES = {
+      "puzzle-games": "Puzzle",
+      "shooting-games": "Action",
+      "idle-games": "Strategy",
+      "arcade-games": "Arcade",
+      "racing-games": "Racing",
+      "sports-games": "Sports",
+      "strategy-games": "Strategy",
+      "action-games": "Action"
+    };
+
+    function routeKeyForCategory(cat) {
+      if (cat === "All") return "";
+      // Prefer your chosen SEO slugs
+      if (cat === "Action") return "shooting-games";
+      if (cat === "Strategy") return "idle-games";
+      const found = Object.entries(CATEGORY_ROUTES).find(([, v]) => v === cat);
+      return found ? found[0] : "";
+    }
+
+    function pushRoute(path) {
+      history.pushState({}, "", path);
+      handleRoute();
+    }
+
     function navigateToGame(game) {
       if (!game || !game.id) return;
-      const url = new URL(window.location.href);
-      url.searchParams.set("game", game.id);
-      window.location.href = url.toString();
+      const slug = game.slug || slugify(game.title);
+      // Use clean URLs on real hosts; fall back to ?game= for file:// local preview.
+      if (window.location.protocol === "file:") {
+        const url = new URL(window.location.href);
+        url.pathname = url.pathname; // keep current file
+        url.searchParams.set("game", game.id);
+        window.location.href = url.toString();
+        return;
+      }
+
+      // Use a real navigation for maximum compatibility and SEO.
+      // SPA route handling still works on page load.
+      window.location.href = `/games/${slug}`;
     }
 
     function showHomePage() {
@@ -3056,15 +3208,98 @@
       homePage.style.display = "none";
       gameDetailPage.style.display = "block";
 
-      if (detailTitle) detailTitle.textContent = game.title;
+      if (detailTitle) detailTitle.textContent = `Play ${game.title} Online Free`;
       if (detailMeta) {
         const cat = game.category || "Arcade";
         detailMeta.textContent = cat + " • HTML5 browser game on Pokopie";
       }
       if (detailDescription) {
+        const genre = (game.category || "Arcade").toLowerCase();
+        const core = game.coreGameplay || "play instantly and enjoy quick, satisfying levels";
+        const similar = game.similarGameplay || "fast browser games and easy-to-learn challenges";
+        // ~110-140 words
         detailDescription.textContent =
-          game.description ||
-          "Instant browser mini game on Pokopie. Click play to start in your browser – no download.";
+          game.introParagraph ||
+          `${game.title} is a free online ${genre} game where you ${core}. This browser game requires no download and works on desktop and mobile. The controls are simple, the gameplay is smooth, and you can start playing in seconds. Whether you want a short break or a longer session, ${game.title} is easy to jump into on PC, mobile, and tablet. If you enjoy ${similar}, you will love this game.`;
+      }
+
+      if (detailExtra) {
+        const cat = game.category || "Arcade";
+        const name = game.title;
+        const controls = game.controls || "keyboard, mouse, or touch";
+        const mainAction = game.mainAction || "control your character and interact with the level";
+        const objective = game.objective || "finish the objective of each stage";
+        const obstacles = game.obstacles || "obstacles and tricky moments";
+        const win = game.winCondition || "win by completing the goal and improving your score";
+
+        const keys = game.keys || "Arrow Keys / WASD (varies by game)";
+        const mouse = game.mouseActions || "Click / Drag as needed";
+
+        const tip1 = game.tip1 || "Start slow and learn the mechanics";
+        const tip2 = game.tip2 || "Focus on timing and consistent moves";
+        const tip3 = game.tip3 || "Avoid rushing — most mistakes happen when you speed up";
+        const tip4 = game.tip4 || "Practice to improve your score";
+
+        const similarGames = (() => {
+          const sameCategory = allGames.filter((g) => g.id !== game.id && g.category === game.category);
+          const pool = sameCategory.length ? sameCategory : allGames.filter((g) => g.id !== game.id);
+          return pool.slice(0, 3);
+        })();
+
+        detailExtra.innerHTML = "";
+
+        // H2 How to play
+        detailExtra.appendChild(el("h2", "", { text: `How to Play ${name}` }));
+        detailExtra.appendChild(
+          el("p", "", {
+            text: `Use ${controls} to ${mainAction}. Your goal is to ${objective}. Avoid ${obstacles} and try to ${win}. The longer you play, the harder it becomes.`
+          })
+        );
+
+        // H2 Controls
+        detailExtra.appendChild(el("h2", "", { text: "Game Controls" }));
+        const ulControls = el("ul", "detail-list");
+        ulControls.appendChild(el("li", "", { text: `Keyboard: ${keys}` }));
+        ulControls.appendChild(el("li", "", { text: `Mouse: ${mouse}` }));
+        ulControls.appendChild(el("li", "", { text: "Mobile: Tap and swipe to control" }));
+        detailExtra.appendChild(ulControls);
+
+        // H2 Tips
+        detailExtra.appendChild(el("h2", "", { text: "Tips and Tricks" }));
+        const ulTips = el("ul", "detail-list");
+        [tip1, tip2, tip3, tip4].forEach((t) => ulTips.appendChild(el("li", "", { text: t })));
+        detailExtra.appendChild(ulTips);
+
+        // H2 Features
+        detailExtra.appendChild(el("h2", "", { text: "Features" }));
+        const ulFeatures = el("ul", "detail-list");
+        [
+          "Free to play in browser",
+          "No download required",
+          "Supports mobile and desktop",
+          "Fast loading and smooth gameplay"
+        ].forEach((t) => ulFeatures.appendChild(el("li", "", { text: t })));
+        detailExtra.appendChild(ulFeatures);
+
+        // H2 Similar Games (internal links)
+        detailExtra.appendChild(el("h2", "", { text: "Similar Games" }));
+        const ulSimilar = el("ul", "detail-list");
+        similarGames.forEach((g) => {
+          const a = el("a", "detail-link", { href: `/games/${g.slug || slugify(g.title)}`, text: `Play ${g.title}` });
+          const li = el("li", "");
+          li.appendChild(a);
+          ulSimilar.appendChild(li);
+        });
+        detailExtra.appendChild(ulSimilar);
+
+        // H2 FAQ
+        detailExtra.appendChild(el("h2", "", { text: "FAQ" }));
+        detailExtra.appendChild(el("h3", "", { text: `Is ${name} free to play` }));
+        detailExtra.appendChild(el("p", "", { text: "Yes, you can play it online for free without downloading." }));
+        detailExtra.appendChild(el("h3", "", { text: `Can I play ${name} on mobile` }));
+        detailExtra.appendChild(el("p", "", { text: "Yes, it works on most phones and tablets." }));
+        detailExtra.appendChild(el("h3", "", { text: "Do I need to install anything" }));
+        detailExtra.appendChild(el("p", "", { text: "No, it runs directly in your browser." }));
       }
 
       const rawUrl = game.playUrl || "https://www.freetogame.com/";
@@ -3075,10 +3310,7 @@
 
       if (detailBackHome) {
         detailBackHome.onclick = () => {
-          const url = new URL(window.location.href);
-          url.searchParams.delete("game");
-          history.pushState({}, "", url.toString());
-          showHomePage();
+          pushRoute("/");
           window.scrollTo({ top: 0, behavior: "smooth" });
         };
       }
@@ -3103,14 +3335,17 @@
         if (host === "www.pokopie.com" || host === "pokopie.com") {
           const href = loc.protocol + "//" + loc.host + loc.pathname + loc.search;
           const params = new URLSearchParams(loc.search || "");
-          if (params.get("game")) {
+          const isGamePath = (loc.pathname || "").toLowerCase().startsWith("/games/");
+          if (params.get("game") || isGamePath) {
             // 详情页场景：直接返回当前 URL（不带哈希）
             return href;
           }
           // 首页 + 弹窗场景：根据 currentModalGame 拼接一个 ?game=ID
           let base = loc.protocol + "//" + loc.host + "/";
           if (currentModalGame && currentModalGame.id) {
-            base += "?game=" + encodeURIComponent(currentModalGame.id);
+            // Prefer clean game URL for referrer
+            const slug = currentModalGame.slug || slugify(currentModalGame.title);
+            base += "games/" + encodeURIComponent(slug);
           }
           return base;
         }
@@ -4221,7 +4456,19 @@
 
     async function loadGames() {
       // 不再调用 FreeToGame API，而是完全使用你提供的 iframe 游戏列表
-      allGames = customIframeGames.slice();
+      const usedSlugs = new Set();
+      allGames = customIframeGames.map((g) => {
+        const title = g.title || "Game";
+        const cat = normalizeCategoryByTitle(title, g.category);
+        let slug = g.slug || slugify(title);
+        if (usedSlugs.has(slug)) {
+          let i = 2;
+          while (usedSlugs.has(`${slug}-${i}`)) i += 1;
+          slug = `${slug}-${i}`;
+        }
+        usedSlugs.add(slug);
+        return { ...g, title, category: cat, slug };
+      });
       statusSource.textContent = "Custom iframe game list";
       statusTotal.textContent = allGames.length + " games available";
       renderAllSections();
@@ -4474,23 +4721,100 @@
       window.open(withGdReferrer(rawUrl), "_blank", "noopener");
     }
 
-    function handleInitialRoute() {
-      const params = new URLSearchParams(window.location.search);
-      const gameId = params.get("game");
-      if (!gameId) {
+    function setSeoForHome() {
+      clearGameSeoJsonLd();
+      setSeoForPage({
+        title: "Pokopie - 100+ Free Online Browser Games | Play Instantly No Download",
+        description:
+          "Play 100+ free HTML5 browser games online at Pokopie.com — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download.",
+        canonicalPath: "/"
+      });
+    }
+
+    function setSeoForCategory(cat) {
+      clearGameSeoJsonLd();
+      const slug = routeKeyForCategory(cat) || Object.entries(CATEGORY_ROUTES).find(([, v]) => v === cat)?.[0] || "";
+      const canonicalPath = slug ? `/${slug}/` : "/";
+      setSeoForPage({
+        title: `${cat} Games Online Free No Download`,
+        description: `Play the best ${cat.toLowerCase()} games online for free. No download required. Explore top-rated browser games on desktop and mobile.`,
+        canonicalPath
+      });
+    }
+
+    function handleRoute() {
+      try {
+        const path = (window.location.pathname || "/").replace(/\/+$/, "") || "/";
+
+        // Backward compatible: ?game=custom-id
+        const params = new URLSearchParams(window.location.search || "");
+        const legacyGameId = params.get("game");
+        if (legacyGameId) {
+          const g = allGames.find((x) => x.id === legacyGameId);
+          if (g) {
+            history.replaceState({}, "", `/games/${g.slug || slugify(g.title)}`);
+            showGameDetail(g);
+            setSeoForGame(g);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+        }
+
+        // Game detail route: /games/:slug
+        if (path.startsWith("/games/")) {
+          const slug = decodeURIComponent(path.slice("/games/".length)).toLowerCase();
+          const game = allGames.find((g) => (g.slug || "").toLowerCase() === slug);
+          if (game) {
+            showGameDetail(game);
+            setSeoForGame(game);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+          // Not found -> home
+          showHomePage();
+          setSeoForHome();
+          return;
+        }
+
+        // Category routes: /puzzle-games/ etc
+        const key = path.replace(/^\/+/, "");
+        if (CATEGORY_ROUTES[key]) {
+          const cat = CATEGORY_ROUTES[key];
+          showHomePage();
+          currentCategory = cat;
+          updateCategoryUI();
+          applyFilters();
+          setSeoForCategory(cat);
+          const mainSection = document.querySelector(".section[aria-labelledby='all-games-heading']");
+          if (mainSection) mainSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        // Home
         showHomePage();
-        return;
-      }
-      const game = allGames.find((g) => g.id === gameId);
-      if (!game) {
+        if (currentCategory !== "All") {
+          currentCategory = "All";
+          updateCategoryUI();
+          applyFilters();
+        }
+        setSeoForHome();
+      } catch (_) {
         showHomePage();
-        return;
+        setSeoForHome();
       }
-      showGameDetail(game);
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function setupEvents() {
+      const logoLink = document.querySelector(".logo");
+      if (logoLink) {
+        logoLink.addEventListener("click", (e) => {
+          // SPA navigation
+          e.preventDefault();
+          pushRoute("/");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
       navCategories.addEventListener("click", (e) => {
         const btn = e.target.closest(".nav-pill");
         if (!btn) return;
@@ -4500,19 +4824,9 @@
         updateCategoryUI();
         applyFilters();
 
-        // 如果当前在游戏详情页，点击顶部菜单时先回到首页列表视图
-        if (gameDetailPage && gameDetailPage.style.display !== "none") {
-          const url = new URL(window.location.href);
-          url.searchParams.delete("game");
-          history.pushState({}, "", url.toString());
-          showHomePage();
-        }
-
-        // 点击顶层分类时，自动平滑滚动到主游戏区域
-        const mainSection = document.querySelector(".section[aria-labelledby='all-games-heading']");
-        if (mainSection) {
-          mainSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        const key = routeKeyForCategory(cat);
+        if (!key) pushRoute("/");
+        else pushRoute(`/${key}/`);
       });
 
       let searchTimeout = null;
@@ -4551,6 +4865,8 @@
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && modalBackdrop.classList.contains("visible")) closeGameModal();
       });
+
+      window.addEventListener("popstate", () => handleRoute());
 
       window.addEventListener("scroll", () => {
         if (window.scrollY > 350) backToTop.classList.add("visible");
@@ -4596,7 +4912,7 @@
     document.addEventListener("DOMContentLoaded", async () => {
       setupEvents();
       await loadGames();
-      handleInitialRoute();
+      handleRoute();
     });
   </script>
 </body>
