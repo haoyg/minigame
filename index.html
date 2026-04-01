@@ -99,7 +99,9 @@
       --accent-strong: #ff8c42;
       --accent-soft: rgba(255, 180, 71, 0.15);
       --text-main: #0f172a;
+      --text-strong: #0f172a;
       --text-soft: #475569;
+      --link: #2563eb;
       --card-bg: rgba(255, 255, 255, 0.92);
       --card-border: rgba(15, 23, 42, 0.12);
       --shadow-soft: 0 18px 45px rgba(2, 6, 23, 0.12);
@@ -129,7 +131,9 @@
       --bg-soft: #111827;
       --bg-softer: #020617;
       --text-main: #f9fafb;
+      --text-strong: #f9fafb;
       --text-soft: #9ca3af;
+      --link: #93c5fd;
       --card-bg: #111827;
       --card-border: rgba(148, 163, 184, 0.2);
       --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
@@ -444,7 +448,7 @@
 
     .hero-subtitle span.emoji { font-size: 18px; }
 
-    .hero-stats { display: flex; flex-wrap: wrap; gap: 16px; margin: 14px 0 10px; font-size: 12px; color: rgba(248, 250, 252, 0.85); }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 16px; margin: 14px 0 10px; font-size: 12px; color: var(--text-soft); }
 
     .hero-stat-item { display: flex; align-items: center; gap: 6px; }
 
@@ -511,6 +515,7 @@
       box-shadow: var(--shadow-soft);
       position: relative;
       overflow: hidden;
+      color: rgba(248, 250, 252, 0.92);
     }
 
     .hero-right-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
@@ -613,13 +618,14 @@
       font-size: 22px;
       font-weight: 800;
       margin: 2px 0 8px;
+      color: var(--text-main);
     }
 
     .category-landing p {
       margin: 8px 0;
       font-size: 13px;
       line-height: 1.6;
-      color: rgba(226, 232, 240, 0.92);
+      color: var(--text-soft);
     }
 
     .category-landing h2 {
@@ -672,11 +678,12 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: var(--text-main);
     }
 
     .landing-desc {
       font-size: 12px;
-      color: rgba(226, 232, 240, 0.82);
+      color: var(--text-soft);
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -686,7 +693,7 @@
     .landing-why {
       margin-top: 10px;
       padding-left: 18px;
-      color: rgba(226, 232, 240, 0.92);
+      color: var(--text-soft);
       font-size: 13px;
       line-height: 1.6;
     }
@@ -755,6 +762,7 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      color: rgba(248, 250, 252, 0.95);
     }
 
     .game-tag span.dot {
@@ -826,6 +834,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      color: rgba(248, 250, 252, 0.95);
     }
 
     .status-dot { width: 8px; height: 8px; border-radius: 999px; }
@@ -947,12 +956,12 @@
     .detail-list {
       margin: 8px 0 0;
       padding-left: 18px;
-      color: rgba(226, 232, 240, 0.95);
+      color: var(--text-soft);
     }
 
     .detail-list li { margin: 6px 0; }
 
-    .detail-link { color: rgba(147, 197, 253, 0.95); text-decoration: none; }
+    .detail-link { color: var(--link); text-decoration: none; }
     .detail-link:hover { text-decoration: underline; }
 
     .game-detail-actions {
@@ -1090,11 +1099,12 @@
       gap: 12px;
       border-bottom: 1px solid rgba(148, 163, 184, 0.35);
       background: linear-gradient(to right, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      color: #f9fafb;
     }
 
     .modal-title { display: flex; flex-direction: column; gap: 2px; }
     .modal-title-main { font-size: 14px; font-weight: 600; }
-    .modal-title-meta { font-size: 11px; color: var(--text-soft); }
+    .modal-title-meta { font-size: 11px; color: rgba(148, 163, 184, 0.95); }
 
     .modal-controls { display: flex; align-items: center; gap: 6px; }
 
@@ -1331,7 +1341,7 @@
     .footer-links { display: flex; flex-wrap: wrap; gap: 10px; }
 
     .footer-links a { color: var(--text-soft); text-decoration: none; }
-    .footer-links a:hover { color: rgba(248, 250, 252, 0.95); text-decoration: underline; }
+    .footer-links a:hover { color: var(--text-main); text-decoration: underline; }
 
     .footer-bottom { font-size: 10px; color: rgba(148, 163, 184, 0.9); }
 
@@ -5172,12 +5182,7 @@
         }
       });
 
-      // Safe SW registration (optional). If you don't want SW, remove this block.
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/sw.js").catch(() => {});
-        });
-      }
+      // Service Worker disabled to avoid unexpected caching/redirect behavior.
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
