@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <title>Pokopie - 100+ Free Online Browser Games | Play Instantly No Download</title>
   <meta name="description" content="Play 100+ free HTML5 browser games online at Pokopie.com — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download." />
-  <meta name="keywords" content="pokopie, pokopie games, pokopie.com, free online games, free browser games, html5 games, web games, instant play, no download games, puzzle games, arcade games, racing games, strategy games, action games" />
+  <meta name="keywords" content="pokopie, pokopie games, pokopie.com, free online games, free browser games, html5 games, web games, instant play, no download games, puzzle games, arcade games, racing games, strategy games, action games, kids quiz, brainrot legend, pvz fusion, pvz fusion cheats, obby brainrot glass bridge, ogame, grey-box testing, ragdoll gun shooter, cannon spinner playground, knockout online" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#ffb347" />
@@ -1540,6 +1540,20 @@
           <a href="/privacy.html">Privacy Policy</a>
           <a href="/contact.html">Contact</a>
           <a href="/terms.html">Terms</a>
+        </div>
+      </div>
+      <div class="footer-top" style="margin-top:10px;">
+        <div class="footer-links" aria-label="Popular searches">
+          <a href="/?q=kids%20quiz">Kids Quiz</a>
+          <a href="/?q=brainrot%20legend">Brainrot Legend</a>
+          <a href="/?q=pvz%20fusion">PVZ Fusion</a>
+          <a href="/?q=pvz%20fusion%20cheats">PVZ Fusion Cheats</a>
+          <a href="/?q=obby%20brainrot%20glass%20bridge">Obby Brainrot: Glass Bridge</a>
+          <a href="/?q=ogame">OGame</a>
+          <a href="/?q=grey-box%20testing">Grey-box Testing</a>
+          <a href="/?q=ragdoll%20gun%20shooter">Ragdoll Gun Shooter</a>
+          <a href="/?q=cannon%20spinner%20playground">Cannon Spinner Playground</a>
+          <a href="/?q=knockout%20online">Knockout Online</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -5021,6 +5035,7 @@
         // Backward compatible: ?game=custom-id
         const params = new URLSearchParams(window.location.search || "");
         const legacyGameId = params.get("game");
+        const q = (params.get("q") || "").trim();
         if (legacyGameId) {
           const g = allGames.find((x) => x.id === legacyGameId);
           if (g) {
@@ -5066,6 +5081,12 @@
         // Home
         showHomePage();
         renderCategoryLanding("All");
+        if (q) {
+          searchQuery = q;
+          if (searchInput) searchInput.value = q;
+          if (clearSearchBtn) clearSearchBtn.classList.toggle("visible", true);
+          applyFilters();
+        }
         if (currentCategory !== "All") {
           currentCategory = "All";
           updateCategoryUI();
