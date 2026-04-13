@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Fun Personality Quiz for Gamers | Pokopie</title>
+  <meta name="description" content="A short, silly personality quiz for gamers. Get a fun tag and shareable result. No login, no download." />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="canonical" href="https://www.pokopie.com/fun-quiz.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.pokopie.com/fun-quiz.html" />
+  <meta property="og:title" content="Fun Personality Quiz for Gamers | Pokopie" />
+  <meta property="og:description" content="A short, silly personality quiz for gamers. Get a fun tag and shareable result." />
+  <meta property="og:site_name" content="Pokopie" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fun Personality Quiz for Gamers | Pokopie" />
+  <meta name="twitter:description" content="A short, silly personality quiz for gamers. Get a fun tag and shareable result." />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3274781156049995"
+    crossorigin="anonymous"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Fun Personality Quiz for Gamers",
+    "url": "https://www.pokopie.com/fun-quiz.html",
+    "isPartOf": { "@type": "WebSite", "name": "Pokopie", "url": "https://www.pokopie.com/" },
+    "about": ["games", "quiz", "personality"]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: rgba(255, 255, 255, 0.92);
+      --border: rgba(15, 23, 42, 0.12);
+      --text: #0f172a;
+      --soft: #475569;
+      --accent: #ffb347;
+      --accent2: #22c55e;
+      --shadow: 0 18px 45px rgba(2, 6, 23, 0.12);
+      --radius: 18px;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --panel: rgba(17, 24, 39, 0.92);
+      --border: rgba(148, 163, 184, 0.18);
+      --text: #f9fafb;
+      --soft: #9ca3af;
+      --shadow: 0 18px 55px rgba(0, 0, 0, 0.65);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 45%),
+                  radial-gradient(circle at bottom right, rgba(251, 146, 60, 0.14), transparent 45%),
+                  var(--bg);
+      min-height: 100vh;
+    }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 22px 16px 70px; }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .02em; }
+    .brand .dot { width: 14px; height: 14px; border-radius: 999px; background: linear-gradient(135deg, #fb923c, #facc15); box-shadow: 0 0 18px rgba(251,146,60,.55); }
+    .actions { display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill, .btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 13px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform .12s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .pill:hover, .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(15,23,42,.18); }
+    .btn.primary { background: linear-gradient(135deg, #fb923c, #facc15); border-color: rgba(251,146,60,.45); color: #0f172a; font-weight: 700; }
+    .btn.good { background: linear-gradient(135deg, #22c55e, #14b8a6); border-color: rgba(34,197,94,.45); color: #0f172a; font-weight: 700; }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 18px 16px;
+      overflow: hidden;
+    }
+
+    h1 { margin: 6px 0 8px; font-size: 28px; line-height: 1.15; }
+    .sub { margin: 0 0 10px; color: var(--soft); font-size: 14px; line-height: 1.6; }
+    .note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(148, 163, 184, 0.55);
+      color: var(--soft);
+      font-size: 12px;
+      background: rgba(2, 6, 23, 0.03);
+    }
+
+    .quiz { margin-top: 14px; display: grid; gap: 12px; }
+    .q {
+      border-radius: var(--radius);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(255,255,255,.06);
+      padding: 12px;
+    }
+    .q h2 { margin: 0 0 10px; font-size: 14px; line-height: 1.4; }
+    .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    @media (max-width: 760px) { .opts { grid-template-columns: 1fr; } }
+
+    .opt {
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(255,255,255,.08);
+      padding: 10px 10px;
+      cursor: pointer;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      transition: transform .12s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+      user-select: none;
+    }
+    .opt:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(15,23,42,.16); }
+    .opt .radio {
+      width: 16px; height: 16px;
+      border-radius: 999px;
+      border: 2px solid rgba(148, 163, 184, 0.8);
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+    .opt.selected { border-color: rgba(251, 146, 60, 0.75); background: rgba(255, 180, 71, 0.12); }
+    .opt.selected .radio { border-color: rgba(251,146,60,.95); box-shadow: 0 0 0 4px rgba(251,146,60,.12); }
+    .opt .txt { font-size: 13px; line-height: 1.35; }
+
+    .bottomBar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .progress { color: var(--soft); font-size: 12px; }
+
+    .result {
+      margin-top: 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 14px 12px;
+      background: radial-gradient(circle at top left, rgba(254, 240, 138, 0.38), transparent 55%),
+                  rgba(255,255,255,.06);
+      display: none;
+    }
+    .result.visible { display: block; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 23, 42, 0.06);
+      font-size: 12px;
+      color: var(--soft);
+      margin-bottom: 10px;
+    }
+    .code { font-weight: 900; letter-spacing: .08em; color: var(--text); }
+    .result h3 { margin: 6px 0 8px; font-size: 18px; }
+    .result p { margin: 0; color: var(--soft); line-height: 1.6; }
+
+    footer { margin-top: 22px; color: var(--soft); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><span class="dot"></span><span>Pokopie</span></div>
+      <div class="actions">
+        <a class="pill" href="/"><span>←</span><span>Back to games</span></a>
+        <button class="btn" id="toggleTheme" type="button" aria-label="Toggle theme"><span>🌓</span><span>Theme</span></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h1>Fun Personality Quiz for Gamers</h1>
+      <p class="sub">
+        3–5 minutes. No login. No personal data. Just a silly tag you can share.
+      </p>
+      <div class="note">
+        This is for entertainment only. We don’t ask for phone numbers, emails, birthdays, or real names.
+      </div>
+
+      <div class="quiz" id="quiz"></div>
+
+      <div class="bottomBar">
+        <div class="progress" id="progressText">0 / 12 answered</div>
+        <div style="display:inline-flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+          <button class="btn" id="resetBtn" type="button">Reset</button>
+          <button class="btn primary" id="resultBtn" type="button">Get my result</button>
+        </div>
+      </div>
+
+      <div class="result" id="resultBox" aria-live="polite">
+        <div class="badge"><span>Result code</span><span class="code" id="resultCode">----</span></div>
+        <h3 id="resultTitle">Loading…</h3>
+        <p id="resultDesc"></p>
+        <div class="bottomBar" style="margin-top:12px;">
+          <div class="progress" id="shareHint">Share your result link.</div>
+          <div style="display:inline-flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn good" id="copyBtn" type="button">Copy link</button>
+            <button class="btn" id="againBtn" type="button">Try again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Tip: you can open a shared result link like <code>?r=CTRL</code>.
+    </footer>
+  </div>
+
+  <script>
+    const QUESTIONS = [
+      { q: "A new game drops. Your first move is…", a: "Jump in immediately and learn by chaos.", b: "Open settings/tutorial and optimize first." , axisA: "chaos", axisB: "control" },
+      { q: "Your ideal win is…", a: "A clutch moment everyone talks about.", b: "A clean plan executed perfectly.", axisA: "hype", axisB: "plan" },
+      { q: "In co‑op you are usually…", a: "The vibe manager (and accidental puller).", b: "The coordinator who pings objectives.", axisA: "social", axisB: "focus" },
+      { q: "Your inventory looks like…", a: "Mystery bag. Something will be useful later.", b: "Sorted, labeled, and probably color-coded.", axisA: "mess", axisB: "order" },
+      { q: "A puzzle blocks you.", a: "Brute force + intuition until it clicks.", b: "Step-by-step, check every assumption.", axisA: "feel", axisB: "logic" },
+      { q: "When you lose a round you…", a: "Queue again instantly. Revenge arc.", b: "Review what happened and adjust.", axisA: "rush", axisB: "review" },
+      { q: "Your favorite in-game currency is…", a: "Coins I can immediately spend.", b: "Resources I can invest for later.", axisA: "now", axisB: "later" },
+      { q: "A boss fight strategy is…", a: "Dodge, adapt, and pray a little.", b: "Pattern study + consistent cycles.", axisA: "adapt", axisB: "pattern" },
+      { q: "Your UI preference is…", a: "Minimal. Show me the action.", b: "Info-rich. Numbers are comfort.", axisA: "minimal", axisB: "stats" },
+      { q: "A new meta appears.", a: "Try it once, then go do my own thing.", b: "Learn it and master it faster than others.", axisA: "freestyle", axisB: "grind" },
+      { q: "Pick a quest:", a: "Save the day with style.", b: "Collect everything and 100% it.", axisA: "story", axisB: "complete" },
+      { q: "Your best gaming snack is…", a: "Anything I can grab mid-fight.", b: "Something neat, portioned, and safe for the keyboard.", axisA: "gremlin", axisB: "tidy" }
+    ];
+
+    const RESULTS = {
+      CTRL: { title: "CTRL — The Calm Optimizer", desc: "You win with setups, habits, and small improvements. If there’s a settings menu, you’ve already found it." },
+      HYPE: { title: "HYPE — The Highlight Chaser", desc: "You play for moments. Big swings, bigger stories. Your clips folder is a museum." },
+      PLAN: { title: "PLAN — The Quiet Strategist", desc: "You treat games like puzzles. You don’t chase chaos — you domesticate it." },
+      GREM: { title: "GREM — The Chaos Gremlin", desc: "You thrive in messy situations. Somehow it works. Somehow you are having the most fun." }
+    };
+
+    const el = (tag, attrs = {}, children = []) => {
+      const n = document.createElement(tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        if (k === "class") n.className = v;
+        else if (k === "text") n.textContent = v;
+        else n.setAttribute(k, v);
+      }
+      for (const c of children) n.appendChild(c);
+      return n;
+    };
+
+    const state = { answers: Array(QUESTIONS.length).fill(null) };
+
+    const quiz = document.getElementById("quiz");
+    const progressText = document.getElementById("progressText");
+    const resultBtn = document.getElementById("resultBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const resultBox = document.getElementById("resultBox");
+    const resultCode = document.getElementById("resultCode");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultDesc = document.getElementById("resultDesc");
+    const copyBtn = document.getElementById("copyBtn");
+    const againBtn = document.getElementById("againBtn");
+    const toggleTheme = document.getElementById("toggleTheme");
+    const shareHint = document.getElementById("shareHint");
+
+    function loadTheme() {
+      const t = localStorage.getItem("pokopie_quiz_theme") || "auto";
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const dark = t === "dark" || (t === "auto" && prefersDark);
+      document.body.classList.toggle("dark", dark);
+    }
+
+    function toggleThemeMode() {
+      const t = localStorage.getItem("pokopie_quiz_theme") || "auto";
+      const next = t === "auto" ? "dark" : (t === "dark" ? "light" : "auto");
+      localStorage.setItem("pokopie_quiz_theme", next);
+      loadTheme();
+    }
+
+    function render() {
+      quiz.innerHTML = "";
+      QUESTIONS.forEach((item, idx) => {
+        const qWrap = el("div", { class: "q" }, [
+          el("h2", { text: `${idx + 1}. ${item.q}` })
+        ]);
+
+        const opts = el("div", { class: "opts" });
+        const mkOpt = (label, value) => {
+          const selected = state.answers[idx] === value;
+          const opt = el("div", { class: "opt" + (selected ? " selected" : ""), role: "button", tabindex: "0" }, [
+            el("div", { class: "radio" }),
+            el("div", { class: "txt", text: label })
+          ]);
+          const choose = () => {
+            state.answers[idx] = value;
+            updateProgress();
+            render();
+          };
+          opt.addEventListener("click", choose);
+          opt.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") choose(); });
+          return opt;
+        };
+        opts.appendChild(mkOpt(item.a, "a"));
+        opts.appendChild(mkOpt(item.b, "b"));
+        qWrap.appendChild(opts);
+        quiz.appendChild(qWrap);
+      });
+      updateProgress();
+    }
+
+    function answeredCount() {
+      return state.answers.filter((x) => x === "a" || x === "b").length;
+    }
+
+    function updateProgress() {
+      const n = answeredCount();
+      progressText.textContent = `${n} / ${QUESTIONS.length} answered`;
+    }
+
+    function computeResultCode() {
+      let scoreControl = 0;
+      let scoreHype = 0;
+      let scorePlan = 0;
+      let scoreGremlin = 0;
+
+      state.answers.forEach((ans, i) => {
+        if (!ans) return;
+        const q = QUESTIONS[i];
+        const pickA = ans === "a";
+
+        if (q.axisB === "control") scoreControl += pickA ? 0 : 1;
+        if (q.axisA === "chaos") scoreGremlin += pickA ? 1 : 0;
+        if (q.axisA === "hype") scoreHype += pickA ? 1 : 0;
+        if (q.axisB === "plan") scorePlan += pickA ? 0 : 1;
+        if (q.axisB === "order") scoreControl += pickA ? 0 : 1;
+        if (q.axisB === "logic") scorePlan += pickA ? 0 : 1;
+        if (q.axisB === "review") scorePlan += pickA ? 0 : 1;
+        if (q.axisB === "pattern") scorePlan += pickA ? 0 : 1;
+        if (q.axisB === "stats") scoreControl += pickA ? 0 : 1;
+        if (q.axisB === "grind") scorePlan += pickA ? 0 : 1;
+        if (q.axisB === "complete") scoreControl += pickA ? 0 : 1;
+        if (q.axisA === "gremlin") scoreGremlin += pickA ? 1 : 0;
+      });
+
+      const table = [
+        { code: "CTRL", v: scoreControl },
+        { code: "HYPE", v: scoreHype },
+        { code: "PLAN", v: scorePlan },
+        { code: "GREM", v: scoreGremlin }
+      ].sort((a, b) => b.v - a.v);
+
+      return table[0].code;
+    }
+
+    function showResult(code, fromShare = false) {
+      const data = RESULTS[code] || RESULTS.CTRL;
+      resultCode.textContent = code;
+      resultTitle.textContent = data.title;
+      resultDesc.textContent = data.desc;
+      resultBox.classList.add("visible");
+
+      const url = new URL(window.location.href);
+      url.searchParams.set("r", code);
+      if (!fromShare) {
+        history.replaceState({}, "", url.toString());
+      }
+      shareHint.textContent = fromShare ? "This is a shared result link." : "Share your result link.";
+      resultBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function tryLoadSharedResult() {
+      try {
+        const params = new URLSearchParams(window.location.search || "");
+        const r = (params.get("r") || "").trim().toUpperCase();
+        if (r && RESULTS[r]) {
+          showResult(r, true);
+        }
+      } catch (_) {}
+    }
+
+    resultBtn.addEventListener("click", () => {
+      if (answeredCount() < QUESTIONS.length) {
+        alert("Please answer all questions to get a result.");
+        return;
+      }
+      showResult(computeResultCode(), false);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      state.answers = Array(QUESTIONS.length).fill(null);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("r");
+      history.replaceState({}, "", url.toString());
+      resultBox.classList.remove("visible");
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    againBtn.addEventListener("click", () => resetBtn.click());
+
+    copyBtn.addEventListener("click", async () => {
+      const code = (resultCode.textContent || "").trim();
+      const url = new URL(window.location.href);
+      if (code) url.searchParams.set("r", code);
+      const text = url.toString();
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => (copyBtn.textContent = "Copy link"), 1200);
+      } catch {
+        prompt("Copy this link:", text);
+      }
+    });
+
+    toggleTheme.addEventListener("click", toggleThemeMode);
+
+    loadTheme();
+    render();
+    tryLoadSharedResult();
+  </script>
+</body>
+</html>
+
