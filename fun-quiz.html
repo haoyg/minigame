@@ -19,6 +19,11 @@
   <meta name="twitter:title" content="Fun Personality Quiz for Gamers | Pokopie" />
   <meta name="twitter:description" content="A short, silly personality quiz for gamers. Get a fun tag and shareable result." />
 
+  <!-- Google Fonts (match main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet" />
+
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3274781156049995"
     crossorigin="anonymous"></script>
@@ -36,92 +41,179 @@
 
   <style>
     :root {
+      /* Match index.html theme tokens */
       --bg: #f8fafc;
-      --panel: rgba(255, 255, 255, 0.92);
-      --border: rgba(15, 23, 42, 0.12);
-      --text: #0f172a;
-      --soft: #475569;
+      --bg-soft: #ffffff;
+      --bg-softer: #f1f5f9;
       --accent: #ffb347;
-      --accent2: #22c55e;
-      --shadow: 0 18px 45px rgba(2, 6, 23, 0.12);
-      --radius: 18px;
+      --accent-strong: #ff8c42;
+      --accent-soft: rgba(255, 180, 71, 0.15);
+      --text-main: #0f172a;
+      --text-strong: #0f172a;
+      --text-soft: #475569;
+      --link: #2563eb;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(15, 23, 42, 0.12);
+      --shadow-soft: 0 18px 45px rgba(2, 6, 23, 0.12);
+      --shadow-glow: 0 0 26px rgba(255, 184, 71, 0.28);
+      --glass-40: rgba(255, 255, 255, 0.6);
+      --glass-70: rgba(255, 255, 255, 0.72);
+      --glass-90: rgba(255, 255, 255, 0.9);
+      --glass-98: rgba(255, 255, 255, 0.98);
+      --glass-border: rgba(15, 23, 42, 0.12);
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --radius-full: 999px;
+      --nav-height: 72px;
     }
 
-    body.dark {
+    body.dark-theme {
       --bg: #0f172a;
-      --panel: rgba(17, 24, 39, 0.92);
-      --border: rgba(148, 163, 184, 0.18);
-      --text: #f9fafb;
-      --soft: #9ca3af;
-      --shadow: 0 18px 55px rgba(0, 0, 0, 0.65);
+      --bg-soft: #111827;
+      --bg-softer: #020617;
+      --text-main: #f9fafb;
+      --text-strong: #f9fafb;
+      --text-soft: #9ca3af;
+      --link: #93c5fd;
+      --card-bg: #111827;
+      --card-border: rgba(148, 163, 184, 0.2);
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+      --shadow-glow: 0 0 30px rgba(255, 184, 71, 0.45);
+      --glass-40: rgba(15, 23, 42, 0.4);
+      --glass-70: rgba(15, 23, 42, 0.7);
+      --glass-90: rgba(15, 23, 42, 0.9);
+      --glass-98: rgba(15, 23, 42, 0.98);
+      --glass-border: rgba(148, 163, 184, 0.18);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
-      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 45%),
-                  radial-gradient(circle at bottom right, rgba(251, 146, 60, 0.14), transparent 45%),
-                  var(--bg);
+      min-height: 100vh;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.22) 0, transparent 45%),
+                  radial-gradient(circle at bottom right, rgba(251, 146, 60, 0.18) 0, transparent 45%),
+                  var(--bg-softer);
+      background-attachment: fixed;
+      line-height: 1.6;
       min-height: 100vh;
     }
 
-    .wrap { max-width: 980px; margin: 0 auto; padding: 22px 16px 70px; }
-    .top {
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, var(--glass-98), var(--glass-90), transparent);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .nav {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 12px 16px 10px;
       display: flex;
       align-items: center;
+      gap: 16px;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
     }
-    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .02em; }
-    .brand .dot { width: 14px; height: 14px; border-radius: 999px; background: linear-gradient(135deg, #fb923c, #facc15); box-shadow: 0 0 18px rgba(251,146,60,.55); }
-    .actions { display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-    .pill, .btn {
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      padding: 8px 12px;
-      font-size: 13px;
-      text-decoration: none;
-      display: inline-flex;
+
+    .logo {
+      display: flex;
       align-items: center;
       gap: 8px;
-      cursor: pointer;
-      transition: transform .12s ease, background .15s ease, box-shadow .15s ease;
+      text-decoration: none;
+      min-width: 0;
     }
-    .pill:hover, .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(15,23,42,.18); }
-    .btn.primary { background: linear-gradient(135deg, #fb923c, #facc15); border-color: rgba(251,146,60,.45); color: #0f172a; font-weight: 700; }
-    .btn.good { background: linear-gradient(135deg, #22c55e, #14b8a6); border-color: rgba(34,197,94,.45); color: #0f172a; font-weight: 700; }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
+      background: conic-gradient(from 220deg, #f97316, #facc15, #22c55e, #3b82f6, #a855f7, #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 18px rgba(249, 115, 22, 0.6);
+      flex: 0 0 auto;
+    }
+    .logo-mark span { font-size: 22px; filter: drop-shadow(0 2px 4px rgba(2, 6, 23, 0.18)); }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+    .logo-title {
+      font-family: "Fredoka One", system-ui, sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.03em;
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.65);
+      white-space: nowrap;
+    }
+    .logo-subtitle { font-size: 11px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.14em; white-space: nowrap; }
+
+    .nav-right { display: inline-flex; align-items: center; gap: 10px; }
+
+    .toggle-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: var(--glass-90);
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-soft);
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+    .toggle-btn:hover { background: var(--glass-98); transform: translateY(-1px); box-shadow: 0 8px 18px rgba(2, 6, 23, 0.14); }
+    .toggle-btn.active { background: linear-gradient(135deg, #22c55e, #14b8a6); color: #0f172a; border-color: rgba(15, 23, 42, 0.8); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.55); }
+
+    .pill-link {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: var(--glass-90);
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-soft);
+      font-size: 11px;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .pill-link:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(2, 6, 23, 0.14); background: var(--glass-98); }
+
+    .page { max-width: 980px; margin: 0 auto; padding: 16px 16px 70px; }
 
     .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.08), transparent 65%),
+                  var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 24px;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-soft);
       padding: 18px 16px;
       overflow: hidden;
     }
 
     h1 { margin: 6px 0 8px; font-size: 28px; line-height: 1.15; }
-    .sub { margin: 0 0 10px; color: var(--soft); font-size: 14px; line-height: 1.6; }
+    .sub { margin: 0 0 10px; color: var(--text-soft); font-size: 14px; line-height: 1.6; }
     .note {
       margin-top: 10px;
       padding: 10px 12px;
       border-radius: 14px;
       border: 1px dashed rgba(148, 163, 184, 0.55);
-      color: var(--soft);
+      color: var(--text-soft);
       font-size: 12px;
       background: rgba(2, 6, 23, 0.03);
     }
 
     .quiz { margin-top: 14px; display: grid; gap: 12px; }
     .q {
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       border: 1px solid rgba(148, 163, 184, 0.25);
-      background: rgba(255,255,255,.06);
+      background: var(--glass-70);
       padding: 12px;
     }
     .q h2 { margin: 0 0 10px; font-size: 14px; line-height: 1.4; }
@@ -131,7 +223,7 @@
     .opt {
       border-radius: 14px;
       border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(255,255,255,.08);
+      background: var(--glass-90);
       padding: 10px 10px;
       cursor: pointer;
       display: flex;
@@ -148,7 +240,7 @@
       margin-top: 2px;
       flex: 0 0 auto;
     }
-    .opt.selected { border-color: rgba(251, 146, 60, 0.75); background: rgba(255, 180, 71, 0.12); }
+    .opt.selected { border-color: rgba(251, 146, 60, 0.75); background: var(--accent-soft); }
     .opt.selected .radio { border-color: rgba(251,146,60,.95); box-shadow: 0 0 0 4px rgba(251,146,60,.12); }
     .opt .txt { font-size: 13px; line-height: 1.35; }
 
@@ -160,7 +252,7 @@
       align-items: center;
       justify-content: space-between;
     }
-    .progress { color: var(--soft); font-size: 12px; }
+    .progress { color: var(--text-soft); font-size: 12px; }
 
     .result {
       margin-top: 14px;
@@ -168,7 +260,7 @@
       border: 1px solid rgba(148, 163, 184, 0.35);
       padding: 14px 12px;
       background: radial-gradient(circle at top left, rgba(254, 240, 138, 0.38), transparent 55%),
-                  rgba(255,255,255,.06);
+                  var(--glass-70);
       display: none;
     }
     .result.visible { display: block; }
@@ -179,28 +271,58 @@
       border-radius: 999px;
       padding: 6px 10px;
       border: 1px solid rgba(148, 163, 184, 0.45);
-      background: rgba(15, 23, 42, 0.06);
+      background: var(--glass-70);
       font-size: 12px;
-      color: var(--soft);
+      color: var(--text-soft);
       margin-bottom: 10px;
     }
-    .code { font-weight: 900; letter-spacing: .08em; color: var(--text); }
+    .code { font-weight: 900; letter-spacing: .08em; color: var(--text-main); }
     .result h3 { margin: 6px 0 8px; font-size: 18px; }
-    .result p { margin: 0; color: var(--soft); line-height: 1.6; }
+    .result p { margin: 0; color: var(--text-soft); line-height: 1.6; }
 
-    footer { margin-top: 22px; color: var(--soft); font-size: 12px; }
+    footer { margin-top: 22px; color: var(--text-soft); font-size: 12px; }
+
+    .btn {
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: var(--glass-90);
+      color: var(--text-main);
+      font-size: 12px;
+      padding: 8px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(2, 6, 23, 0.18); background: var(--glass-98); }
+    .btn.primary { border-color: rgba(248, 250, 252, 0.8); background: linear-gradient(135deg, #fb923c, #facc15); color: #0f172a; font-weight: 700; }
+    .btn.good { border-color: rgba(248, 250, 252, 0.5); background: linear-gradient(135deg, #22c55e, #14b8a6); color: #0f172a; font-weight: 700; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand"><span class="dot"></span><span>Pokopie</span></div>
-      <div class="actions">
-        <a class="pill" href="/"><span>←</span><span>Back to games</span></a>
-        <button class="btn" id="toggleTheme" type="button" aria-label="Toggle theme"><span>🌓</span><span>Theme</span></button>
+  <header>
+    <nav class="nav">
+      <a class="logo" href="/" aria-label="Pokopie home">
+        <div class="logo-mark"><span>🎮</span></div>
+        <div class="logo-text">
+          <span class="logo-title">Pokopie</span>
+          <span class="logo-subtitle">FREE ONLINE GAMES</span>
+        </div>
+      </a>
+      <div class="nav-right">
+        <a class="pill-link" href="/"><span>←</span><span>Back</span></a>
+        <button class="toggle-btn" id="darkModeToggle" type="button" aria-label="Toggle dark mode">
+          <span class="icon">🌙</span>
+          <span>Dark</span>
+        </button>
       </div>
-    </div>
+    </nav>
+  </header>
 
+  <main class="page">
     <div class="card">
       <h1>Fun Personality Quiz for Gamers</h1>
       <p class="sub">
@@ -237,7 +359,7 @@
     <footer>
       Tip: you can open a shared result link like <code>?r=CTRL</code>.
     </footer>
-  </div>
+  </main>
 
   <script>
     const QUESTIONS = [
@@ -285,21 +407,28 @@
     const resultDesc = document.getElementById("resultDesc");
     const copyBtn = document.getElementById("copyBtn");
     const againBtn = document.getElementById("againBtn");
-    const toggleTheme = document.getElementById("toggleTheme");
+    const darkModeToggle = document.getElementById("darkModeToggle");
     const shareHint = document.getElementById("shareHint");
 
-    function loadTheme() {
-      const t = localStorage.getItem("pokopie_quiz_theme") || "auto";
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const dark = t === "dark" || (t === "auto" && prefersDark);
-      document.body.classList.toggle("dark", dark);
+    function syncThemeToggleUI() {
+      if (!darkModeToggle) return;
+      const isDark = document.body.classList.contains("dark-theme");
+      darkModeToggle.classList.toggle("active", isDark);
+      if (isDark) {
+        darkModeToggle.querySelector(".icon").textContent = "🌞";
+        darkModeToggle.querySelector("span:last-child").textContent = "Light";
+      } else {
+        darkModeToggle.querySelector(".icon").textContent = "🌙";
+        darkModeToggle.querySelector("span:last-child").textContent = "Dark";
+      }
     }
 
-    function toggleThemeMode() {
-      const t = localStorage.getItem("pokopie_quiz_theme") || "auto";
-      const next = t === "auto" ? "dark" : (t === "dark" ? "light" : "auto");
-      localStorage.setItem("pokopie_quiz_theme", next);
-      loadTheme();
+    function loadTheme() {
+      const storedTheme = localStorage.getItem("pokopie-theme");
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const shouldUseDark = storedTheme === "dark" || (!storedTheme && prefersDark);
+      document.body.classList.toggle("dark-theme", !!shouldUseDark);
+      syncThemeToggleUI();
     }
 
     function render() {
@@ -437,7 +566,13 @@
       }
     });
 
-    toggleTheme.addEventListener("click", toggleThemeMode);
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.toggle("dark-theme");
+        localStorage.setItem("pokopie-theme", isDark ? "dark" : "light");
+        syncThemeToggleUI();
+      });
+    }
 
     loadTheme();
     render();
