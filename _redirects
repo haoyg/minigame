@@ -1,4 +1,11 @@
 /ads.txt /ads.txt 200
+/robots.txt /robots.txt 200
+/sitemap.xml /sitemap.xml 200
+
+# SPA fallback (only after static files above)
+/* /index.html 200
+
+/ads.txt /ads.txt 200
 /best-unblocked-games /best-unblocked-games.html 200
 /top-idle-games /top-idle-games.html 200
 /* /index.html 200
