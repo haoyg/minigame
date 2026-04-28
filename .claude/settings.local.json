@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/**)",
+      "Bash(find . -path \"*/minigame/index.html\" -type f)"
+    ]
+  }
+}
