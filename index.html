@@ -1429,8 +1429,8 @@
   </header>
 
   <main class="page" id="top">
-    <!-- Hero (hidden visually but kept for JS wiring) -->
-    <section class="hero" aria-labelledby="hero-heading" style="display:none;">
+    <!-- Hero (contains the primary H1 for the homepage) -->
+    <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-left">
         <div class="hero-chip-row">
           <div class="hero-chip">
@@ -5024,9 +5024,15 @@
       clearGameSeoJsonLd();
       const slug = routeKeyForCategory(cat) || Object.entries(CATEGORY_ROUTES).find(([, v]) => v === cat)?.[0] || "";
       const canonicalPath = slug ? `/${slug}/` : "/";
+      const keyword =
+        (slug || cat || "")
+          .replace(/-games$/i, " games")
+          .replace(/-/g, " ")
+          .trim() || "games";
+      const titleCat = cat === "All" ? "All Games" : cat;
       setSeoForPage({
-        title: `${cat} Games Online Free No Download`,
-        description: `Play the best ${cat.toLowerCase()} games online for free. No download required. Explore top-rated browser games on desktop and mobile.`,
+        title: `${titleCat} | Free Online ${keyword} - No Download - Pokopie`,
+        description: `Play ${keyword} online for free on Pokopie. Explore top ${keyword} and play instantly in your browser — no download, no signup. Works on mobile and desktop.`,
         canonicalPath
       });
     }
