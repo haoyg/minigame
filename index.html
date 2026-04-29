@@ -3258,7 +3258,9 @@
       }
       const img = el("img", imgClass, Object.assign({
         src: pngSrc,
-        alt: alt || "game thumbnail"
+        alt: alt || "game thumbnail",
+        loading: "lazy",
+        decoding: "async"
       }, attrs));
       img.onerror = () => {
         img.src = FALLBACK_THUMB;
@@ -4881,12 +4883,12 @@
     function renderFeatured() {
       featuredGrid.innerHTML = "";
       const featured = allGames.slice(0, 8);
-      featured.forEach((game) => {
+      featured.forEach((game, idx) => {
         const card = el("article", "featured-card", { "data-game-id": game.id });
         const img = createThumbPicture("featured-thumb", resolveThumbSrc(game.thumbnail), game.title + " thumbnail", {
-          loading: "lazy",
+          loading: idx === 0 ? "eager" : "lazy",
           decoding: "async",
-          fetchpriority: "low"
+          fetchpriority: idx === 0 ? "high" : "low"
         });
         card.appendChild(img);
         const overlay = el("div", "featured-overlay");
