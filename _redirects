@@ -2,6 +2,20 @@
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200
 
+# Canonicalize: prefer clean URLs (no .html)
+/about.html /about 301
+/contact.html /contact 301
+/privacy.html /privacy 301
+/terms.html /terms 301
+/fun-quiz.html /fun-quiz 301
+
+# Serve clean URLs from the underlying .html files
+/about /about.html 200
+/contact /contact.html 200
+/privacy /privacy.html 200
+/terms /terms.html 200
+/fun-quiz /fun-quiz.html 200
+
 /best-unblocked-games /best-unblocked-games.html 200
 /top-idle-games /top-idle-games.html 200
 

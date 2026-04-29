@@ -3238,6 +3238,36 @@
       return "/" + s.replace(/^\/+/, "");
     }
 
+    function resolveWebpSrc(resolvedSrc) {
+      const s = (resolvedSrc || "").trim();
+      if (!s) return "";
+      // Only local PNG thumbs are converted; external URLs keep original format.
+      if (!s.startsWith("/") || !/\.png(\?.*)?$/i.test(s)) return "";
+      return s.replace(/\.png(\?.*)?$/i, ".webp$1");
+    }
+
+    function createThumbPicture(imgClass, thumbSrc, alt, attrs = {}) {
+      const pngSrc = thumbSrc || FALLBACK_THUMB;
+      const webpSrc = resolveWebpSrc(pngSrc);
+      const picture = document.createElement("picture");
+      if (webpSrc) {
+        const source = document.createElement("source");
+        source.type = "image/webp";
+        source.srcset = webpSrc;
+        picture.appendChild(source);
+      }
+      const img = el("img", imgClass, Object.assign({
+        src: pngSrc,
+        alt: alt || "game thumbnail"
+      }, attrs));
+      img.onerror = () => {
+        img.src = FALLBACK_THUMB;
+        img.onerror = null;
+      };
+      picture.appendChild(img);
+      return picture;
+    }
+
     function setCategoryLandingVisible(visible) {
       if (!categoryLanding) return;
       categoryLanding.hidden = !visible;
@@ -3282,8 +3312,7 @@
         landingTopList.innerHTML = "";
         topList.forEach((g) => {
           const item = el("article", "landing-item");
-          const img = el("img", "landing-thumb", { src: resolveThumbSrc(g.thumbnail) || FALLBACK_THUMB, alt: g.title + " thumbnail", loading: "lazy" });
-          img.onerror = () => { img.src = FALLBACK_THUMB; img.onerror = null; };
+          const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", { loading: "lazy" });
           const right = el("div", "");
           right.appendChild(el("div", "landing-title", { text: g.title }));
           const oneLine = g.description || `Play ${g.title} free online. No download required.`;
@@ -3314,8 +3343,7 @@
         landingNewList.innerHTML = "";
         (newList.length ? newList : topList.slice(0, 6)).forEach((g) => {
           const item = el("article", "landing-item");
-          const img = el("img", "landing-thumb", { src: resolveThumbSrc(g.thumbnail) || FALLBACK_THUMB, alt: g.title + " thumbnail", loading: "lazy" });
-          img.onerror = () => { img.src = FALLBACK_THUMB; img.onerror = null; };
+          const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", { loading: "lazy" });
           const right = el("div", "");
           right.appendChild(el("div", "landing-title", { text: g.title }));
           right.appendChild(el("div", "landing-desc", { text: g.description || `New ${cat.toLowerCase()} game on Pokopie. Play instantly in browser.` }));
@@ -3466,15 +3494,9 @@
         const card = el("article", "detail-similar-card");
         card.setAttribute("data-game-id", sim.id);
 
-        const img = el("img", "detail-similar-thumb", {
-          src: resolveThumbSrc(sim.thumbnail) || FALLBACK_THUMB,
-          alt: sim.title + " thumbnail",
+        const img = createThumbPicture("detail-similar-thumb", resolveThumbSrc(sim.thumbnail), sim.title + " thumbnail", {
           loading: "lazy"
         });
-        img.onerror = () => {
-          img.src = FALLBACK_THUMB;
-          img.onerror = null;
-        };
         card.appendChild(img);
 
         const caption = el("div", "detail-similar-caption", {
@@ -4809,17 +4831,11 @@
       card.setAttribute("data-game-id", game.id);
 
       const thumbWrap = el("div", "game-thumb-wrap");
-      const img = el("img", "game-thumb", {
-        src: resolveThumbSrc(game.thumbnail) || FALLBACK_THUMB,
-        alt: game.title + " thumbnail",
+      const img = createThumbPicture("game-thumb", resolveThumbSrc(game.thumbnail), game.title + " thumbnail", {
         loading: "lazy",
         decoding: "async",
         fetchpriority: "low"
       });
-      img.onerror = () => {
-        img.src = FALLBACK_THUMB;
-        img.onerror = null;
-      };
       thumbWrap.appendChild(img);
 
       const tag = el("div", "game-tag");
@@ -4867,17 +4883,11 @@
       const featured = allGames.slice(0, 8);
       featured.forEach((game) => {
         const card = el("article", "featured-card", { "data-game-id": game.id });
-        const img = el("img", "featured-thumb", {
-          src: resolveThumbSrc(game.thumbnail) || FALLBACK_THUMB,
-          alt: game.title + " thumbnail",
+        const img = createThumbPicture("featured-thumb", resolveThumbSrc(game.thumbnail), game.title + " thumbnail", {
           loading: "lazy",
           decoding: "async",
           fetchpriority: "low"
         });
-        img.onerror = () => {
-          img.src = FALLBACK_THUMB;
-          img.onerror = null;
-        };
         card.appendChild(img);
         const overlay = el("div", "featured-overlay");
         overlay.appendChild(el("div", "featured-title", { text: truncate(game.title, 22) }));
