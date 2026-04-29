@@ -1,39 +1,83 @@
-/* Minimal Service Worker for Pokopie (optional).
-   Keeps the console clean and provides a safe offline fallback for the shell.
+/* Service Worker for Pokopie:
+   - FreeToGame API: network-first (avoid stale game catalog)
+   - Static assets: cache-first
+   - Do not cache arbitrary cross-origin GET requests
 */
 
-const CACHE_NAME = "pokopie-v1";
-const CORE_ASSETS = ["/", "/index.html"];
+const CACHE_VERSION = "v2";
+const STATIC_CACHE = `pokopie-static-${CACHE_VERSION}`;
+const API_CACHE = `pokopie-api-${CACHE_VERSION}`;
+const CORE_ASSETS = ["/", "/index.html", "/app.js"];
+const API_HOST = "www.freetogame.com";
+const API_PATH_PREFIX = "/api/";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS)).then(() => self.skipWaiting())
+    caches
+      .open(STATIC_CACHE)
+      .then((cache) => cache.addAll(CORE_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys
+            .filter((k) => k !== STATIC_CACHE && k !== API_CACHE)
+            .map((k) => caches.delete(k))
+        )
+      )
+      .then(() => self.clients.claim())
   );
 });
+
+function isApiRequest(reqUrl) {
+  return reqUrl.hostname === API_HOST && reqUrl.pathname.startsWith(API_PATH_PREFIX);
+}
+
+async function networkFirst(req) {
+  const cache = await caches.open(API_CACHE);
+  try {
+    const fresh = await fetch(req);
+    if (fresh && fresh.ok) cache.put(req, fresh.clone()).catch(() => {});
+    return fresh;
+  } catch (_) {
+    const cached = await cache.match(req);
+    if (cached) return cached;
+    throw _;
+  }
+}
+
+async function cacheFirst(req) {
+  const cached = await caches.match(req);
+  if (cached) return cached;
+  const res = await fetch(req);
+  if (res && res.ok) {
+    const cache = await caches.open(STATIC_CACHE);
+    cache.put(req, res.clone()).catch(() => {});
+  }
+  return res;
+}
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
 
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => {});
-          return res;
-        })
-        .catch(() => caches.match("/index.html"));
-    })
-  );
+  const url = new URL(req.url);
+  if (isApiRequest(url)) {
+    event.respondWith(networkFirst(req));
+    return;
+  }
+
+  // Cache-first only for same-origin static resources/documents.
+  if (url.origin === self.location.origin) {
+    event.respondWith(
+      cacheFirst(req).catch(() => caches.match("/index.html"))
+    );
+  }
 });
 
