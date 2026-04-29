@@ -1602,7 +1602,9 @@
         src: pngSrc,
         alt: alt || "game thumbnail",
         loading: "lazy",
-        decoding: "async"
+        decoding: "async",
+        width: "320",
+        height: "180"
       }, attrs));
       img.onerror = () => {
         img.src = FALLBACK_THUMB;
@@ -1656,7 +1658,11 @@
         landingTopList.innerHTML = "";
         topList.forEach((g) => {
           const item = el("article", "landing-item");
-          const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", { loading: "lazy" });
+          const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", {
+            loading: "lazy",
+            width: "86",
+            height: "56"
+          });
           const right = el("div", "");
           right.appendChild(el("div", "landing-title", { text: g.title }));
           const oneLine = g.description || `Play ${g.title} free online. No download required.`;
@@ -1687,7 +1693,11 @@
         landingNewList.innerHTML = "";
         (newList.length ? newList : topList.slice(0, 6)).forEach((g) => {
           const item = el("article", "landing-item");
-          const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", { loading: "lazy" });
+          const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", {
+            loading: "lazy",
+            width: "86",
+            height: "56"
+          });
           const right = el("div", "");
           right.appendChild(el("div", "landing-title", { text: g.title }));
           right.appendChild(el("div", "landing-desc", { text: g.description || `New ${cat.toLowerCase()} game on Pokopie. Play instantly in browser.` }));
