@@ -1575,31 +1575,14 @@
       const s = (src || "").trim();
       if (!s) return "";
       if (/^(https?:|data:|blob:)/i.test(s)) return s;
-      if (s.startsWith("/")) return s;
-      // Make relative paths work on sub-routes like /puzzle-games/
-      return "/" + s.replace(/^\/+/, "");
-    }
-
-    function resolveWebpSrc(resolvedSrc) {
-      const s = (resolvedSrc || "").trim();
-      if (!s) return "";
-      // Only local PNG thumbs are converted; external URLs keep original format.
-      if (!s.startsWith("/") || !/\.png(\?.*)?$/i.test(s)) return "";
-      return s.replace(/\.png(\?.*)?$/i, ".webp$1");
+      const path = s.startsWith("/") ? s : "/" + s.replace(/^\/+/, "");
+      return path.replace(/\.png(\?.*)?$/i, ".webp$1");
     }
 
     function createThumbPicture(imgClass, thumbSrc, alt, attrs = {}) {
-      const pngSrc = thumbSrc || FALLBACK_THUMB;
-      const webpSrc = resolveWebpSrc(pngSrc);
-      const picture = document.createElement("picture");
-      if (webpSrc) {
-        const source = document.createElement("source");
-        source.type = "image/webp";
-        source.srcset = webpSrc;
-        picture.appendChild(source);
-      }
+      const src = thumbSrc || FALLBACK_THUMB;
       const img = el("img", imgClass, Object.assign({
-        src: pngSrc,
+        src: src,
         alt: alt || "game thumbnail",
         loading: "lazy",
         decoding: "async",
@@ -1610,8 +1593,7 @@
         img.src = FALLBACK_THUMB;
         img.onerror = null;
       };
-      picture.appendChild(img);
-      return picture;
+      return img;
     }
 
     function setCategoryLandingVisible(visible) {
