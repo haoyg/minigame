@@ -207,6 +207,19 @@
   <button class="cb" id="mz">&#8635;</button>
 </div>
 
+<p style="text-align:center;font-size:11px;color:#475569;margin-top:16px;">👁 <span id="vc">—</span> visits</p>
+
 <script src="game.js"></script>
+<script>
+  (function() {
+    var BASE = 'https://countapi.mileshilliard.com/api/v1';
+    var KEY = 'pokopie_games_tetris';
+    fetch(BASE + '/hit/' + KEY).catch(function(){});
+    fetch(BASE + '/get/' + KEY)
+      .then(function(r){ return r.json(); })
+      .then(function(d){ document.getElementById('vc').textContent = d.value.toLocaleString(); })
+      .catch(function(){});
+  })();
+</script>
 </body>
 </html>

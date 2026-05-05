@@ -1541,7 +1541,21 @@
       <div class="footer-bottom">
         <strong>Pokopie</strong> – Free online HTML5 browser games. Visit our About, Privacy, Contact and Terms pages to learn more.
       </div>
+      <div id="visit-counter" style="margin-top:8px;font-size:11px;color:var(--text-soft);">
+        👁 <span id="vc">—</span> visits
+      </div>
     </footer>
+    <script>
+      (function() {
+        var BASE = 'https://countapi.mileshilliard.com/api/v1';
+        var KEY = 'pokopie_homepage';
+        fetch(BASE + '/hit/' + KEY).catch(function(){});
+        fetch(BASE + '/get/' + KEY)
+          .then(function(r){ return r.json(); })
+          .then(function(d){ document.getElementById('vc').textContent = d.value.toLocaleString(); })
+          .catch(function(){});
+      })();
+    </script>
   </main>
 
   <!-- Game detail page (single game view) -->
