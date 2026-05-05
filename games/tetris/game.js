@@ -8,29 +8,22 @@
   const ROWS = 20;
   const BLOCK = 24;
   const COLORS = [null, '#00eeff', '#ffdd00', '#bb00ff', '#00cc44', '#ff2200', '#0055ff', '#ff8800'];
+  const BG = '#0b1220';
 
   // SHAPES[piece][rotation][cellIndex] = [col, row]
-  // Standard SRS-based rotation, 4 states per piece
   const SHAPES = [
-    // I — horizontal | vertical
     [[[0,0],[1,0],[2,0],[3,0]], [[1,-1],[1,0],[1,1],[1,2]], [[0,0],[1,0],[2,0],[3,0]], [[1,-1],[1,0],[1,1],[1,2]]],
-    // O — same in all rotations
     [[[0,0],[1,0],[0,1],[1,1]], [[0,0],[1,0],[0,1],[1,1]], [[0,0],[1,0],[0,1],[1,1]], [[0,0],[1,0],[0,1],[1,1]]],
-    // T
     [[[0,0],[1,0],[2,0],[1,1]], [[0,1],[0,0],[0,2],[1,1]], [[1,0],[0,1],[1,1],[2,1]], [[0,1],[1,0],[2,0],[1,1]]],
-    // S
     [[[1,0],[2,0],[0,1],[1,1]], [[0,0],[0,1],[1,1],[1,2]], [[1,0],[2,0],[0,1],[1,1]], [[0,0],[0,1],[1,1],[1,2]]],
-    // Z
     [[[0,0],[1,0],[1,1],[2,1]], [[1,0],[0,1],[1,1],[1,2]], [[0,0],[1,0],[1,1],[2,1]], [[1,0],[0,1],[1,1],[1,2]]],
-    // J
     [[[0,0],[0,1],[1,1],[2,1]], [[0,0],[1,0],[0,1],[0,2]], [[0,0],[1,0],[2,0],[2,1]], [[1,0],[1,1],[0,2],[1,2]]],
-    // L
     [[[2,0],[0,1],[1,1],[2,1]], [[0,0],[1,0],[1,1],[1,2]], [[0,0],[1,0],[2,0],[0,1]], [[0,0],[0,1],[0,2],[1,2]]],
   ];
 
-  const canvas = document.getElementById('game-canvas');
+  const canvas = document.getElementById('c');
   const ctx = canvas.getContext('2d');
-  const nextCanvas = document.getElementById('next-canvas');
+  const nextCanvas = document.getElementById('nc');
   const nextCtx = nextCanvas.getContext('2d');
 
   let board, current, nextPiece, x, y, rot, score, lines, level;
@@ -86,7 +79,9 @@
     x = 3; y = -2; rot = 0;
     if (!valid(x, y)) {
       gameState = 'gameover';
-      showOverlay('Game Over', `Score: ${score}<br>Press Play to retry.`);
+      document.getElementById('oh').textContent = 'Game Over';
+      document.getElementById('om').innerHTML = 'Score: ' + score + '<br>Press Play to retry.';
+      document.getElementById('ov').classList.remove('hidden');
     }
     drawNext();
   }
@@ -94,15 +89,19 @@
   function rndPiece() { return Math.floor(Math.random() * 7); }
 
   function drawNext() {
-    nextCtx.fillStyle = '#0d0d20';
-    nextCtx.clearRect(0, 0, 80, 80);
+    nextCtx.fillStyle = BG;
+    nextCtx.clearRect(0, 0, 72, 72);
     const s = SHAPES[nextPiece][0];
     const minC = Math.min(...s.map(d => d[0]));
+    const maxC = Math.max(...s.map(d => d[0]));
     const minR = Math.min(...s.map(d => d[1]));
-    const offX = (4 - (Math.max(...s.map(d => d[0])) - minC + 1)) / 2 + minC;
-    const offY = (4 - (Math.max(...s.map(d => d[1])) - minR + 1)) / 2 + minR;
+    const maxR = Math.max(...s.map(d => d[1]));
+    const w = maxC - minC + 1;
+    const h = maxR - minR + 1;
+    const offX = Math.floor((4 - w) / 2) - minC;
+    const offY = Math.floor((4 - h) / 2) - minR;
     for (const [dx, dy] of s) {
-      drawBlock(nextCtx, 80, 80, (dx - offX + 2) * 18, (dy - offY + 2) * 18, 16, COLORS[nextPiece + 1]);
+      drawBlock(nextCtx, (dx + offX + 1) * 16, (dy + offY + 1) * 16, 14, COLORS[nextPiece + 1]);
     }
   }
 
@@ -132,56 +131,53 @@
   }
 
   const ACTIONS = {
-    ArrowLeft: () => move(-1, 0),
-    ArrowRight: () => move(1, 0),
-    ArrowDown: () => move(0, 1),
-    ArrowUp: rotate,
-    KeyZ: rotate,
-    Space: hardDrop,
+    ArrowLeft:  () => move(-1, 0),
+    ArrowRight:  () => move(1, 0),
+    ArrowDown:   () => move(0, 1),
+    ArrowUp:     rotate,
+    KeyZ:        rotate,
+    Space:       hardDrop,
   };
 
   document.addEventListener('keydown', e => {
     if (ACTIONS[e.code]) { e.preventDefault(); ACTIONS[e.code](); }
   });
 
-  // Mobile buttons
-  document.getElementById('m-left').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowLeft(); });
-  document.getElementById('m-right').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowRight(); });
-  document.getElementById('m-down').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowDown(); });
-  document.getElementById('m-rotate').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowUp(); });
+  document.getElementById('ml').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowLeft(); });
+  document.getElementById('mr').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowRight(); });
+  document.getElementById('md').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowDown(); });
+  document.getElementById('mz').addEventListener('touchstart', e => { e.preventDefault(); ACTIONS.ArrowUp(); });
 
-  // Touch swipe on canvas
   let tx = null, ty = null;
   canvas.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; e.preventDefault(); }, { passive: false });
   canvas.addEventListener('touchmove', e => {
     if (tx === null) return;
     const dx = e.touches[0].clientX - tx, dy = e.touches[0].clientY - ty;
-    if (Math.abs(dx) > 25) { ACTIONS[dx > 0 ? 'ArrowRight' : 'ArrowLeft'](); tx = e.touches[0].clientX; }
-    if (dy > 25) { ACTIONS.ArrowDown(); ty = e.touches[0].clientY; }
+    if (Math.abs(dx) > 28) { ACTIONS[dx > 0 ? 'ArrowRight' : 'ArrowLeft'](); tx = e.touches[0].clientX; }
+    if (dy > 28) { ACTIONS.ArrowDown(); ty = e.touches[0].clientY; }
     e.preventDefault();
   }, { passive: false });
   canvas.addEventListener('touchend', e => { tx = null; ty = null; e.preventDefault(); }, { passive: false });
 
   // ── Rendering ───────────────────────────────────────────────────
 
-  function drawBlock(c, cw, ch, px, py, size, color) {
+  function drawBlock(c, px, py, size, color) {
     const s = size || BLOCK;
     c.fillStyle = color;
     c.fillRect(px, py, s, s);
-    c.fillStyle = 'rgba(255,255,255,0.2)';
-    c.fillRect(px, py, s, 3);
-    c.fillRect(px, py, 3, s);
-    c.fillStyle = 'rgba(0,0,0,0.3)';
-    c.fillRect(px + s - 3, py, 3, s);
-    c.fillRect(px, py + s - 3, s, 3);
+    c.fillStyle = 'rgba(255,255,255,0.18)';
+    c.fillRect(px, py, s, 2);
+    c.fillRect(px, py, 2, s);
+    c.fillStyle = 'rgba(0,0,0,0.28)';
+    c.fillRect(px + s - 2, py, 2, s);
+    c.fillRect(px, py + s - 2, s, 2);
   }
 
   function drawBoard() {
-    ctx.fillStyle = '#0d0d20';
+    ctx.fillStyle = BG;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Grid
-    ctx.strokeStyle = 'rgba(50,50,100,0.3)';
+    ctx.strokeStyle = 'rgba(30,41,59,0.8)';
     ctx.lineWidth = 0.5;
     for (let r = 0; r <= ROWS; r++) {
       ctx.beginPath(); ctx.moveTo(0, r * BLOCK); ctx.lineTo(canvas.width, r * BLOCK); ctx.stroke();
@@ -190,39 +186,37 @@
       ctx.beginPath(); ctx.moveTo(c * BLOCK, 0); ctx.lineTo(c * BLOCK, canvas.height); ctx.stroke();
     }
 
-    // Locked cells
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
-        if (board[r][c]) drawBlock(ctx, canvas.width, canvas.height, c * BLOCK, r * BLOCK, BLOCK, COLORS[board[r][c]]);
+        if (board[r][c]) drawBlock(ctx, c * BLOCK, r * BLOCK, BLOCK, COLORS[board[r][c]]);
       }
     }
 
     if (gameState !== 'playing') return;
 
-    // Ghost piece
+    // Ghost
     let gy = y;
-    while (true) { if (valid(x, gy + 1)) gy++; else break; }
+    while (valid(x, gy + 1)) gy++;
     if (gy !== y) {
       for (const [dx, dy] of shape()) {
         const gc = x + dx, gr = gy + dy;
         if (gr >= 0) {
-          ctx.fillStyle = 'rgba(255,255,255,0.07)';
+          ctx.fillStyle = 'rgba(255,255,255,0.06)';
           ctx.fillRect(gc * BLOCK + 2, gr * BLOCK + 2, BLOCK - 4, BLOCK - 4);
         }
       }
     }
 
-    // Active piece
     for (const [dx, dy] of shape()) {
       const gc = x + dx, gr = y + dy;
-      if (gr >= 0) drawBlock(ctx, canvas.width, canvas.height, gc * BLOCK, gr * BLOCK, BLOCK, COLORS[current + 1]);
+      if (gr >= 0) drawBlock(ctx, gc * BLOCK, gr * BLOCK, BLOCK, COLORS[current + 1]);
     }
   }
 
   function updateUI() {
-    document.getElementById('score-display').textContent = score;
-    document.getElementById('lines-display').textContent = lines;
-    document.getElementById('level-display').textContent = level;
+    document.getElementById('sc').textContent = score;
+    document.getElementById('li').textContent = lines;
+    document.getElementById('lv').textContent = level;
   }
 
   // ── Game loop ──────────────────────────────────────────────────
@@ -245,28 +239,19 @@
     requestAnimationFrame(loop);
   }
 
-  // ── Overlay ────────────────────────────────────────────────────
+  // ── Start ──────────────────────────────────────────────────────
 
-  function showOverlay(title, msg) {
-    const ov = document.getElementById('overlay');
-    document.getElementById('overlay-title').textContent = title;
-    document.getElementById('overlay-msg').innerHTML = msg;
-    ov.classList.remove('hidden');
-  }
-
-  function hideOverlay() { document.getElementById('overlay').classList.add('hidden'); }
-
-  document.getElementById('start-btn').addEventListener('click', startGame);
-
-  function startGame() {
+  document.getElementById('btn').addEventListener('click', () => {
     board = newBoard();
     score = 0; lines = 0; level = 1;
     dropAccum = 0; lastTime = null;
     nextPiece = null;
     gameState = 'playing';
+    document.getElementById('oh').textContent = 'Tetris';
+    document.getElementById('om').innerHTML = 'Stack the blocks.<br>Clear lines. Beat your score.';
+    document.getElementById('ov').classList.add('hidden');
     spawnPiece();
     updateUI();
-    hideOverlay();
     requestAnimationFrame(loop);
-  }
+  });
 })();

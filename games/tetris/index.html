@@ -19,59 +19,79 @@
   <meta name="twitter:description" content="Play Tetris online free on Pokopie. No download needed!" />
   <meta name="twitter:image" content="https://www.pokopie.com/assets/og.svg" />
   <style>
+    :root { color-scheme: dark; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #0a0a1a;
+      background: radial-gradient(circle at top, #020617, #020617 40%, #0f172a);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      font-family: 'Courier New', monospace;
-      color: #e0e0e0;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #e5e7eb;
       user-select: none;
       -webkit-user-select: none;
     }
 
-    #tetris-wrap {
+    .back-link {
+      position: absolute;
+      top: 16px;
+      left: 16px;
       display: flex;
-      gap: 16px;
+      align-items: center;
+      gap: 6px;
+      color: #93c5fd;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.25);
+      transition: background 0.15s;
+    }
+    .back-link:hover { background: rgba(30,41,59,0.95); text-decoration: none; }
+
+    #wrap {
+      display: flex;
+      gap: 14px;
       align-items: flex-start;
     }
 
-    #side-panel {
+    .side {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      width: 110px;
+      gap: 10px;
+      width: 90px;
     }
 
-    .panel-box {
-      background: #111128;
-      border: 1px solid #333360;
-      border-radius: 6px;
+    .box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(148,163,184,0.2);
+      border-radius: 12px;
       padding: 10px 12px;
+      text-align: center;
     }
 
-    .panel-label {
-      font-size: 10px;
-      letter-spacing: .12em;
-      color: #6666aa;
+    .lbl {
+      font-size: 9px;
+      letter-spacing: .1em;
+      color: #64748b;
       text-transform: uppercase;
       margin-bottom: 4px;
     }
 
-    .panel-value {
-      font-size: 20px;
+    .val {
+      font-size: 18px;
       font-weight: 700;
-      color: #ffdd44;
+      color: #fbbf24;
       line-height: 1;
     }
 
-    #next-canvas {
-      display: block;
-      margin: 0 auto;
+    #next-wrap {
+      display: flex;
+      justify-content: center;
     }
 
     canvas {
@@ -80,91 +100,67 @@
       image-rendering: pixelated;
     }
 
-    #game-canvas {
-      background: #0d0d20;
-      border: 2px solid #333360;
+    #c {
+      background: #0b1220;
+      border: 2px solid rgba(148,163,184,0.2);
       cursor: pointer;
+      flex-shrink: 0;
     }
 
-    #overlay {
+    #ov {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.78);
+      inset: 0;
+      background: rgba(2,6,23,0.82);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 14px;
+      gap: 12px;
       border-radius: 4px;
     }
+    #ov.hidden { display: none; }
+    #ov h2 { font-size: 22px; color: #fbbf24; letter-spacing: .04em; }
+    #ov p { font-size: 12px; color: #94a3b8; text-align: center; max-width: 220px; line-height: 1.5; }
+    #go { display: none; }
 
-    #overlay.hidden { display: none; }
-
-    #overlay h2 {
-      font-size: 22px;
-      color: #ffdd44;
-      letter-spacing: .05em;
-    }
-
-    #overlay p {
-      font-size: 13px;
-      color: #aaaacc;
-      text-align: center;
-      max-width: 260px;
-      line-height: 1.5;
-    }
-
-    #start-btn {
-      background: #ffdd44;
-      color: #0a0a1a;
+    .btn {
+      background: #16a34a;
+      color: #fff;
       border: none;
-      padding: 10px 28px;
-      font-size: 14px;
-      font-weight: 700;
+      padding: 9px 26px;
+      font-size: 13px;
+      font-weight: 600;
       font-family: inherit;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
-      letter-spacing: .06em;
-      text-transform: uppercase;
+      letter-spacing: .04em;
     }
+    .btn:hover { background: #22c55e; }
 
-    #start-btn:hover { background: #ffe880; }
+    .hint { font-size: 10px; color: #475569; text-align: center; margin-top: 2px; }
 
-    .controls-hint {
-      font-size: 11px;
-      color: #555577;
-      text-align: center;
-    }
-
-    #mobile-controls {
-      display: none;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .ctrl-btn {
-      background: #1e1e40;
-      color: #aaaacc;
-      border: 1px solid #333360;
-      border-radius: 6px;
-      width: 52px;
-      height: 52px;
-      font-size: 20px;
+    #mc { display: none; gap: 8px; margin-top: 12px; }
+    .cb {
+      background: rgba(255,255,255,0.06);
+      color: #94a3b8;
+      border: 1px solid rgba(148,163,184,0.2);
+      border-radius: 8px;
+      width: 48px;
+      height: 48px;
+      font-size: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
+    .cb:active { background: rgba(255,255,255,0.12); }
 
-    .ctrl-btn:active { background: #2a2a60; }
-
-    @media (max-width: 600px) {
-      #tetris-wrap { gap: 10px; }
-      #side-panel { width: 80px; }
-      .panel-value { font-size: 16px; }
-      #mobile-controls { display: flex; }
+    @media (max-width: 540px) {
+      #wrap { gap: 8px; }
+      .side { width: 72px; }
+      .val { font-size: 15px; }
+      #mc { display: flex; }
     }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3274781156049995"
@@ -172,44 +168,43 @@
 </head>
 <body>
 
-<div id="tetris-wrap">
-  <!-- Side panel -->
-  <div id="side-panel">
-    <div class="panel-box">
-      <div class="panel-label">Score</div>
-      <div class="panel-value" id="score-display">0</div>
+<a class="back-link" href="/">&#8592; Back to games</a>
+
+<div id="wrap">
+  <div class="side">
+    <div class="box">
+      <div class="lbl">Score</div>
+      <div class="val" id="sc">0</div>
     </div>
-    <div class="panel-box">
-      <div class="panel-label">Lines</div>
-      <div class="panel-value" id="lines-display">0</div>
+    <div class="box">
+      <div class="lbl">Lines</div>
+      <div class="val" id="li">0</div>
     </div>
-    <div class="panel-box">
-      <div class="panel-label">Level</div>
-      <div class="panel-value" id="level-display">1</div>
+    <div class="box">
+      <div class="lbl">Level</div>
+      <div class="val" id="lv">1</div>
     </div>
-    <div class="panel-box">
-      <div class="panel-label">Next</div>
-      <canvas id="next-canvas" width="80" height="80"></canvas>
+    <div class="box" id="next-wrap">
+      <canvas id="nc" width="72" height="72"></canvas>
     </div>
   </div>
 
-  <!-- Game canvas + overlay -->
   <div style="position:relative;">
-    <canvas id="game-canvas" width="240" height="480"></canvas>
-    <div id="overlay">
-      <h2 id="overlay-title">Tetris</h2>
-      <p id="overlay-msg">Stack the blocks. Clear lines. Beat your score.</p>
-      <button id="start-btn">Play</button>
-      <div class="controls-hint">← → move &nbsp; ↑ rotate &nbsp; ↓ soft drop &nbsp; SPACE hard drop</div>
+    <canvas id="c" width="240" height="480"></canvas>
+    <div id="ov">
+      <h2 id="oh">Tetris</h2>
+      <p id="om">Stack the blocks.<br>Clear lines. Beat your score.</p>
+      <button class="btn" id="btn">Play</button>
+      <div class="hint">&#8592; &#8594; move &nbsp; &#8593; rotate &nbsp; &#8595; soft drop &nbsp; SPACE hard drop</div>
     </div>
   </div>
 </div>
 
-<div id="mobile-controls">
-  <button class="ctrl-btn" id="m-left">←</button>
-  <button class="ctrl-btn" id="m-down">↓</button>
-  <button class="ctrl-btn" id="m-rotate">↻</button>
-  <button class="ctrl-btn" id="m-right">→</button>
+<div id="mc">
+  <button class="cb" id="ml">&#8592;</button>
+  <button class="cb" id="md">&#8595;</button>
+  <button class="cb" id="mr">&#8594;</button>
+  <button class="cb" id="mz">&#8635;</button>
 </div>
 
 <script src="game.js"></script>
