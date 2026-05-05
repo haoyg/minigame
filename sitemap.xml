@@ -1,106 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <!-- 首页 -->
-  <url>
-    <loc>https://pokopie.com/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
+
   <url>
     <loc>https://www.pokopie.com/</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- 游戏分类页面 -->
+
   <url>
-    <loc>https://pokopie.com/puzzle-games/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://www.pokopie.com/best-unblocked-games</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
   <url>
-    <loc>https://pokopie.com/shooting-games/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://www.pokopie.com/top-idle-games</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
   <url>
-    <loc>https://pokopie.com/idle-games/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.pokopie.com/about.html</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
-  
+
   <url>
-    <loc>https://pokopie.com/arcade-games/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://pokopie.com/racing-games/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://pokopie.com/sports-games/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- 专题页面 -->
-  <url>
-    <loc>https://pokopie.com/best-unblocked-games</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.pokopie.com/contact.html</loc>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
+
   <url>
-    <loc>https://pokopie.com/top-idle-games</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <!-- 静态页面 -->
-  <url>
-    <loc>https://pokopie.com/about.html</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://pokopie.com/contact.html</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://pokopie.com/privacy-policy.html</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.pokopie.com/privacy.html</loc>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  
+
   <url>
-    <loc>https://pokopie.com/terms.html</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.pokopie.com/terms.html</loc>
+    <lastmod>2026-05-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pokopie.com/fun-quiz.html</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Built-in games -->
+  <url>
+    <loc>https://www.pokopie.com/games/2048/</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pokopie.com/games/breakout/</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pokopie.com/games/memory/</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pokopie.com/games/minesweeper/</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pokopie.com/games/snake/</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
 </urlset>
