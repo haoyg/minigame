@@ -12,6 +12,7 @@ const CORE_ASSETS = [
   "/index.html",
   "/app.js",
   "/games/2048/index.html",
+  "/games/tetris/index.html",
   "/games/breakout/index.html",
   "/games/memory/index.html",
   "/games/minesweeper/index.html",

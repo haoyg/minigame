@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Tetris — Play Free Online | Pokopie</title>
+  <meta name="description" content="Play Tetris online free on Pokopie. Stack the blocks, clear lines, and chase your high score. No download, instant play." />
+  <link rel="canonical" href="https://www.pokopie.com/games/tetris/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.pokopie.com/games/tetris/" />
+  <meta property="og:title" content="Play Tetris Online Free | Pokopie" />
+  <meta property="og:description" content="Play Tetris online free on Pokopie. Stack blocks, clear lines, and beat your high score. No download." />
+  <meta property="og:site_name" content="Pokopie" />
+  <meta property="og:image" content="https://www.pokopie.com/assets/og.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Play Tetris Online Free | Pokopie" />
+  <meta name="twitter:description" content="Play Tetris online free on Pokopie. No download needed!" />
+  <meta name="twitter:image" content="https://www.pokopie.com/assets/og.svg" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0a0a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Courier New', monospace;
+      color: #e0e0e0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    #tetris-wrap {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    #side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 110px;
+    }
+
+    .panel-box {
+      background: #111128;
+      border: 1px solid #333360;
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+
+    .panel-label {
+      font-size: 10px;
+      letter-spacing: .12em;
+      color: #6666aa;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .panel-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffdd44;
+      line-height: 1;
+    }
+
+    #next-canvas {
+      display: block;
+      margin: 0 auto;
+    }
+
+    canvas {
+      display: block;
+      border-radius: 4px;
+      image-rendering: pixelated;
+    }
+
+    #game-canvas {
+      background: #0d0d20;
+      border: 2px solid #333360;
+      cursor: pointer;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.78);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      border-radius: 4px;
+    }
+
+    #overlay.hidden { display: none; }
+
+    #overlay h2 {
+      font-size: 22px;
+      color: #ffdd44;
+      letter-spacing: .05em;
+    }
+
+    #overlay p {
+      font-size: 13px;
+      color: #aaaacc;
+      text-align: center;
+      max-width: 260px;
+      line-height: 1.5;
+    }
+
+    #start-btn {
+      background: #ffdd44;
+      color: #0a0a1a;
+      border: none;
+      padding: 10px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    #start-btn:hover { background: #ffe880; }
+
+    .controls-hint {
+      font-size: 11px;
+      color: #555577;
+      text-align: center;
+    }
+
+    #mobile-controls {
+      display: none;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .ctrl-btn {
+      background: #1e1e40;
+      color: #aaaacc;
+      border: 1px solid #333360;
+      border-radius: 6px;
+      width: 52px;
+      height: 52px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .ctrl-btn:active { background: #2a2a60; }
+
+    @media (max-width: 600px) {
+      #tetris-wrap { gap: 10px; }
+      #side-panel { width: 80px; }
+      .panel-value { font-size: 16px; }
+      #mobile-controls { display: flex; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3274781156049995"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="tetris-wrap">
+  <!-- Side panel -->
+  <div id="side-panel">
+    <div class="panel-box">
+      <div class="panel-label">Score</div>
+      <div class="panel-value" id="score-display">0</div>
+    </div>
+    <div class="panel-box">
+      <div class="panel-label">Lines</div>
+      <div class="panel-value" id="lines-display">0</div>
+    </div>
+    <div class="panel-box">
+      <div class="panel-label">Level</div>
+      <div class="panel-value" id="level-display">1</div>
+    </div>
+    <div class="panel-box">
+      <div class="panel-label">Next</div>
+      <canvas id="next-canvas" width="80" height="80"></canvas>
+    </div>
+  </div>
+
+  <!-- Game canvas + overlay -->
+  <div style="position:relative;">
+    <canvas id="game-canvas" width="240" height="480"></canvas>
+    <div id="overlay">
+      <h2 id="overlay-title">Tetris</h2>
+      <p id="overlay-msg">Stack the blocks. Clear lines. Beat your score.</p>
+      <button id="start-btn">Play</button>
+      <div class="controls-hint">← → move &nbsp; ↑ rotate &nbsp; ↓ soft drop &nbsp; SPACE hard drop</div>
+    </div>
+  </div>
+</div>
+
+<div id="mobile-controls">
+  <button class="ctrl-btn" id="m-left">←</button>
+  <button class="ctrl-btn" id="m-down">↓</button>
+  <button class="ctrl-btn" id="m-rotate">↻</button>
+  <button class="ctrl-btn" id="m-right">→</button>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
