@@ -925,7 +925,7 @@
         title: "Climb Up!",
         description: "Climb Up! via GameDistribution. Opens in a new browser tab.",
         category: "Action",
-        thumbnail: "assets/climb-up.png",
+        thumbnail: FALLBACK_THUMB,
         playUrl: climbUpUrl,
         popular: true,
         recent: true

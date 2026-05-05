@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Read(//mnt/**)",
-      "Bash(find . -path \"*/minigame/index.html\" -type f)"
+      "Bash(find . -path \"*/minigame/index.html\" -type f)",
+      "Bash(curl -s \"https://pokopie.com/sitemap.xml\")",
+      "Bash(curl *)",
+      "Bash(xargs -n1 basename)",
+      "Bash(sed 's/.webp//')"
     ]
   }
 }

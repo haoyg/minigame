@@ -7,7 +7,17 @@
 const CACHE_VERSION = "v2";
 const STATIC_CACHE = `pokopie-static-${CACHE_VERSION}`;
 const API_CACHE = `pokopie-api-${CACHE_VERSION}`;
-const CORE_ASSETS = ["/", "/index.html", "/app.js"];
+const CORE_ASSETS = [
+  "/",
+  "/index.html",
+  "/app.js",
+  "/games/2048/index.html",
+  "/games/breakout/index.html",
+  "/games/memory/index.html",
+  "/games/minesweeper/index.html",
+  "/games/snake/index.html",
+  "/fun-quiz.html"
+];
 const API_HOST = "www.freetogame.com";
 const API_PATH_PREFIX = "/api/";
 
