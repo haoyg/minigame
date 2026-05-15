@@ -3559,6 +3559,12 @@
       });
 
       // Service Worker disabled to avoid unexpected caching/redirect behavior.
+      // Clean up any stale SWs from previous deployments.
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (regs) {
+          regs.forEach(function (r) { r.unregister(); });
+        }).catch(function () {});
+      }
     }
 
     document.addEventListener("DOMContentLoaded", async () => {

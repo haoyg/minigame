@@ -9,7 +9,9 @@
       "Bash(sed 's/.webp//')",
       "WebFetch(domain:countapi.xyz)",
       "WebSearch",
-      "Bash(echo \"EXIT:$?\")"
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(grep -c \"\\\\.png$\")",
+      "Bash(grep -c \"\\\\.webp$\")"
     ]
   }
 }

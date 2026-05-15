@@ -28,16 +28,14 @@ There is no linting, no tests, and no package manager.
 
 ## Architecture
 
-All app logic lives inline inside HTML files — there are no external JS bundles for the main site.
-
-**`index.html`** (~5200 lines) is the entire main application:
-- Fetches the game catalog from `https://www.freetogame.com/api/games?platform=browser`
+**`app.js`** (~3568 lines) is the main application script:
+- Maintains a local catalog of 105 browser games from GameDistribution
 - Renders a filterable/searchable game grid
 - Opens games in an iframe modal or routes to game detail pages (`/games/{slug}`)
 - Handles category filtering, dark/light theme, and similar-game sidebars
-- All CSS and JS are inline within this file
+- All CSS and JS are inline within HTML files
 
-**`/games/`** — 5 self-contained built-in games (2048, breakout, memory, minesweeper, snake), each with their own `index.html` + local JS/CSS. These are loaded inside the main modal or as standalone pages.
+**`/games/`** — 5 self-contained built-in games (2048, breakout, memory, minesweeper, snake, tetris), each with their own `index.html` + local JS/CSS. These are loaded inside the main modal or as standalone pages.
 
 **`_redirects`** — Netlify routing. Maps clean URLs (e.g., `/best-unblocked-games`) to their HTML files. The catch-all `/* -> /index.html` enables SPA-style routing.
 
