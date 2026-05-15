@@ -9,6 +9,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#ffb347" />
 
+  <!-- Security headers -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=()" />
+
   <!-- Canonical -->
   <link rel="canonical" href="https://www.pokopie.com" />
 
@@ -1567,7 +1572,7 @@
           <div class="game-detail-meta" id="detailMeta"></div>
         </header>
         <div class="detail-iframe-wrapper">
-          <iframe id="detailIframe" loading="lazy" allowfullscreen></iframe>
+          <iframe id="detailIframe" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
           <div class="detail-iframe-loading" id="detailIframeLoading">
             <div class="spinner"></div>
             <span>Loading game…</span>
@@ -1610,7 +1615,7 @@
       </div>
       <div class="modal-body">
         <div class="iframe-wrapper">
-          <iframe id="gameIframe" loading="lazy" allowfullscreen></iframe>
+          <iframe id="gameIframe" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
           <div class="modal-loading" id="modalLoading"><div class="spinner"></div></div>
           <div class="internal-wrapper" id="internalWrapper" aria-label="Built-in HTML5 game">
             <canvas id="internalCanvas" width="960" height="540"></canvas>

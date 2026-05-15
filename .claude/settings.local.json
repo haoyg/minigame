@@ -11,7 +11,9 @@
       "WebSearch",
       "Bash(echo \"EXIT:$?\")",
       "Bash(grep -c \"\\\\.png$\")",
-      "Bash(grep -c \"\\\\.webp$\")"
+      "Bash(grep -c \"\\\\.webp$\")",
+      "Bash(node *)",
+      "Bash(grep -v \"^\\\\\\\\.\")"
     ]
   }
 }
