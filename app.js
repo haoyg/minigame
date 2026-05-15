@@ -3217,6 +3217,17 @@
     function renderFeatured() {
       featuredGrid.innerHTML = "";
       const featured = allGames.slice(0, 8);
+      // Preload first featured thumbnail to improve LCP
+      if (featured.length) {
+        const firstThumb = resolveThumbSrc(featured[0].thumbnail);
+        if (firstThumb && !document.querySelector('link[href="' + firstThumb + '"]')) {
+          const link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "image";
+          link.href = firstThumb;
+          document.head.appendChild(link);
+        }
+      }
       featured.forEach((game, idx) => {
         const card = el("article", "featured-card", { "data-game-id": game.id });
         const img = createThumbPicture("featured-thumb", resolveThumbSrc(game.thumbnail), game.title + " thumbnail", {
