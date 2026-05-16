@@ -1680,26 +1680,6 @@
       return fallback;
     }
 
-    async function loadGames() {
-      // 不再调用 FreeToGame API，而是完全使用你提供的 iframe 游戏列表
-      const usedSlugs = new Set();
-      allGames = customIframeGames.map((g) => {
-        const title = g.title || "Game";
-        const cat = normalizeCategoryByTitle(title, g.category);
-        let slug = g.slug || slugify(title);
-        if (usedSlugs.has(slug)) {
-          let i = 2;
-          while (usedSlugs.has(`${slug}-${i}`)) i += 1;
-          slug = `${slug}-${i}`;
-        }
-        usedSlugs.add(slug);
-        return { ...g, title, category: cat, slug };
-      });
-      statusSource.textContent = "Custom iframe game list";
-      statusTotal.textContent = allGames.length + " games available";
-      renderAllSections();
-    }
-
     function updateCategoryUI() {
       const navBtns = navCategories.querySelectorAll(".nav-pill");
       navBtns.forEach((b) => {
