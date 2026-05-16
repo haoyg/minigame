@@ -13,7 +13,9 @@
       "Bash(grep -c \"\\\\.png$\")",
       "Bash(grep -c \"\\\\.webp$\")",
       "Bash(node *)",
-      "Bash(grep -v \"^\\\\\\\\.\")"
+      "Bash(grep -v \"^\\\\\\\\.\")",
+      "Bash(python3 *)",
+      "Bash(python *)"
     ]
   }
 }

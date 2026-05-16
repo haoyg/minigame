@@ -59,7 +59,6 @@
     }
 
     // 自定义 iframe 游戏列表（已迁移到 /games-catalog.json，loadGames 异步加载）
-    const customIframeGames = [];
 
     let allGames = [];
     let filteredGames = [];
