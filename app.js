@@ -163,6 +163,8 @@
     const modalClose = document.getElementById("modalClose");
     const modalFullscreen = document.getElementById("modalFullscreen");
     const modalOpenNew = document.getElementById("modalOpenNew");
+    const modalZoomIn = document.getElementById("modalZoomIn");
+    const modalZoomOut = document.getElementById("modalZoomOut");
 
     // Game detail elements
     const detailTitle = document.getElementById("detailTitle");
@@ -188,6 +190,7 @@
 
     let currentModalGame = null;
     let isModalMaximized = false;
+    let zoomLevel = 1;
     let embedWatchdog = null;
     let internalLoopHandle = 0;
     let internalCleanup = null;
@@ -1966,10 +1969,14 @@
       stopInternalGame();
       gameIframe.src = "";
       isModalMaximized = false;
+      zoomLevel = 1;
       const modal = document.querySelector(".modal");
       modal.style.maxWidth = "960px";
       modal.style.maxHeight = "90vh";
       modal.style.borderRadius = "26px";
+      if (gameIframe) {
+        gameIframe.style.transform = "scale(1)";
+      }
     }
 
     function toggleModalMaximize() {
@@ -1984,6 +1991,35 @@
         modal.style.maxHeight = "90vh";
         modal.style.borderRadius = "26px";
       }
+    }
+
+    function zoomIn() {
+      const iframe = document.getElementById("gameIframe");
+      if (!iframe) return;
+      zoomLevel = Math.min(zoomLevel + 0.25, 3);
+      iframe.style.transform = "scale(" + zoomLevel + ")";
+      iframe.style.transformOrigin = "center center";
+      modalZoomOut.classList.toggle("active", zoomLevel < 3);
+      modalZoomIn.classList.toggle("active", zoomLevel > 1);
+    }
+
+    function zoomOut() {
+      const iframe = document.getElementById("gameIframe");
+      if (!iframe) return;
+      zoomLevel = Math.max(zoomLevel - 0.25, 0.5);
+      iframe.style.transform = "scale(" + zoomLevel + ")";
+      iframe.style.transformOrigin = "center center";
+      modalZoomOut.classList.toggle("active", zoomLevel < 3);
+      modalZoomIn.classList.toggle("active", zoomLevel > 1);
+    }
+
+    function resetZoom() {
+      const iframe = document.getElementById("gameIframe");
+      if (!iframe) return;
+      zoomLevel = 1;
+      iframe.style.transform = "scale(1)";
+      modalZoomOut.classList.remove("active");
+      modalZoomIn.classList.remove("active");
     }
 
     function openGameInNewTab() {
@@ -2141,6 +2177,8 @@
       modalClose.addEventListener("click", closeGameModal);
       modalFullscreen.addEventListener("click", toggleModalMaximize);
       modalOpenNew.addEventListener("click", openGameInNewTab);
+      modalZoomIn.addEventListener("click", zoomIn);
+      modalZoomOut.addEventListener("click", zoomOut);
       noticeOpenNew.addEventListener("click", openGameInNewTab);
       noticeTryAnother.addEventListener("click", () => {
         const list = filteredGames.length ? filteredGames : allGames;

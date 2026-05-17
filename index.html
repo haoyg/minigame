@@ -1115,6 +1115,12 @@
       box-shadow: 0 10px 26px rgba(15, 23, 42, 0.9);
     }
 
+    .modal-btn.active {
+      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      color: #0f172a;
+      border-color: rgba(15, 23, 42, 0.8);
+    }
+
     .modal-body {
       position: relative;
       padding: 10px;
@@ -1187,7 +1193,14 @@
       background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 1));
     }
 
-    .iframe-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .iframe-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: transform 0.2s ease;
+    }
 
     .internal-wrapper {
       position: absolute;
@@ -1597,6 +1610,8 @@
           <span class="modal-title-meta" id="modalGameMeta"></span>
         </div>
         <div class="modal-controls">
+          <button class="modal-btn" id="modalZoomOut" title="Zoom out" aria-label="Zoom out">−</button>
+          <button class="modal-btn" id="modalZoomIn" title="Zoom in" aria-label="Zoom in">+</button>
           <button class="modal-btn" id="modalOpenNew" title="Open in new tab" aria-label="Open game in new tab">↗</button>
           <button class="modal-btn" id="modalFullscreen" title="Toggle full window" aria-label="Toggle full window">⤢</button>
           <button class="modal-btn" id="modalClose" title="Close" aria-label="Close">✕</button>
