@@ -173,6 +173,7 @@
     const detailIframeLoading = document.getElementById("detailIframeLoading");
     const detailSimilarList = document.getElementById("detailSimilarList");
     const detailBackHome = document.getElementById("detailBackHome");
+    const detailPlayBtn = document.getElementById("detailPlayBtn");
 
     // Category landing elements
     const categoryLanding = document.getElementById("categoryLanding");
@@ -594,6 +595,13 @@
         detailBackHome.onclick = () => {
           pushRoute("/");
           window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+      }
+
+      if (detailPlayBtn) {
+        detailPlayBtn.onclick = () => {
+          const rawUrl = game.playUrl || "https://www.freetogame.com/";
+          window.open(withGdReferrer(rawUrl), "_blank", "noopener,noreferrer");
         };
       }
 
@@ -1887,12 +1895,13 @@
     function openGameModal(game) {
       currentModalGame = game;
 
-      // 对 GameDistribution 恢复“直接新标签打开”的模式，不再展示 iframe 弹窗。
+      // 对 GameDistribution 游戏，先关闭弹窗，然后跳转到游戏详情页（详情页有 Play 按钮）
       try {
         const raw = game.playUrl || "";
         const host = raw ? new URL(raw, window.location.href).hostname.toLowerCase() : "";
         if (host.includes("html5.gamedistribution.com")) {
-          openGameInNewTab();
+          closeGameModal();
+          navigateToGame(game);
           return;
         }
       } catch {
