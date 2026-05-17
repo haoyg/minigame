@@ -19,9 +19,6 @@
 /best-unblocked-games /best-unblocked-games.html 200
 /top-idle-games /top-idle-games.html 200
 
-# Game detail pages — handled by JS router in index.html
-/games/* /index.html 200
-
 # Category landing pages — handled by JS router in index.html
 /puzzle-games /index.html 200
 /action-games /index.html 200
@@ -30,5 +27,5 @@
 /sports-games /index.html 200
 /strategy-games /index.html 200
 
-# Catch-all 404 — only reached for paths not matched above (typos, dead links, etc.)
-/* /404.html 404
+# Catch-all (handled by browser JS router in app.js)
+# /* /404.html 404
