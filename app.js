@@ -165,6 +165,7 @@
     const modalOpenNew = document.getElementById("modalOpenNew");
     const modalZoomIn = document.getElementById("modalZoomIn");
     const modalZoomOut = document.getElementById("modalZoomOut");
+    const modalIframeFullscreen = document.getElementById("modalIframeFullscreen");
 
     // Game detail elements
     const detailTitle = document.getElementById("detailTitle");
@@ -2022,6 +2023,16 @@
       modalZoomIn.classList.remove("active");
     }
 
+    function toggleIframeFullscreen() {
+      const wrapper = document.querySelector(".iframe-wrapper");
+      if (!wrapper) return;
+      if (!document.fullscreenElement) {
+        wrapper.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    }
+
     function openGameInNewTab() {
       if (!currentModalGame) return;
       if (currentModalGame.playMode === "internal") return;
@@ -2179,6 +2190,7 @@
       modalOpenNew.addEventListener("click", openGameInNewTab);
       modalZoomIn.addEventListener("click", zoomIn);
       modalZoomOut.addEventListener("click", zoomOut);
+      modalIframeFullscreen.addEventListener("click", toggleIframeFullscreen);
       noticeOpenNew.addEventListener("click", openGameInNewTab);
       noticeTryAnother.addEventListener("click", () => {
         const list = filteredGames.length ? filteredGames : allGames;
