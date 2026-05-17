@@ -387,6 +387,7 @@
         return;
       }
       window.location.href = `/?game=${encodeURIComponent(game.id)}`;
+    }
 
     function showHomePage() {
       homePage.style.display = "";
