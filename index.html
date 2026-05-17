@@ -1202,6 +1202,16 @@
       transition: transform 0.2s ease;
     }
 
+    .modal-iframe-controls {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
     .internal-wrapper {
       position: absolute;
       inset: 0;
@@ -1610,11 +1620,8 @@
           <span class="modal-title-meta" id="modalGameMeta"></span>
         </div>
         <div class="modal-controls">
-          <button class="modal-btn" id="modalZoomOut" title="Zoom out" aria-label="Zoom out">−</button>
-          <button class="modal-btn" id="modalZoomIn" title="Zoom in" aria-label="Zoom in">+</button>
           <button class="modal-btn" id="modalOpenNew" title="Open in new tab" aria-label="Open game in new tab">↗</button>
           <button class="modal-btn" id="modalFullscreen" title="Toggle full window" aria-label="Toggle full window">⤢</button>
-          <button class="modal-btn" id="modalIframeFullscreen" title="Fullscreen iframe" aria-label="Fullscreen">⛶</button>
           <button class="modal-btn" id="modalClose" title="Close" aria-label="Close">✕</button>
         </div>
       </div>
@@ -1622,6 +1629,11 @@
         <div class="iframe-wrapper">
           <iframe id="gameIframe" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
           <div class="modal-loading" id="modalLoading"><div class="spinner"></div></div>
+          <div class="modal-iframe-controls">
+            <button class="modal-btn" id="modalZoomOut" title="Zoom out" aria-label="Zoom out">−</button>
+            <button class="modal-btn" id="modalZoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+            <button class="modal-btn" id="modalIframeFullscreen" title="Fullscreen iframe" aria-label="Fullscreen">⛶</button>
+          </div>
           <div class="internal-wrapper" id="internalWrapper" aria-label="Built-in HTML5 game">
             <canvas id="internalCanvas" width="960" height="540"></canvas>
             <div class="internal-hud" id="internalHud">
