@@ -20,7 +20,9 @@
       "Bash(git check-ignore *)",
       "WebFetch(domain:pokopie.com)",
       "Bash(xxd E:/gitclone_project/minigame/_redirects)",
-      "Bash(xxd E:/gitclone_project/minigame/app.js)"
+      "Bash(xxd E:/gitclone_project/minigame/app.js)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
