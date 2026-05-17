@@ -15,7 +15,11 @@
       "Bash(node *)",
       "Bash(grep -v \"^\\\\\\\\.\")",
       "Bash(python3 *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "Bash(git add *)",
+      "Bash(git check-ignore *)",
+      "WebFetch(domain:pokopie.com)",
+      "Bash(xxd E:/gitclone_project/minigame/_redirects)"
     ]
   }
 }
