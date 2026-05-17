@@ -19,6 +19,9 @@
 /best-unblocked-games /best-unblocked-games.html 200
 /top-idle-games /top-idle-games.html 200
 
+# Game detail pages — handled by JS router in index.html
+/games/* /index.html 200
+
 # Category landing pages — handled by JS router in index.html
 /puzzle-games /index.html 200
 /action-games /index.html 200
