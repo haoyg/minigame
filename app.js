@@ -379,19 +379,14 @@
     function navigateToGame(game) {
       if (!game || !game.id) return;
       const slug = game.slug || slugify(game.title);
-      // Use clean URLs on real hosts; fall back to ?game= for file:// local preview.
+      // Use query params for game routing to work on all hosts (Netlify, Cloudflare, etc.)
       if (window.location.protocol === "file:") {
         const url = new URL(window.location.href);
-        url.pathname = url.pathname; // keep current file
         url.searchParams.set("game", game.id);
         window.location.href = url.toString();
         return;
       }
-
-      // Use a real navigation for maximum compatibility and SEO.
-      // SPA route handling still works on page load.
-      window.location.href = `/games/${slug}`;
-    }
+      window.location.href = `/?game=${encodeURIComponent(game.id)}`;
 
     function showHomePage() {
       homePage.style.display = "";
