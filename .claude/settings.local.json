@@ -22,7 +22,9 @@
       "Bash(xxd E:/gitclone_project/minigame/_redirects)",
       "Bash(xxd E:/gitclone_project/minigame/app.js)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "WebFetch(domain:www.pokopie.com)",
+      "Bash(git commit *)"
     ]
   }
 }
