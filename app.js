@@ -40,20 +40,81 @@
           return {
             id: row.id,
             title: title,
-            description: title + " via GameDistribution. Opens in a new browser tab.",
+            description: row.description || title + " — free browser game on Pokopie.",
             category: cat,
             thumbnail: row.thumbnail,
             playUrl: row.playUrl,
             popular: row.popular !== false,
             recent: row.recent !== false,
-            slug: slug
+            slug: slug,
+            introParagraph: row.introParagraph,
+            controls: row.controls,
+            keys: row.keys,
+            mouseActions: row.mouseActions,
+            mainAction: row.mainAction,
+            objective: row.objective,
+            obstacles: row.obstacles,
+            winCondition: row.winCondition,
+            tip1: row.tip1,
+            tip2: row.tip2,
+            tip3: row.tip3,
+            tip4: row.tip4
           };
         });
-        statusSource.textContent = "Custom game catalog";
+        statusSource.textContent = "Custom game catalog + FreeToGame";
       } catch(e) {
         allGames = [];
         statusSource.textContent = "Failed to load catalog";
       }
+
+      // Also fetch from FreeToGame API to add more games
+      try {
+        var ftgRes = await fetch(API_URL);
+        if (ftgRes.ok) {
+          var ftgData = await ftgRes.json();
+          if (Array.isArray(ftgData) && ftgData.length > 0) {
+            var existingIds = {};
+            allGames.forEach(function(g) { existingIds[g.id] = true; });
+
+            ftgData.forEach(function(game) {
+              if (existingIds[game.id]) return; // skip duplicates
+              var title = game.title || "Game";
+              var cat = normalizeCategoryByTitle(title, game.category || "Arcade");
+              var slug = slugify(title);
+              // Only add games with thumbnail to keep quality
+              if (game.thumbnail) {
+                allGames.push({
+                  id: game.id,
+                  title: title,
+                  description: game.description || title + " — free browser game on Pokopie.",
+                  category: cat,
+                  thumbnail: game.thumbnail,
+                  playUrl: game.game_url,
+                  popular: game.popular !== false,
+                  recent: game.release_date && game.release_date.includes("2025"),
+                  slug: slug,
+                  introParagraph: null,
+                  controls: null,
+                  keys: null,
+                  mouseActions: null,
+                  mainAction: null,
+                  objective: null,
+                  obstacles: null,
+                  winCondition: null,
+                  tip1: null,
+                  tip2: null,
+                  tip3: null,
+                  tip4: null
+                });
+              }
+            });
+            statusSource.textContent = allGames.length + " games (custom + FreeToGame)";
+          }
+        }
+      } catch(e) {
+        // FreeToGame fetch failed, continue with custom catalog only
+      }
+
       statusTotal.textContent = allGames.length + " games available";
       renderAllSections();
     }
