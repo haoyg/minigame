@@ -24,7 +24,8 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "WebFetch(domain:www.pokopie.com)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git fetch *)"
     ]
   }
 }
