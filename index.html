@@ -1200,16 +1200,25 @@
       height: 100%;
       border: none;
       transition: transform 0.2s ease;
+      z-index: 1;
+    }
+
+    .iframe-wrapper .modal-loading {
+      z-index: 5;
+    }
+
+    .iframe-wrapper .modal-iframe-controls {
+      z-index: 20;
     }
 
     .modal-iframe-controls {
       position: absolute;
-      bottom: 10px;
+      bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       gap: 6px;
-      z-index: 10;
+      z-index: 20;
     }
 
     .internal-wrapper {
