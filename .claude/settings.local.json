@@ -25,7 +25,10 @@
       "Bash(git push *)",
       "WebFetch(domain:www.pokopie.com)",
       "Bash(git commit *)",
-      "Bash(git fetch *)"
+      "Bash(git fetch *)",
+      "Bash(ping *)",
+      "Bash(nslookup haoyg-minigame.pages.dev)",
+      "Bash(nslookup *)"
     ]
   }
 }
