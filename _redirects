@@ -28,10 +28,12 @@
 # Category landing pages — handled by JS router in index.html
 /puzzle-games /index.html 200
 /action-games /index.html 200
+/shooting-games /index.html 200
 /arcade-games /index.html 200
 /racing-games /index.html 200
 /sports-games /index.html 200
 /strategy-games /index.html 200
+/idle-games /index.html 200
 
 # Catch-all (handled by browser JS router in app.js)
 # /* /404.html 404
