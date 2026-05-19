@@ -915,10 +915,12 @@
       animation: spin 0.7s linear infinite;
     }
 
+    /* Mobile-first: game window first, SEO content collapsed */
     .game-detail-description {
       margin-top: 12px;
       font-size: 13px;
       color: var(--text-soft);
+      display: none;
     }
 
     .game-detail-extra {
@@ -926,6 +928,7 @@
       font-size: 13px;
       line-height: 1.5;
       color: var(--text-soft);
+      display: none;
     }
 
     .game-detail-extra h2 {
@@ -1367,6 +1370,15 @@
       .game-detail-layout {
         grid-template-columns: minmax(0, 1fr);
       }
+      /* Mobile: game window + actions only, SEO content hidden */
+      .game-detail-description { display: none; }
+      .game-detail-extra { display: none; }
+    }
+
+    @media (min-width: 961px) {
+      /* Desktop: show SEO content inline after iframe */
+      .game-detail-description { display: block; }
+      .game-detail-extra { display: block; }
     }
 
     @media (max-width: 780px) {
