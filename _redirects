@@ -31,9 +31,6 @@
 /games/snake /games/snake/ 301
 /games/tetris /games/tetris/ 301
 
-# Redirect old /games/slug (catalog games) to /play/slug for SEO
-/games/* /play/:splat 301
-
 # Category landing pages — handled by JS router in index.html
 /puzzle-games /index.html 200
 /action-games /index.html 200
@@ -43,6 +40,3 @@
 /sports-games /index.html 200
 /strategy-games /index.html 200
 /idle-games /index.html 200
-
-# Catch-all (handled by browser JS router in app.js)
-# /* /404.html 404

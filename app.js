@@ -445,14 +445,13 @@
     function navigateToGame(game) {
       if (!game || !game.id) return;
       const slug = game.slug || slugify(game.title);
-      // Use query params for game routing to work on all hosts (Netlify, Cloudflare, etc.)
       if (window.location.protocol === "file:") {
         const url = new URL(window.location.href);
         url.searchParams.set("game", game.id);
         window.location.href = url.toString();
         return;
       }
-      window.location.href = `/play/${encodeURIComponent(slug)}`;
+      pushRoute(`/play/${encodeURIComponent(slug)}`);
     }
 
     function showHomePage() {
