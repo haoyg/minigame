@@ -1768,6 +1768,8 @@
     function renderAllSections() {
       applyFilters();
       renderFeatured();
+      renderPopular();
+      renderNew();
     }
 
     function applyFilters() {
