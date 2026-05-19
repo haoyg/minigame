@@ -9,7 +9,26 @@
       "Bash(sed 's/.webp//')",
       "WebFetch(domain:countapi.xyz)",
       "WebSearch",
-      "Bash(echo \"EXIT:$?\")"
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(grep -c \"\\\\.png$\")",
+      "Bash(grep -c \"\\\\.webp$\")",
+      "Bash(node *)",
+      "Bash(grep -v \"^\\\\\\\\.\")",
+      "Bash(python3 *)",
+      "Bash(python *)",
+      "Bash(git add *)",
+      "Bash(git check-ignore *)",
+      "WebFetch(domain:pokopie.com)",
+      "Bash(xxd E:/gitclone_project/minigame/_redirects)",
+      "Bash(xxd E:/gitclone_project/minigame/app.js)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "WebFetch(domain:www.pokopie.com)",
+      "Bash(git commit *)",
+      "Bash(git fetch *)",
+      "Bash(ping *)",
+      "Bash(nslookup haoyg-minigame.pages.dev)",
+      "Bash(nslookup *)"
     ]
   }
 }

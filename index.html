@@ -3,11 +3,16 @@
 <head>
   <!-- Basic SEO -->
   <meta charset="UTF-8" />
-  <title>Pokopie - 100+ Free Online Browser Games | Play Instantly No Download</title>
-  <meta name="description" content="Play 100+ free HTML5 browser games online at Pokopie.com — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download." />
+  <title>Pokopie - 105 Free Online Browser Games | Play Instantly No Download</title>
+  <meta name="description" content="Play 105 free HTML5 browser games online at Pokopie.com — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download." />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#ffb347" />
+
+  <!-- Security headers -->
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=()" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://www.pokopie.com" />
@@ -16,7 +21,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.pokopie.com" />
   <meta property="og:title" content="Pokopie - Free Online Browser Games" />
-  <meta property="og:description" content="Play 100+ free HTML5 games online on Pokopie. Arcade, puzzle, action, racing and more. No download, instant fun!" />
+  <meta property="og:description" content="Play 105 free HTML5 games online on Pokopie. Arcade, puzzle, action, racing and more. No download, instant fun!" />
   <meta property="og:site_name" content="Pokopie" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:image" content="https://www.pokopie.com/assets/og.svg" />
@@ -68,7 +73,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fredoka+One&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -1110,6 +1115,12 @@
       box-shadow: 0 10px 26px rgba(15, 23, 42, 0.9);
     }
 
+    .modal-btn.active {
+      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      color: #0f172a;
+      border-color: rgba(15, 23, 42, 0.8);
+    }
+
     .modal-body {
       position: relative;
       padding: 10px;
@@ -1182,7 +1193,28 @@
       background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 1));
     }
 
-    .iframe-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .iframe-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: transform 0.2s ease;
+      z-index: 1;
+    }
+
+    .iframe-wrapper .modal-loading {
+      z-index: 5;
+    }
+
+
+    .modal-iframe-controls {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      z-index: 20;
+    }
 
     .internal-wrapper {
       position: absolute;
@@ -1266,6 +1298,7 @@
       align-items: center;
       justify-content: center;
       pointer-events: none;
+      z-index: 5;
       background: radial-gradient(circle at center, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9));
     }
 
@@ -1425,13 +1458,13 @@
 
         <div class="hero-subtitle">
           <span class="emoji">⚡</span>
-          <span>100+ hand‑picked HTML5 games. Click, play, enjoy!</span>
+          <span>From quick arcade puzzles to epic strategy sessions — every game loads instantly in your browser, no account or download needed. We personally test and curate every title to ensure it is fun, family‑friendly, and smooth on both desktop and mobile.</span>
         </div>
 
         <div class="hero-stats">
           <div class="hero-stat-item"><span class="hero-stat-pill">🎮 Arcade • Puzzle • Action &amp; more</span></div>
           <div class="hero-stat-item"><span class="hero-stat-pill">📱 Mobile &amp; Desktop friendly</span></div>
-          <div class="hero-stat-item"><span class="hero-stat-pill">✨ Instant loading, zero installs</span></div>
+          <div class="hero-stat-item"><span class="hero-stat-pill">✨ Reviewed and updated weekly</span></div>
         </div>
 
         <div class="hero-actions">
@@ -1449,7 +1482,7 @@
               <span>Featured this week</span>
               <span class="badge">Curated by Pokopie</span>
             </div>
-            <div class="hero-tagline">Discover fast, fun, family‑friendly browser games.</div>
+            <div class="hero-tagline">Every game on Pokopie is tested by our team — no intrusive ads, no paywalls, just fun browser games.</div>
           </div>
         </div>
         <div class="hero-featured-grid" id="featuredGrid"></div>
@@ -1489,8 +1522,8 @@
 
       <div class="status-bar" id="statusBar">
         <div class="status-pill"><span class="status-dot green"></span><span id="statusTotal">Loading games...</span></div>
-        <div class="status-pill"><span class="status-dot.blue"></span><span id="statusFilter">All categories</span></div>
-        <div class="status-pill"><span class="status-dot red"></span><span id="statusSource">Using FreeToGame API…</span></div>
+        <div class="status-pill"><span class="status-dot blue"></span><span id="statusFilter">All categories</span></div>
+        <div class="status-pill"><span class="status-dot red"></span><span id="statusSource">Custom game catalog</span></div>
       </div>
 
       <!-- Category landing content (shown on /puzzle-games/ etc for SEO) -->
@@ -1524,20 +1557,6 @@
           <a href="/terms.html">Terms</a>
         </div>
       </div>
-      <div class="footer-top" style="margin-top:10px;">
-        <div class="footer-links" aria-label="Popular searches">
-          <a href="/?q=kids%20quiz">Kids Quiz</a>
-          <a href="/?q=brainrot%20legend">Brainrot Legend</a>
-          <a href="/?q=pvz%20fusion">PVZ Fusion</a>
-          <a href="/?q=pvz%20fusion%20cheats">PVZ Fusion Cheats</a>
-          <a href="/?q=obby%20brainrot%20glass%20bridge">Obby Brainrot: Glass Bridge</a>
-          <a href="/?q=ogame">OGame</a>
-          <a href="/?q=grey-box%20testing">Grey-box Testing</a>
-          <a href="/?q=ragdoll%20gun%20shooter">Ragdoll Gun Shooter</a>
-          <a href="/?q=cannon%20spinner%20playground">Cannon Spinner Playground</a>
-          <a href="/?q=knockout%20online">Knockout Online</a>
-        </div>
-      </div>
       <div class="footer-bottom">
         <strong>Pokopie</strong> – Free online HTML5 browser games. Visit our About, Privacy, Contact and Terms pages to learn more.
       </div>
@@ -1567,7 +1586,7 @@
           <div class="game-detail-meta" id="detailMeta"></div>
         </header>
         <div class="detail-iframe-wrapper">
-          <iframe id="detailIframe" loading="lazy" allowfullscreen></iframe>
+          <iframe id="detailIframe" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
           <div class="detail-iframe-loading" id="detailIframeLoading">
             <div class="spinner"></div>
             <span>Loading game…</span>
@@ -1576,6 +1595,9 @@
         <p class="game-detail-description" id="detailDescription"></p>
         <div class="game-detail-extra" id="detailExtra"></div>
         <div class="game-detail-actions">
+          <button type="button" class="detail-btn primary" id="detailPlayBtn">
+            <span>▶ Play Game in New Tab</span>
+          </button>
           <button type="button" class="detail-btn" id="detailBackHome">
             <span>← Back to all games</span>
           </button>
@@ -1610,7 +1632,7 @@
       </div>
       <div class="modal-body">
         <div class="iframe-wrapper">
-          <iframe id="gameIframe" loading="lazy" allowfullscreen></iframe>
+          <iframe id="gameIframe" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
           <div class="modal-loading" id="modalLoading"><div class="spinner"></div></div>
           <div class="internal-wrapper" id="internalWrapper" aria-label="Built-in HTML5 game">
             <canvas id="internalCanvas" width="960" height="540"></canvas>
@@ -1627,6 +1649,11 @@
               <span><strong>Controls:</strong> Arrow keys / WASD • On mobile: drag to move</span>
             </div>
           </div>
+        </div>
+        <div class="modal-iframe-controls">
+          <button class="modal-btn" id="modalZoomOut" title="Zoom out" aria-label="Zoom out">−</button>
+          <button class="modal-btn" id="modalZoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+          <button class="modal-btn" id="modalIframeFullscreen" title="Fullscreen iframe" aria-label="Fullscreen">⛶</button>
         </div>
         <div class="modal-description" id="modalDescription">
           <!-- Filled dynamically with the current game's title, category and short description -->
