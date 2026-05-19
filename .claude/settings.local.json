@@ -28,7 +28,8 @@
       "Bash(git fetch *)",
       "Bash(ping *)",
       "Bash(nslookup haoyg-minigame.pages.dev)",
-      "Bash(nslookup *)"
+      "Bash(nslookup *)",
+      "Bash(xargs '-I{}' python3 -c ' *)"
     ]
   }
 }

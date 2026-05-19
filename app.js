@@ -379,7 +379,7 @@
 
     function setSeoForGame(game) {
       const cat = (game.category || "Arcade");
-      const canonicalPath = `/games/${game.slug || slugify(game.title)}`;
+      const canonicalPath = `/play/${game.slug || slugify(game.title)}`;
       const title = `Play ${game.title} Online Free No Download`;
       const description = `Play ${game.title} online for free. No download needed. Learn how to play, tips, and similar games. Works on PC, mobile, and tablet.`;
 
@@ -571,7 +571,7 @@
         detailExtra.appendChild(el("h2", "", { text: "Similar Games" }));
         const ulSimilar = el("ul", "detail-list");
         similarGames.forEach((g) => {
-          const a = el("a", "detail-link", { href: `/games/${g.slug || slugify(g.title)}`, text: `Play ${g.title}` });
+          const a = el("a", "detail-link", { href: `/play/${g.slug || slugify(g.title)}`, text: `Play ${g.title}` });
           const li = el("li", "");
           li.appendChild(a);
           ulSimilar.appendChild(li);
@@ -629,7 +629,7 @@
         if (host === "www.pokopie.com" || host === "pokopie.com") {
           const href = loc.protocol + "//" + loc.host + loc.pathname + loc.search;
           const params = new URLSearchParams(loc.search || "");
-          const isGamePath = (loc.pathname || "").toLowerCase().startsWith("/games/");
+          const isGamePath = (loc.pathname || "").toLowerCase().startsWith("/play/");
           if (params.get("game") || isGamePath) {
             // 详情页场景：直接返回当前 URL（不带哈希）
             return href;
@@ -639,7 +639,7 @@
           if (currentModalGame && currentModalGame.id) {
             // Prefer clean game URL for referrer
             const slug = currentModalGame.slug || slugify(currentModalGame.title);
-            base += "games/" + encodeURIComponent(slug);
+            base += "play/" + encodeURIComponent(slug);
           }
           return base;
         }
@@ -2078,7 +2078,7 @@
         if (legacyGameId) {
           const g = allGames.find((x) => x.id === legacyGameId);
           if (g) {
-            history.replaceState({}, "", `/games/${g.slug || slugify(g.title)}`);
+            history.replaceState({}, "", `/play/${g.slug || slugify(g.title)}`);
             showGameDetail(g);
             setSeoForGame(g);
             window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2086,9 +2086,9 @@
           }
         }
 
-        // Game detail route: /games/:slug
-        if (path.startsWith("/games/")) {
-          const slug = decodeURIComponent(path.slice("/games/".length)).toLowerCase();
+        // Game detail route: /play/:slug (external catalog games)
+        if (path.startsWith("/play/")) {
+          const slug = decodeURIComponent(path.slice("/play/".length)).toLowerCase();
           const game = allGames.find((g) => (g.slug || "").toLowerCase() === slug);
           if (game) {
             showGameDetail(game);
