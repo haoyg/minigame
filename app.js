@@ -452,7 +452,7 @@
         window.location.href = url.toString();
         return;
       }
-      window.location.href = `/?game=${encodeURIComponent(game.id)}`;
+      window.location.href = `/play/${encodeURIComponent(slug)}`;
     }
 
     function showHomePage() {

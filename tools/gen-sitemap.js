@@ -61,14 +61,14 @@ function main() {
   // Homepage
   urls.push({ loc: `${ROOT}/`, changefreq: "daily", priority: "1.0", lastmod: date });
 
-  // Category pages
+  // Category pages (preferred canonical routes, matching routeKeyForCategory in app.js)
   const categoryPages = [
     "/puzzle-games/",
-    "/action-games/",
+    "/shooting-games/",
     "/arcade-games/",
     "/racing-games/",
     "/sports-games/",
-    "/strategy-games/"
+    "/idle-games/"
   ];
   for (const p of categoryPages) {
     urls.push({ loc: `${ROOT}${p}`, changefreq: "daily", priority: "0.8", lastmod: date });
