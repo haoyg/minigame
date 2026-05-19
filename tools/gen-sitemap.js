@@ -1,13 +1,17 @@
 const fs = require("fs");
+const path = require("path");
 
 const ROOT = "https://www.pokopie.com";
-const INDEX_PATH = "E:/gitclone_project/minigame/index.html";
+const SCRIPT_DIR = __dirname;
+const ROOT_DIR = path.resolve(SCRIPT_DIR, "..");
+const INDEX_PATH = path.join(ROOT_DIR, "index.html");
+const CATALOG_PATH = path.join(ROOT_DIR, "games-catalog.json");
 
 function slugify(text) {
   return (text || "")
     .toLowerCase()
     .trim()
-    .replace(/[’']/g, "")
+    .replace(/['']/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 80) || "game";
@@ -20,6 +24,10 @@ function escXml(s) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 function extractTitlesFromInlineScript(html) {
@@ -47,35 +55,68 @@ function buildUniqueSlugs(titles) {
 }
 
 function main() {
-  const html = fs.readFileSync(INDEX_PATH, "utf8");
-  const titles = extractTitlesFromInlineScript(html);
-  const gameSlugs = buildUniqueSlugs(titles);
-
+  const date = today();
   const urls = [];
-  urls.push({ loc: `${ROOT}/`, changefreq: "daily", priority: "1.0" });
 
+  // Homepage
+  urls.push({ loc: `${ROOT}/`, changefreq: "daily", priority: "1.0", lastmod: date });
+
+  // Category pages
   const categoryPages = [
     "/puzzle-games/",
-    "/shooting-games/",
-    "/idle-games/",
+    "/action-games/",
     "/arcade-games/",
     "/racing-games/",
-    "/sports-games/"
+    "/sports-games/",
+    "/strategy-games/"
   ];
-  for (const p of categoryPages) urls.push({ loc: `${ROOT}${p}`, changefreq: "daily", priority: "0.8" });
+  for (const p of categoryPages) {
+    urls.push({ loc: `${ROOT}${p}`, changefreq: "daily", priority: "0.8", lastmod: date });
+  }
 
+  // Static pages
   const staticPages = [
     "/best-unblocked-games",
     "/top-idle-games",
-    "/about.html",
-    "/privacy.html",
-    "/contact.html",
-    "/terms.html"
+    "/about",
+    "/privacy",
+    "/contact",
+    "/terms",
+    "/fun-quiz"
   ];
-  for (const p of staticPages) urls.push({ loc: `${ROOT}${p}`, changefreq: "monthly", priority: "0.5" });
+  for (const p of staticPages) {
+    urls.push({ loc: `${ROOT}${p}`, changefreq: "monthly", priority: "0.5", lastmod: date });
+  }
 
-  for (const s of gameSlugs) {
-    urls.push({ loc: `${ROOT}/games/${encodeURIComponent(s)}`, changefreq: "weekly", priority: "0.9" });
+  // Built-in games (static directories)
+  const builtInGames = ["2048", "breakout", "memory", "minesweeper", "snake", "tetris"];
+  for (const g of builtInGames) {
+    urls.push({ loc: `${ROOT}/games/${g}/`, changefreq: "monthly", priority: "0.7", lastmod: date });
+  }
+
+  // Catalog games from games-catalog.json
+  try {
+    const catalog = JSON.parse(fs.readFileSync(CATALOG_PATH, "utf8"));
+    const usedSlugs = new Set();
+    for (const game of catalog) {
+      let slug = game.slug || slugify(game.title);
+      // Deduplicate slugs (same logic as app.js)
+      if (usedSlugs.has(slug)) {
+        let i = 2;
+        while (usedSlugs.has(`${slug}-${i}`)) i++;
+        slug = `${slug}-${i}`;
+      }
+      usedSlugs.add(slug);
+      urls.push({ loc: `${ROOT}/play/${encodeURIComponent(slug)}`, changefreq: "weekly", priority: "0.9", lastmod: date });
+    }
+  } catch (e) {
+    // Fallback: extract from inline script
+    const html = fs.readFileSync(INDEX_PATH, "utf8");
+    const titles = extractTitlesFromInlineScript(html);
+    const gameSlugs = buildUniqueSlugs(titles);
+    for (const s of gameSlugs) {
+      urls.push({ loc: `${ROOT}/play/${encodeURIComponent(s)}`, changefreq: "weekly", priority: "0.9", lastmod: date });
+    }
   }
 
   let out = "";
@@ -84,6 +125,7 @@ function main() {
   for (const u of urls) {
     out += `  <url>\n`;
     out += `    <loc>${escXml(u.loc)}</loc>\n`;
+    out += `    <lastmod>${u.lastmod}</lastmod>\n`;
     out += `    <changefreq>${u.changefreq}</changefreq>\n`;
     out += `    <priority>${u.priority}</priority>\n`;
     out += `  </url>\n`;
@@ -94,4 +136,3 @@ function main() {
 }
 
 main();
-
