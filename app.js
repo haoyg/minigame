@@ -459,6 +459,55 @@
       gameDetailPage.style.display = "none";
     }
 
+    function showMissingGameDetail(slug) {
+      if (!gameDetailPage || !homePage) return;
+      homePage.style.display = "none";
+      gameDetailPage.style.display = "block";
+
+      if (detailTitle) detailTitle.textContent = "Game not found";
+      if (detailMeta) detailMeta.textContent = "Pokopie game detail";
+      if (detailDescription) {
+        detailDescription.textContent =
+          "We could not find this game in the current catalog. It may have been renamed, removed, or the game catalog may not have loaded correctly.";
+      }
+      if (detailExtra) {
+        detailExtra.innerHTML = "";
+        detailExtra.appendChild(el("h2", "", { text: "What to try next" }));
+        const list = el("ul", "detail-list");
+        list.appendChild(el("li", "", { text: "Go back to all games and choose another title." }));
+        list.appendChild(el("li", "", { text: "Refresh the page in a moment if the catalog is still loading." }));
+        if (slug) list.appendChild(el("li", "", { text: "Requested game: " + slug }));
+        detailExtra.appendChild(list);
+      }
+      if (detailIframe) detailIframe.src = "about:blank";
+      if (detailIframeLoading) detailIframeLoading.classList.add("hidden");
+      if (detailSimilarList) detailSimilarList.innerHTML = "";
+      if (detailPlayBtn) detailPlayBtn.onclick = null;
+      if (detailBackHome) {
+        detailBackHome.onclick = () => {
+          pushRoute("/");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+      }
+      setSeoForPage({
+        title: "Game Not Found - Pokopie",
+        description: "This Pokopie game could not be found. Browse free online games and choose another title.",
+        canonicalPath: "/"
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function findGameByRouteSlug(routeSlug) {
+      const slug = (routeSlug || "").trim().toLowerCase();
+      if (!slug) return null;
+      return allGames.find((g) => {
+        const gameSlug = (g.slug || slugify(g.title)).toLowerCase();
+        const titleSlug = slugify(g.title).toLowerCase();
+        const idSlug = String(g.id || "").toLowerCase();
+        return gameSlug === slug || titleSlug === slug || idSlug === slug;
+      }) || null;
+    }
+
     function renderSimilarGames(game) {
       if (!detailSimilarList) return;
       detailSimilarList.innerHTML = "";
@@ -2090,16 +2139,14 @@
         // Game detail route: /play/:slug (external catalog games)
         if (path.startsWith("/play/")) {
           const slug = decodeURIComponent(path.slice("/play/".length)).toLowerCase();
-          const game = allGames.find((g) => (g.slug || "").toLowerCase() === slug);
+          const game = findGameByRouteSlug(slug);
           if (game) {
             showGameDetail(game);
             setSeoForGame(game);
             window.scrollTo({ top: 0, behavior: "smooth" });
             return;
           }
-          // Not found -> home
-          showHomePage();
-          setSeoForHome();
+          showMissingGameDetail(slug);
           return;
         }
 
