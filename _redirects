@@ -2,12 +2,37 @@
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200
 
-# Canonicalize: prefer clean URLs (no .html)
+# Canonicalize: prefer clean URLs with no .html
 /about.html /about 301
 /contact.html /contact 301
 /privacy.html /privacy 301
 /terms.html /terms 301
 /fun-quiz.html /fun-quiz 301
+/best-unblocked-games.html /best-unblocked-games 301
+/top-idle-games.html /top-idle-games 301
+/articles/how-to-play-games-online-without-downloading.html /articles/how-to-play-games-online-without-downloading 301
+/articles/browser-games-vs-mobile-apps.html /articles/browser-games-vs-mobile-apps 301
+/articles/best-game-categories-explained.html /articles/best-game-categories-explained 301
+
+# Canonicalize: remove trailing slashes except real game directories
+/about/ /about 301
+/contact/ /contact 301
+/privacy/ /privacy 301
+/terms/ /terms 301
+/fun-quiz/ /fun-quiz 301
+/best-unblocked-games/ /best-unblocked-games 301
+/top-idle-games/ /top-idle-games 301
+/puzzle-games/ /puzzle-games 301
+/action-games/ /action-games 301
+/shooting-games/ /shooting-games 301
+/arcade-games/ /arcade-games 301
+/racing-games/ /racing-games 301
+/sports-games/ /sports-games 301
+/strategy-games/ /strategy-games 301
+/idle-games/ /idle-games 301
+/articles/how-to-play-games-online-without-downloading/ /articles/how-to-play-games-online-without-downloading 301
+/articles/browser-games-vs-mobile-apps/ /articles/browser-games-vs-mobile-apps 301
+/articles/best-game-categories-explained/ /articles/best-game-categories-explained 301
 
 # Serve clean URLs from the underlying .html files
 /about /about.html 200
@@ -15,14 +40,16 @@
 /privacy /privacy.html 200
 /terms /terms.html 200
 /fun-quiz /fun-quiz.html 200
-
 /best-unblocked-games /best-unblocked-games.html 200
 /top-idle-games /top-idle-games.html 200
+/articles/how-to-play-games-online-without-downloading /articles/how-to-play-games-online-without-downloading.html 200
+/articles/browser-games-vs-mobile-apps /articles/browser-games-vs-mobile-apps.html 200
+/articles/best-game-categories-explained /articles/best-game-categories-explained.html 200
 
-# Game detail pages — catalog games via /play/ (handled by JS router in app.js)
+# Game detail pages - catalog games via /play/ (handled by JS router in app.js)
 /play/* /index.html 200
 
-# Built-in games — preserve their own directories (must come before the wildcard)
+# Built-in games - preserve their own directories (must come before the wildcard)
 # These are real subdirectories, not catalog slugs, so they must not redirect to /play/
 /games/2048 /games/2048/ 301
 /games/breakout /games/breakout/ 301
@@ -31,7 +58,7 @@
 /games/snake /games/snake/ 301
 /games/tetris /games/tetris/ 301
 
-# Category landing pages — handled by JS router in index.html
+# Category landing pages - handled by JS router in index.html
 /puzzle-games /index.html 200
 /action-games /index.html 200
 /shooting-games /index.html 200

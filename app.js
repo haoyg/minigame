@@ -2103,7 +2103,7 @@
     function setSeoForCategory(cat) {
       clearGameSeoJsonLd();
       const slug = routeKeyForCategory(cat) || Object.entries(CATEGORY_ROUTES).find(([, v]) => v === cat)?.[0] || "";
-      const canonicalPath = slug ? `/${slug}/` : "/";
+      const canonicalPath = slug ? `/${slug}` : "/";
       const keyword =
         (slug || cat || "")
           .replace(/-games$/i, " games")
@@ -2150,7 +2150,7 @@
           return;
         }
 
-        // Category routes: /puzzle-games/ etc
+        // Category routes: /puzzle-games etc
         const key = path.replace(/^\/+/, "");
         if (CATEGORY_ROUTES[key]) {
           const cat = CATEGORY_ROUTES[key];
@@ -2209,7 +2209,7 @@
 
         const key = routeKeyForCategory(cat);
         if (!key) pushRoute("/");
-        else pushRoute(`/${key}/`);
+        else pushRoute(`/${key}`);
       });
 
       let searchTimeout = null;
