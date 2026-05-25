@@ -82,6 +82,11 @@ function withGdReferrer(playUrl, canonicalUrl) {
 
 function buildGames(catalog) {
   const used = new Set();
+  const titleCounts = catalog.reduce((counts, game) => {
+    const title = game.title || "Game";
+    counts.set(title, (counts.get(title) || 0) + 1);
+    return counts;
+  }, new Map());
   return catalog.map((game) => {
     let slug = game.slug || slugify(game.title);
     if (used.has(slug)) {
@@ -90,7 +95,10 @@ function buildGames(catalog) {
       slug = `${slug}-${i}`;
     }
     used.add(slug);
-    return Object.assign({}, game, { slug });
+    const displayTitle = titleCounts.get(game.title || "Game") > 1
+      ? `${game.title || "Game"} ${game.category || "Arcade"} Game`
+      : game.title;
+    return Object.assign({}, game, { slug, displayTitle });
   });
 }
 
@@ -113,7 +121,7 @@ function categoryPath(category) {
 }
 
 function gameCopy(game) {
-  const name = game.title || "Game";
+  const name = game.displayTitle || game.title || "Game";
   const category = game.category || "Arcade";
   const genre = category.toLowerCase();
   const controls = sentencePart(game.controls || "keyboard, mouse, or touch controls");
