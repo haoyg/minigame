@@ -44,6 +44,20 @@ function sentencePart(value) {
   return stripTags(value).replace(/[.!?。！？]+$/g, "");
 }
 
+function sentence(value) {
+  const text = sentencePart(value);
+  return text ? text[0].toUpperCase() + text.slice(1) + "." : "";
+}
+
+function controlSentence(value) {
+  const text = sentencePart(value || "keyboard, mouse, or touch controls");
+  if (!text) return "Use keyboard, mouse, or touch controls.";
+  if (/^(use|click|tap|drag|swipe|aim|move|press|hold|select|choose|steer)\b/i.test(text)) {
+    return sentence(text);
+  }
+  return `Use ${text}.`;
+}
+
 function resolveAssetUrl(src) {
   const s = String(src || "").trim();
   if (!s) return `${ROOT}/assets/og.svg`;
@@ -84,6 +98,18 @@ function similarGames(game, games) {
   const sameCategory = games.filter((g) => g.id !== game.id && g.category === game.category);
   const pool = sameCategory.length ? sameCategory : games.filter((g) => g.id !== game.id);
   return pool.slice(0, 6);
+}
+
+function categoryPath(category) {
+  const paths = {
+    Puzzle: "puzzle-games",
+    Racing: "racing-games",
+    Sports: "sports-games",
+    Action: "shooting-games",
+    Arcade: "arcade-games",
+    Strategy: "idle-games"
+  };
+  return paths[category] || "arcade-games";
 }
 
 function gameCopy(game) {
@@ -146,7 +172,7 @@ function renderPage(game, games) {
         "@id": `${canonicalUrl}#breadcrumb`,
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": `${ROOT}/` },
-          { "@type": "ListItem", "position": 2, "name": `${copy.category} Games`, "item": `${ROOT}/${copy.category === "Puzzle" ? "puzzle-games" : copy.category === "Racing" ? "racing-games" : copy.category === "Sports" ? "sports-games" : copy.category === "Action" ? "shooting-games" : "idle-games"}` },
+          { "@type": "ListItem", "position": 2, "name": `${copy.category} Games`, "item": `${ROOT}/${categoryPath(copy.category)}` },
           { "@type": "ListItem", "position": 3, "name": copy.name, "item": canonicalUrl }
         ]
       },
@@ -227,7 +253,7 @@ function renderPage(game, games) {
     <div class="layout">
       <main class="panel">
         <h1>Play ${escHtml(copy.name)} Online Free</h1>
-        <div class="meta">${escHtml(copy.category)} game · HTML5 browser game · No download</div>
+        <div class="meta">${escHtml(copy.category)} game | HTML5 browser game | No download</div>
         <img class="hero-img" src="${escAttr(image)}" alt="${escAttr(copy.name)} thumbnail" width="640" height="360" />
         <div class="actions">
           <a class="btn" href="${escAttr(playUrl)}" target="_blank" rel="noopener noreferrer">Play Game</a>
@@ -238,7 +264,7 @@ function renderPage(game, games) {
         <p>${escHtml(copy.intro)}</p>
 
         <h2>How to Play ${escHtml(copy.name)}</h2>
-        <p>Use ${escHtml(copy.controls)}. Your main task is to ${escHtml(copy.mainAction)}. Your goal is to ${escHtml(copy.objective)}. Watch out for ${escHtml(copy.obstacles)} and try to ${escHtml(copy.win)}.</p>
+        <p>${escHtml(controlSentence(copy.controls))} The main task is to ${escHtml(copy.mainAction)}. Your goal is to ${escHtml(copy.objective)}. The main challenges are ${escHtml(copy.obstacles)}. Aim to ${escHtml(copy.win)}.</p>
 
         <h2>Game Controls</h2>
         <ul>
