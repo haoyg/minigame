@@ -689,6 +689,48 @@
       .landing-new-list { grid-template-columns: 1fr; }
     }
 
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .guide-card {
+      display: block;
+      min-height: 150px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.10), transparent 65%),
+                  var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.26);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .guide-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(248, 250, 252, 0.5);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.42);
+    }
+
+    .guide-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.35;
+      color: var(--text-main);
+    }
+
+    .guide-card p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 780px) {
+      .guide-grid { grid-template-columns: 1fr; }
+    }
+
     /* Horizontal sections (Popular / New) */
     .games-row {
       display: flex;
@@ -1557,6 +1599,30 @@
       <div class="empty-message" id="emptyMessage" hidden>No games match your search yet. Try clearing your filters or using a different keyword.</div>
     </section>
 
+    <!-- Gaming Guides -->
+    <section class="section" aria-labelledby="guides-heading">
+      <div class="section-header">
+        <div>
+          <div class="section-title"><span class="emoji">📚</span><span id="guides-heading">Gaming Guides</span></div>
+          <div class="section-subtitle">Helpful reads for choosing and playing browser games.</div>
+        </div>
+      </div>
+      <div class="guide-grid">
+        <a class="guide-card" href="/articles/how-to-play-games-online-without-downloading">
+          <h3>How to Play Games Online Without Downloading</h3>
+          <p>Learn how HTML5 browser games work and how to start playing safely on any device.</p>
+        </a>
+        <a class="guide-card" href="/articles/browser-games-vs-mobile-apps">
+          <h3>Browser Games vs Mobile Apps</h3>
+          <p>Compare browser games and app games across storage, speed, accessibility, and casual play.</p>
+        </a>
+        <a class="guide-card" href="/articles/best-game-categories-explained">
+          <h3>Best Game Categories Explained</h3>
+          <p>Understand arcade, puzzle, action, racing, sports, and strategy games before you pick.</p>
+        </a>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer>
       <div class="footer-top">
@@ -1566,6 +1632,7 @@
           <a href="/privacy">Privacy Policy</a>
           <a href="/contact">Contact</a>
           <a href="/fun-quiz">Fun Quiz</a>
+          <a href="/articles/how-to-play-games-online-without-downloading">Guides</a>
           <a href="/terms">Terms</a>
         </div>
       </div>
