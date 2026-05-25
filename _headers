@@ -4,3 +4,18 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
+
+/*.html
+  Content-Type: text/html; charset=UTF-8
+
+/articles/*.html
+  Content-Type: text/html; charset=UTF-8
+
+/games/*/index.html
+  Content-Type: text/html; charset=UTF-8
+
+/app.js
+  Content-Type: application/javascript; charset=UTF-8
+
+/games-catalog.json
+  Content-Type: application/json; charset=UTF-8
