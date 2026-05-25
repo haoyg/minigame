@@ -14,6 +14,12 @@
 /articles/browser-games-vs-mobile-apps.html /articles/browser-games-vs-mobile-apps 301
 /articles/best-game-categories-explained.html /articles/best-game-categories-explained 301
 
+/puzzle-games.html /puzzle-games 301
+/shooting-games.html /shooting-games 301
+/arcade-games.html /arcade-games 301
+/racing-games.html /racing-games 301
+/sports-games.html /sports-games 301
+/idle-games.html /idle-games 301
 # Canonicalize: remove trailing slashes except real game directories
 /about/ /about 301
 /contact/ /contact 301
@@ -602,11 +608,11 @@
 /games/tetris /games/tetris/ 301
 
 # Category landing pages - handled by JS router in index.html
-/puzzle-games /index.html 200
-/action-games /index.html 200
-/shooting-games /index.html 200
-/arcade-games /index.html 200
-/racing-games /index.html 200
-/sports-games /index.html 200
-/strategy-games /index.html 200
-/idle-games /index.html 200
+/puzzle-games /puzzle-games.html 200
+/action-games /shooting-games 301
+/shooting-games /shooting-games.html 200
+/arcade-games /arcade-games.html 200
+/racing-games /racing-games.html 200
+/sports-games /sports-games.html 200
+/strategy-games /idle-games 301
+/idle-games /idle-games.html 200
