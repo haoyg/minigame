@@ -139,8 +139,8 @@ function scoreGame(game, config) {
 
 function pickGames(games, config) {
   return games
+    .filter((game) => game.category === config.category)
     .map((game) => ({ game, score: scoreGame(game, config) }))
-    .filter((row) => row.score > 0)
     .sort((a, b) => b.score - a.score || String(a.game.title).localeCompare(String(b.game.title)))
     .slice(0, 36)
     .map((row) => row.game);
