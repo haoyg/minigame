@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = "https://www.pokopie.com";
+const ROOT = "https://pokopie.com";
 const SCRIPT_DIR = __dirname;
 const ROOT_DIR = path.resolve(SCRIPT_DIR, "..");
 const CATALOG_PATH = path.join(ROOT_DIR, "games-catalog.json");

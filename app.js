@@ -343,7 +343,7 @@
 
     function getCanonicalOrigin() {
       const host = (window.location.hostname || "").toLowerCase();
-      if (host === "www.pokopie.com" || host === "pokopie.com") return "https://www.pokopie.com";
+      if (host === "pokopie.com" || host === "www.pokopie.com") return "https://pokopie.com";
       return window.location.origin;
     }
 
@@ -687,7 +687,7 @@
       try {
         const loc = window.location;
         const host = (loc.hostname || "").toLowerCase();
-        if (host === "www.pokopie.com" || host === "pokopie.com") {
+        if (host === "pokopie.com" || host === "www.pokopie.com") {
           const href = loc.protocol + "//" + loc.host + loc.pathname + loc.search;
           const params = new URLSearchParams(loc.search || "");
           const isGamePath = (loc.pathname || "").toLowerCase().startsWith("/play/");
@@ -707,7 +707,7 @@
       } catch {
         // ignore
       }
-      return "https://www.pokopie.com/";
+      return "https://pokopie.com/";
     }
 
     function withGdReferrer(url) {
@@ -736,7 +736,7 @@
       // Allow embeds only on the real production hosts.
       try {
         const host = (window.location.hostname || "").toLowerCase();
-        return host === "www.pokopie.com" || host === "pokopie.com";
+        return host === "pokopie.com" || host === "www.pokopie.com";
       } catch {
         return false;
       }

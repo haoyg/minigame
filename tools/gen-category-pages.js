@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = "https://www.pokopie.com";
+const ROOT = "https://pokopie.com";
 const ROOT_DIR = path.resolve(__dirname, "..");
 const CATALOG_PATH = path.join(ROOT_DIR, "games-catalog.json");
 const REDIRECTS_PATH = path.join(ROOT_DIR, "_redirects");

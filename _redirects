@@ -1,3 +1,6 @@
+https://www.pokopie.com/* https://pokopie.com/:splat 301!
+http://www.pokopie.com/* https://pokopie.com/:splat 301!
+
 /ads.txt /ads.txt 200
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200
