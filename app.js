@@ -287,7 +287,7 @@
       if (landingTopList) {
         landingTopList.innerHTML = "";
         topList.forEach((g) => {
-          const item = el("article", "landing-item");
+          const item = el("a", "landing-item", { href: getGamePath(g) });
           const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", {
             loading: "lazy",
             width: "86",
@@ -299,7 +299,7 @@
           right.appendChild(el("div", "landing-desc", { text: oneLine }));
           item.appendChild(img);
           item.appendChild(right);
-          item.addEventListener("click", () => navigateToGame(g));
+          attachGameLink(item, g);
           landingTopList.appendChild(item);
         });
       }
@@ -322,7 +322,7 @@
       if (landingNewList) {
         landingNewList.innerHTML = "";
         (newList.length ? newList : topList.slice(0, 6)).forEach((g) => {
-          const item = el("article", "landing-item");
+          const item = el("a", "landing-item", { href: getGamePath(g) });
           const img = createThumbPicture("landing-thumb", resolveThumbSrc(g.thumbnail), g.title + " thumbnail", {
             loading: "lazy",
             width: "86",
@@ -333,7 +333,7 @@
           right.appendChild(el("div", "landing-desc", { text: g.description || `New ${cat.toLowerCase()} game on Pokopie. Play instantly in browser.` }));
           item.appendChild(img);
           item.appendChild(right);
-          item.addEventListener("click", () => navigateToGame(g));
+          attachGameLink(item, g);
           landingNewList.appendChild(item);
         });
       }
@@ -442,16 +442,29 @@
       handleRoute();
     }
 
+    function getGamePath(game) {
+      if (!game) return "/";
+      const slug = game.slug || slugify(game.title);
+      return `/play/${encodeURIComponent(slug)}`;
+    }
+
+    function attachGameLink(link, game) {
+      link.addEventListener("click", (e) => {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        navigateToGame(game);
+      });
+    }
+
     function navigateToGame(game) {
       if (!game || !game.id) return;
-      const slug = game.slug || slugify(game.title);
       if (window.location.protocol === "file:") {
         const url = new URL(window.location.href);
         url.searchParams.set("game", game.id);
         window.location.href = url.toString();
         return;
       }
-      pushRoute(`/play/${encodeURIComponent(slug)}`);
+      pushRoute(getGamePath(game));
     }
 
     function showHomePage() {
@@ -519,7 +532,7 @@
       const pool = sameCategory.length ? sameCategory : allGames.filter((g) => g.id !== game.id);
 
       pool.slice(0, 6).forEach((sim) => {
-        const card = el("article", "detail-similar-card");
+        const card = el("a", "detail-similar-card", { href: getGamePath(sim) });
         card.setAttribute("data-game-id", sim.id);
 
         const img = createThumbPicture("detail-similar-thumb", resolveThumbSrc(sim.thumbnail), sim.title + " thumbnail", {
@@ -532,7 +545,7 @@
         });
         card.appendChild(caption);
 
-        card.addEventListener("click", () => navigateToGame(sim));
+        attachGameLink(card, sim);
         detailSimilarList.appendChild(card);
       });
     }
@@ -1842,7 +1855,7 @@
     }
 
     function createGameCard(game, compact) {
-      const card = el("article", "game-card");
+      const card = el("a", "game-card", { href: getGamePath(game) });
       card.setAttribute("data-game-id", game.id);
 
       const thumbWrap = el("div", "game-thumb-wrap");
@@ -1873,15 +1886,11 @@
       metaRow.appendChild(el("span", null, { text: (game.category || "Arcade") + " • HTML5" }));
       metaRow.appendChild(el("span", null, { text: "Play now" }));
 
-      const btn = el("button", "play-button", { type: "button" });
+      const btn = el("span", "play-button");
       btn.appendChild(el("span", "icon", { text: "▶" }));
       btn.appendChild(el("span", null, { text: "Play Now" }));
 
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        navigateToGame(game);
-      });
-      card.addEventListener("click", () => navigateToGame(game));
+      attachGameLink(card, game);
 
       content.appendChild(title);
       content.appendChild(desc);
@@ -1908,7 +1917,7 @@
         }
       }
       featured.forEach((game, idx) => {
-        const card = el("article", "featured-card", { "data-game-id": game.id });
+        const card = el("a", "featured-card", { "data-game-id": game.id, href: getGamePath(game) });
         const img = createThumbPicture("featured-thumb", resolveThumbSrc(game.thumbnail), game.title + " thumbnail", {
           loading: idx === 0 ? "eager" : "lazy",
           decoding: "async",
@@ -1922,7 +1931,7 @@
         meta.appendChild(el("span", "play", { text: "▶ Play" }));
         overlay.appendChild(meta);
         card.appendChild(overlay);
-        card.addEventListener("click", () => navigateToGame(game));
+        attachGameLink(card, game);
         featuredGrid.appendChild(card);
       });
     }
