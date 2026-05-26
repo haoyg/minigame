@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = "https://www.pokopie.com";
+const ROOT = "https://pokopie.com";
 const SCRIPT_DIR = __dirname;
 const ROOT_DIR = path.resolve(SCRIPT_DIR, "..");
 const INDEX_PATH = path.join(ROOT_DIR, "index.html");
@@ -63,12 +63,12 @@ function main() {
 
   // Category pages (preferred canonical routes, matching routeKeyForCategory in app.js)
   const categoryPages = [
-    "/puzzle-games/",
-    "/shooting-games/",
-    "/arcade-games/",
-    "/racing-games/",
-    "/sports-games/",
-    "/idle-games/"
+    "/puzzle-games",
+    "/shooting-games",
+    "/arcade-games",
+    "/racing-games",
+    "/sports-games",
+    "/idle-games"
   ];
   for (const p of categoryPages) {
     urls.push({ loc: `${ROOT}${p}`, changefreq: "daily", priority: "0.8", lastmod: date });
@@ -86,6 +86,16 @@ function main() {
   ];
   for (const p of staticPages) {
     urls.push({ loc: `${ROOT}${p}`, changefreq: "monthly", priority: "0.5", lastmod: date });
+  }
+
+  // Editorial articles
+  const articlePages = [
+    "/articles/how-to-play-games-online-without-downloading",
+    "/articles/browser-games-vs-mobile-apps",
+    "/articles/best-game-categories-explained"
+  ];
+  for (const p of articlePages) {
+    urls.push({ loc: `${ROOT}${p}`, changefreq: "monthly", priority: "0.6", lastmod: date });
   }
 
   // Built-in games (static directories)

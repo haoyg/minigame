@@ -15,16 +15,16 @@
   <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=()" />
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://www.pokopie.com" />
+  <link rel="canonical" href="https://pokopie.com" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.pokopie.com" />
+  <meta property="og:url" content="https://pokopie.com" />
   <meta property="og:title" content="Pokopie - Free Online Browser Games" />
   <meta property="og:description" content="Play 100+ free HTML5 games online on Pokopie. Arcade, puzzle, action, racing and more. No download, instant fun!" />
   <meta property="og:site_name" content="Pokopie" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:image" content="https://www.pokopie.com/assets/og.svg" />
+  <meta property="og:image" content="https://pokopie.com/assets/og.svg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
@@ -32,7 +32,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Pokopie - Free Online Browser Games" />
   <meta name="twitter:description" content="Play free HTML5 browser games instantly on Pokopie. No download needed!" />
-  <meta name="twitter:image" content="https://www.pokopie.com/assets/og.svg" />
+  <meta name="twitter:image" content="https://pokopie.com/assets/og.svg" />
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3274781156049995"
@@ -45,23 +45,23 @@
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://www.pokopie.com/#website",
-        "url": "https://www.pokopie.com/",
+        "@id": "https://pokopie.com/#website",
+        "url": "https://pokopie.com/",
         "name": "Pokopie",
         "description": "Free online HTML5 browser games. Instant play, no download.",
         "inLanguage": "en",
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://www.pokopie.com/?q={search_term_string}",
+          "target": "https://pokopie.com/?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       },
       {
         "@type": "Organization",
-        "@id": "https://www.pokopie.com/#organization",
+        "@id": "https://pokopie.com/#organization",
         "name": "Pokopie",
-        "url": "https://www.pokopie.com/",
-        "logo": "https://www.pokopie.com/assets/logo-512.svg"
+        "url": "https://pokopie.com/",
+        "logo": "https://pokopie.com/assets/logo-512.svg"
       }
     ]
   }
@@ -687,6 +687,48 @@
     @media (max-width: 780px) {
       .landing-top-list,
       .landing-new-list { grid-template-columns: 1fr; }
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .guide-card {
+      display: block;
+      min-height: 150px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.10), transparent 65%),
+                  var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.26);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .guide-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(248, 250, 252, 0.5);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.42);
+    }
+
+    .guide-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.35;
+      color: var(--text-main);
+    }
+
+    .guide-card p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 780px) {
+      .guide-grid { grid-template-columns: 1fr; }
     }
 
     /* Horizontal sections (Popular / New) */
@@ -1538,7 +1580,7 @@
         <div class="status-pill"><span class="status-dot red"></span><span id="statusSource">Custom game catalog</span></div>
       </div>
 
-      <!-- Category landing content (shown on /puzzle-games/ etc for SEO) -->
+      <!-- Category landing content (shown on /puzzle-games etc for SEO) -->
       <section class="category-landing" id="categoryLanding" hidden aria-label="Category landing">
         <h1 id="landingH1">Best Games Online</h1>
         <p id="landingIntro"></p>
@@ -1557,16 +1599,41 @@
       <div class="empty-message" id="emptyMessage" hidden>No games match your search yet. Try clearing your filters or using a different keyword.</div>
     </section>
 
+    <!-- Gaming Guides -->
+    <section class="section" aria-labelledby="guides-heading">
+      <div class="section-header">
+        <div>
+          <div class="section-title"><span class="emoji">📚</span><span id="guides-heading">Gaming Guides</span></div>
+          <div class="section-subtitle">Helpful reads for choosing and playing browser games.</div>
+        </div>
+      </div>
+      <div class="guide-grid">
+        <a class="guide-card" href="/articles/how-to-play-games-online-without-downloading">
+          <h3>How to Play Games Online Without Downloading</h3>
+          <p>Learn how HTML5 browser games work and how to start playing safely on any device.</p>
+        </a>
+        <a class="guide-card" href="/articles/browser-games-vs-mobile-apps">
+          <h3>Browser Games vs Mobile Apps</h3>
+          <p>Compare browser games and app games across storage, speed, accessibility, and casual play.</p>
+        </a>
+        <a class="guide-card" href="/articles/best-game-categories-explained">
+          <h3>Best Game Categories Explained</h3>
+          <p>Understand arcade, puzzle, action, racing, sports, and strategy games before you pick.</p>
+        </a>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer>
       <div class="footer-top">
         <div>© 2026 Pokopie.com – Play free browser games anytime, anywhere!</div>
         <div class="footer-links">
-          <a href="/about.html">About</a>
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/contact.html">Contact</a>
-          <a href="/fun-quiz.html">Fun Quiz</a>
-          <a href="/terms.html">Terms</a>
+          <a href="/about">About</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/contact">Contact</a>
+          <a href="/fun-quiz">Fun Quiz</a>
+          <a href="/articles/how-to-play-games-online-without-downloading">Guides</a>
+          <a href="/terms">Terms</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -1673,7 +1740,7 @@
         <div class="embed-notice" id="embedNotice" role="status" aria-live="polite">
           <div>
             <strong>Embedding blocked.</strong>
-            Some providers restrict games on local previews or unapproved domains. Try opening in a new tab, or deploy to <span style="white-space:nowrap;">www.pokopie.com</span>.
+            Some providers restrict games on local previews or unapproved domains. Try opening in a new tab, or deploy to <span style="white-space:nowrap;">pokopie.com</span>.
           </div>
           <div class="actions">
             <button class="mini-btn primary" type="button" id="noticeOpenNew">Open in new tab</button>
