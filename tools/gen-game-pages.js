@@ -319,15 +319,7 @@ function renderPage(game, games) {
 function updateRedirects(games) {
   const start = "# BEGIN GENERATED PLAY ROUTES";
   const end = "# END GENERATED PLAY ROUTES";
-  const routes = [
-    start,
-    ...games.flatMap((game) => [
-      `/play/${game.slug}.html /play/${game.slug} 301`,
-      `/play/${game.slug}/ /play/${game.slug} 301`,
-      `/play/${game.slug} /play/${game.slug}.html 200`
-    ]),
-    end
-  ].join("\n");
+  const routes = [start, end].join("\n");
 
   let redirects = fs.readFileSync(REDIRECTS_PATH, "utf8");
   const block = new RegExp(`${start}[\\s\\S]*?${end}\\n?`);
@@ -336,15 +328,27 @@ function updateRedirects(games) {
   } else {
     redirects = redirects.replace("# Game detail pages - catalog games via /play/ (handled by JS router in app.js)", `${routes}\n\n# Game detail pages - catalog games via /play/ (handled by JS router in app.js)`);
   }
+  redirects = redirects
+    .replace(/\n# Game detail pages - catalog games via \/play\/ \(handled by JS router in app\.js\)\n\/play\/\* \/index\.html 200\n?/g, "\n");
   fs.writeFileSync(REDIRECTS_PATH, redirects, "utf8");
+}
+
+function removeLegacyFlatPages(games) {
+  for (const game of games) {
+    const legacyPath = path.join(PLAY_DIR, `${game.slug}.html`);
+    if (fs.existsSync(legacyPath)) fs.unlinkSync(legacyPath);
+  }
 }
 
 function main() {
   const catalog = JSON.parse(fs.readFileSync(CATALOG_PATH, "utf8"));
   const games = buildGames(catalog);
   fs.mkdirSync(PLAY_DIR, { recursive: true });
+  removeLegacyFlatPages(games);
   for (const game of games) {
-    fs.writeFileSync(path.join(PLAY_DIR, `${game.slug}.html`), renderPage(game, games), "utf8");
+    const gameDir = path.join(PLAY_DIR, game.slug);
+    fs.mkdirSync(gameDir, { recursive: true });
+    fs.writeFileSync(path.join(gameDir, "index.html"), renderPage(game, games), "utf8");
   }
   updateRedirects(games);
   console.log(`Generated ${games.length} game pages in ${path.relative(ROOT_DIR, PLAY_DIR)}`);
