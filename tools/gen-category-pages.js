@@ -142,7 +142,7 @@ function pickGames(games, config) {
     .filter((game) => game.category === config.category)
     .map((game) => ({ game, score: scoreGame(game, config) }))
     .sort((a, b) => b.score - a.score || String(a.game.title).localeCompare(String(b.game.title)))
-    .slice(0, 36)
+    .slice(0, 100)
     .map((row) => row.game);
 }
 
@@ -150,7 +150,7 @@ function renderPage(config, games) {
   const canonical = `${ROOT}/${config.slug}`;
   const selected = pickGames(games, config);
   const top = selected.slice(0, 12);
-  const more = selected.slice(12, 36);
+  const more = selected.slice(12);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -168,8 +168,8 @@ function renderPage(config, games) {
         "@type": "ItemList",
         "@id": `${canonical}#itemlist`,
         "name": config.title,
-        "numberOfItems": top.length,
-        "itemListElement": top.map((game, index) => ({
+        "numberOfItems": selected.length,
+        "itemListElement": selected.map((game, index) => ({
           "@type": "ListItem",
           "position": index + 1,
           "url": `${ROOT}/play/${game.slug}`,
