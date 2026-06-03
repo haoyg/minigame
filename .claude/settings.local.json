@@ -30,7 +30,8 @@
       "Bash(nslookup haoyg-minigame.pages.dev)",
       "Bash(nslookup *)",
       "Bash(xargs '-I{}' python3 -c ' *)",
-      "WebFetch(domain:support.google.com)"
+      "WebFetch(domain:support.google.com)",
+      "Bash(git checkout *)"
     ]
   }
 }
