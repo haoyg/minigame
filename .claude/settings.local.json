@@ -31,7 +31,8 @@
       "Bash(nslookup *)",
       "Bash(xargs '-I{}' python3 -c ' *)",
       "WebFetch(domain:support.google.com)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "WebFetch(domain:itch.io)"
     ]
   }
 }
