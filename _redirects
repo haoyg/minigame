@@ -599,6 +599,7 @@ http://www.pokopie.com/* https://pokopie.com/:splat 301
 # END GENERATED PLAY ROUTES
 
 
+
 # Built-in games - preserve their own directories (must come before the wildcard)
 # These are real subdirectories, not catalog slugs, so they must not redirect to /play/
 /games/2048 /games/2048/ 301
