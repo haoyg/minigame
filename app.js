@@ -2276,30 +2276,19 @@
 
       backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-      const storedTheme = localStorage.getItem("pokopie-theme");
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const shouldUseDark = storedTheme === "dark" || (!storedTheme && prefersDark) || (!storedTheme && !prefersDark);
+      // Always stay in dark theme (single theme now)
+      document.body.classList.add("dark-theme");
+      darkModeToggle.classList.add("active");
+      darkModeToggle.querySelector(".icon").textContent = "🌞";
+      darkModeToggle.querySelector("span:last-child").textContent = "Light";
 
-      if (shouldUseDark) {
+      darkModeToggle.addEventListener("click", () => {
+        // Always keep dark theme - no toggle to light
         document.body.classList.add("dark-theme");
         darkModeToggle.classList.add("active");
         darkModeToggle.querySelector(".icon").textContent = "🌞";
         darkModeToggle.querySelector("span:last-child").textContent = "Light";
-        if (!storedTheme) localStorage.setItem("pokopie-theme", "dark");
-      }
-
-      darkModeToggle.addEventListener("click", () => {
-        const isDark = document.body.classList.toggle("dark-theme");
-        darkModeToggle.classList.toggle("active", isDark);
-        if (isDark) {
-          darkModeToggle.querySelector(".icon").textContent = "🌞";
-          darkModeToggle.querySelector("span:last-child").textContent = "Light";
-          localStorage.setItem("pokopie-theme", "dark");
-        } else {
-          darkModeToggle.querySelector(".icon").textContent = "🌙";
-          darkModeToggle.querySelector("span:last-child").textContent = "Dark";
-          localStorage.setItem("pokopie-theme", "light");
-        }
+        localStorage.setItem("pokopie-theme", "dark");
       });
 
       // Service Worker disabled to avoid unexpected caching/redirect behavior.
