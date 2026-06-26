@@ -32,7 +32,8 @@
       "Bash(xargs '-I{}' python3 -c ' *)",
       "WebFetch(domain:support.google.com)",
       "Bash(git checkout *)",
-      "WebFetch(domain:itch.io)"
+      "WebFetch(domain:itch.io)",
+      "Bash(grep -n \"^\\\\/\\\\* \" _redirects)"
     ]
   }
 }
