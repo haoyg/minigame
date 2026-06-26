@@ -35,10 +35,13 @@
     p, li { color:#cbd5e1; font-size:15px; }
     .meta { color:#94a3b8; font-size:13px; margin-bottom:16px; }
     .hero-img { width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:14px; border:1px solid rgba(148,163,184,.22); background:#111827; }
-    .play-frame { width:100%; aspect-ratio:16/9; border:0; border-radius:14px; background:#020617; margin-top:16px; }
+    .play-frame { width:100%; aspect-ratio:16/9; border:0; border-radius:14px; background:#020617; margin-top:16px; display:none; }
+    .play-frame.visible { display:block; }
     .actions { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
-    .btn { display:inline-flex; padding:10px 14px; border-radius:999px; background:#22c55e; color:#052e16; font-weight:800; }
+    .btn { display:inline-flex; padding:10px 14px; border-radius:999px; background:#22c55e; color:#052e16; font-weight:800; cursor:pointer; border:none; text-decoration:none; }
+    .btn:hover { opacity:0.85; text-decoration:none; }
     .btn.secondary { background:rgba(59,130,246,.18); color:#bfdbfe; border:1px solid rgba(59,130,246,.35); }
+    .btn.ghost { background:transparent; color:#94a3b8; border:1px solid rgba(148,163,184,.35); }
     .similar { display:grid; gap:10px; }
     .similar-card { display:grid; grid-template-columns:82px minmax(0,1fr); gap:10px; align-items:center; padding:8px; border:1px solid rgba(148,163,184,.16); border-radius:12px; background:rgba(255,255,255,.035); }
     .similar-card img { width:82px; height:46px; object-fit:cover; border-radius:8px; }
@@ -59,10 +62,11 @@
         <div class="meta">Puzzle game | HTML5 browser game | No download</div>
         <img class="hero-img" src="https://pokopie.com/assets/maido.webp" alt="Maido thumbnail" width="640" height="360" />
         <div class="actions">
-          <a class="btn" href="https://html5.gamedistribution.com/d644c8ad5da0410cab699b29b09b21ea/?gd_sdk_referrer_url=https%3A%2F%2Fpokopie.com%2Fplay%2Fmaido" target="_blank" rel="noopener noreferrer">Play Game</a>
+          <a class="btn" href="https://html5.gamedistribution.com/d644c8ad5da0410cab699b29b09b21ea/?gd_sdk_referrer_url=https%3A%2F%2Fpokopie.com%2Fplay%2Fmaido" target="_blank" rel="noopener noreferrer">▶ Play Game</a>
           <a class="btn secondary" href="/">Browse More Games</a>
+          <button class="btn ghost" id="iframeToggle" type="button" onclick="var f=document.getElementById('gameFrame');var t=this;if(f.classList.contains('visible')){f.classList.remove('visible');t.textContent='Try in Iframe';t.style.borderColor='rgba(148,163,184,.35)'}else{f.classList.add('visible');t.textContent='Close Iframe';t.style.borderColor='rgba(148,163,184,.8)'};window.scrollBy&&f.classList.contains('visible')&&f.scrollIntoView({behavior:'smooth',block:'nearest'})">Try in Iframe</button>
         </div>
-        <iframe class="play-frame" src="https://html5.gamedistribution.com/d644c8ad5da0410cab699b29b09b21ea/?gd_sdk_referrer_url=https%3A%2F%2Fpokopie.com%2Fplay%2Fmaido" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
+        <iframe id="gameFrame" class="play-frame" src="https://html5.gamedistribution.com/d644c8ad5da0410cab699b29b09b21ea/?gd_sdk_referrer_url=https%3A%2F%2Fpokopie.com%2Fplay%2Fmaido" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
 
         <p>Maido is a puzzle game about connecting pieces and reading the board carefully. Match the right elements, open blocked spaces, and solve each layout through clean sequencing.</p>
 
