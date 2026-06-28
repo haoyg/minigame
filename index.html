@@ -61,7 +61,7 @@
         "@id": "https://pokopie.com/#organization",
         "name": "Pokopie",
         "url": "https://pokopie.com/",
-        "logo": "https://pokopie.com/assets/logo-512.svg"
+        "logo": "https://pokopie.com/assets/pokopie-logo.png"
       }
     ]
   }
@@ -149,38 +149,26 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 8px;
       margin-right: 8px;
+      flex: 0 0 auto;
     }
 
-    .logo-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .logo-art {
+      position: relative;
+      display: block;
+      width: 132px;
+      height: 64px;
+      overflow: hidden;
+      flex: 0 0 auto;
     }
 
-    .logo-mark span {
-      font-size: 18px;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-    }
-
-    .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-
-    .logo-title {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    .logo-subtitle {
-      font-size: 10px;
-      color: var(--text-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+    .logo-art img {
+      position: absolute;
+      top: -23.5px;
+      left: -32.7px;
+      width: 202.5px;
+      max-width: none;
+      height: auto;
     }
 
     .nav-categories {
@@ -1032,11 +1020,9 @@
   <header>
     <nav class="nav">
       <a href="#top" class="logo" aria-label="Pokopie - Free Online Games">
-        <div class="logo-mark"><span>🎮</span></div>
-        <div class="logo-text">
-          <span class="logo-title">Pokopie</span>
-          <span class="logo-subtitle">FREE ONLINE GAMES</span>
-        </div>
+        <span class="logo-art" aria-hidden="true">
+          <img src="/assets/pokopie-logo.png" alt="" width="1536" height="1024" fetchpriority="high" />
+        </span>
       </a>
 
       <div class="nav-categories" id="navCategories">
