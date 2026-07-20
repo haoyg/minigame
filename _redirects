@@ -1,6 +1,12 @@
 https://www.pokopie.com/* https://pokopie.com/:splat 301
 http://www.pokopie.com/* https://pokopie.com/:splat 301
 
+# Retire old thin /play pages so Google can drop them from the index.
+# Keep these rules above generated /play routes and force them over existing files.
+/play /old-play-pages-removed.html 410!
+/play/ /old-play-pages-removed.html 410!
+/play/* /old-play-pages-removed.html 410!
+
 /ads.txt /ads.txt 200
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200
