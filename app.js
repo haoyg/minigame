@@ -1873,18 +1873,15 @@
       tag.appendChild(tagText);
       thumbWrap.appendChild(tag);
 
-      if (game.popular) thumbWrap.appendChild(el("div", "game-popularity", { text: "🔥 Popular" }));
-      else if (game.recent) thumbWrap.appendChild(el("div", "game-popularity", { text: "⭐ New" }));
+      if (game.popular) thumbWrap.appendChild(el("div", "game-popularity popular", { text: "Popular" }));
+      else if (game.recent) thumbWrap.appendChild(el("div", "game-popularity recent", { text: "New" }));
 
       const content = el("div", "game-content");
       const title = el("h3", "game-title", { text: game.title });
       title.title = game.title;
 
-      const desc = el("p", "game-description", { text: truncate(game.description || "Instant browser mini game.", compact ? 70 : 90) });
-
       const metaRow = el("div", "game-meta-row");
-      metaRow.appendChild(el("span", null, { text: (game.category || "Arcade") + " • HTML5" }));
-      metaRow.appendChild(el("span", null, { text: "Play now" }));
+      metaRow.appendChild(el("span", null, { text: game.category || "Arcade" }));
 
       const btn = el("span", "play-button");
       btn.appendChild(el("span", "icon", { text: "▶" }));
@@ -1893,7 +1890,6 @@
       attachGameLink(card, game);
 
       content.appendChild(title);
-      content.appendChild(desc);
       content.appendChild(metaRow);
       content.appendChild(btn);
 
@@ -1953,7 +1949,15 @@
       mainGrid.innerHTML = "";
       if (!filteredGames.length) { emptyMessage.hidden = false; return; }
       emptyMessage.hidden = true;
-      filteredGames.forEach((g) => mainGrid.appendChild(createGameCard(g, false)));
+      filteredGames.forEach((g, index) => {
+        mainGrid.appendChild(createGameCard(g, false));
+        if (index === 7) {
+          const ad = el("aside", "grid-ad", { "aria-label": "Advertisement" });
+          ad.appendChild(el("span", "", { text: "Advertisement" }));
+          ad.appendChild(el("strong", "", { text: "Responsive ad space" }));
+          mainGrid.appendChild(ad);
+        }
+      });
     }
 
     function openGameModal(game) {
@@ -2277,19 +2281,22 @@
 
       backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-      // Always stay in dark theme (single theme now)
-      document.body.classList.add("dark-theme");
-      darkModeToggle.classList.add("active");
-      darkModeToggle.querySelector(".icon").textContent = "🌞";
-      darkModeToggle.querySelector("span:last-child").textContent = "Light";
+      const themeKey = "pokopia-color-mode-v2";
+      const applyTheme = (mode) => {
+        const dark = mode === "dark";
+        document.body.classList.toggle("dark-theme", dark);
+        darkModeToggle.classList.toggle("active", dark);
+        darkModeToggle.querySelector(".icon").textContent = dark ? "☀" : "◐";
+        darkModeToggle.querySelector("span:last-child").textContent = dark ? "Light" : "Dark";
+        darkModeToggle.setAttribute("aria-pressed", String(dark));
+      };
+
+      applyTheme(localStorage.getItem(themeKey) === "dark" ? "dark" : "light");
 
       darkModeToggle.addEventListener("click", () => {
-        // Always keep dark theme - no toggle to light
-        document.body.classList.add("dark-theme");
-        darkModeToggle.classList.add("active");
-        darkModeToggle.querySelector(".icon").textContent = "🌞";
-        darkModeToggle.querySelector("span:last-child").textContent = "Light";
-        localStorage.setItem("pokopie-theme", "dark");
+        const nextMode = document.body.classList.contains("dark-theme") ? "light" : "dark";
+        localStorage.setItem(themeKey, nextMode);
+        applyTheme(nextMode);
       });
 
       // Service Worker disabled to avoid unexpected caching/redirect behavior.

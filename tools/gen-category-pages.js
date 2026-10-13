@@ -206,40 +206,48 @@ function renderPage(config, games) {
   <meta name="twitter:title" content="${esc(config.title)}" />
   <meta name="twitter:description" content="${esc(config.description)}" />
   <meta name="twitter:image" content="${ROOT}/assets/og.svg" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3274781156049995" crossorigin="anonymous"></script>
   <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
   <style>
-    :root { color-scheme: dark; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#0f172a; color:#e5e7eb; line-height:1.65; }
+    :root { color-scheme:light; --ink:#10213f; --muted:#64748b; --green:#16a864; --border:#dfe5ec; --surface:#fff; --page:#f7f8fa; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--page); color:var(--ink); line-height:1.55; }
     a { color:inherit; text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    .wrap { max-width:1180px; margin:0 auto; padding:26px 18px 60px; }
-    .top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:22px; }
-    .brand { font-weight:800; font-size:18px; }
-    .pill { color:#93c5fd; border:1px solid rgba(148,163,184,.35); border-radius:999px; padding:7px 12px; font-size:13px; }
-    .hero { max-width:820px; margin-bottom:24px; }
-    h1 { margin:0 0 10px; font-size:36px; line-height:1.12; }
-    h2 { margin:30px 0 12px; font-size:22px; }
-    p, li { color:#cbd5e1; font-size:15px; }
-    .grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:14px; }
-    .card { background:rgba(255,255,255,.055); border:1px solid rgba(148,163,184,.22); border-radius:14px; overflow:hidden; display:block; }
-    .card img { width:100%; aspect-ratio:16/9; object-fit:cover; background:#111827; }
-    .card-body { padding:10px; }
-    .card h3 { margin:0 0 6px; font-size:15px; line-height:1.3; color:#f8fafc; }
-    .card p { margin:0; font-size:12px; line-height:1.45; color:#94a3b8; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    header { background:#0d1d38; border-bottom:1px solid rgba(255,255,255,.1); }
+    .top { max-width:1320px; min-height:72px; margin:0 auto; padding:6px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand-art { position:relative; width:142px; height:64px; overflow:hidden; display:block; }
+    .brand-art img { position:absolute; top:-23.5px; left:-32.7px; width:202.5px; height:135px; max-width:none; }
+    .back { color:#e2e8f0; border:1px solid rgba(255,255,255,.2); border-radius:7px; padding:8px 12px; font-size:13px; }
+    .wrap { max-width:1320px; margin:0 auto; padding:18px 20px 60px; }
+    .ad { min-height:92px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--muted); background:#eef2f6; border:1px solid var(--border); border-radius:8px; font-size:12px; }
+    .ad small { opacity:.7; }
+    .hero { max-width:920px; margin:26px 0; }
+    h1 { margin:0 0 8px; font-size:36px; line-height:1.12; letter-spacing:0; }
+    h2 { margin:34px 0 14px; font-size:24px; }
+    p, li { color:var(--muted); font-size:15px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; display:block; box-shadow:0 3px 14px rgba(15,31,55,.06); transition:.16s ease; }
+    .card:hover { transform:translateY(-3px); border-color:rgba(22,168,100,.45); box-shadow:0 10px 30px rgba(15,31,55,.1); }
+    .card img { width:100%; aspect-ratio:16/9; object-fit:cover; background:#eef2f6; display:block; }
+    .card-body { padding:12px; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:10px; }
+    .card h3 { margin:0; font-size:15px; line-height:1.3; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .play { color:#fff; background:var(--green); border-radius:6px; padding:7px 12px; font-size:12px; font-weight:700; }
     .why { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; }
-    .why li { list-style:none; padding:14px; border:1px solid rgba(148,163,184,.18); border-radius:14px; background:rgba(255,255,255,.04); }
+    .why li { list-style:none; padding:16px; border:1px solid var(--border); border-radius:8px; background:var(--surface); }
     .links { display:flex; flex-wrap:wrap; gap:10px; }
-    .links a { color:#bfdbfe; border:1px solid rgba(59,130,246,.3); background:rgba(59,130,246,.12); border-radius:999px; padding:8px 12px; font-size:13px; }
+    .links a { color:var(--ink); border:1px solid var(--border); background:var(--surface); border-radius:7px; padding:8px 12px; font-size:13px; }
     @media (max-width: 980px) { .grid { grid-template-columns:repeat(3, minmax(0,1fr)); } }
-    @media (max-width: 720px) { h1 { font-size:28px; } .grid, .why { grid-template-columns:1fr; } }
+    @media (max-width: 680px) { .top,.wrap { padding-inline:14px; } .brand-art { width:126px; height:58px; } h1 { font-size:28px; } .ad { min-height:72px; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .why { grid-template-columns:1fr; padding:0; } .card-body { display:block; padding:9px; } .play { display:flex; justify-content:center; margin-top:9px; } .card h3 { font-size:13px; } }
+    @media (max-width: 380px) { .grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
+  <header><div class="top">
+    <a class="brand-art" href="/" aria-label="Pokopia home"><img src="/assets/pokopie-logo.png" alt="" width="1536" height="1024" /></a>
+    <a class="back" href="/">All games</a>
+  </div></header>
   <div class="wrap">
-    <div class="top">
-      <a class="brand" href="/">Pokopia</a>
-      <a class="pill" href="/">Back to all games</a>
-    </div>
+    <aside class="ad" aria-label="Advertisement"><span>Advertisement</span><small>Responsive ad space</small></aside>
 
     <main>
       <section class="hero">
@@ -250,7 +258,7 @@ function renderPage(config, games) {
       <section>
         <h2>Top ${esc(config.category)} Games</h2>
         <div class="grid">
-          ${top.map((game) => `<a class="card" href="/play/${game.slug}"><img src="${esc(imgUrl(game.thumbnail))}" alt="${esc(game.title)} thumbnail" width="320" height="180" loading="lazy" /><div class="card-body"><h3>${esc(game.title)}</h3><p>${esc(game.introParagraph || game.description || `Play ${game.title} online for free.`)}</p></div></a>`).join("\n          ")}
+          ${top.map((game) => `<a class="card" href="/play/${game.slug}/"><img src="${esc(imgUrl(game.thumbnail))}" alt="${esc(game.title)} thumbnail" width="320" height="180" loading="lazy" /><div class="card-body"><h3>${esc(game.title)}</h3><span class="play">Play Now</span></div></a>`).join("\n          ")}
         </div>
       </section>
 
@@ -264,7 +272,7 @@ function renderPage(config, games) {
       <section>
         <h2>More ${esc(config.category)} Games</h2>
         <div class="grid">
-          ${more.map((game) => `<a class="card" href="/play/${game.slug}"><img src="${esc(imgUrl(game.thumbnail))}" alt="${esc(game.title)} thumbnail" width="320" height="180" loading="lazy" /><div class="card-body"><h3>${esc(game.title)}</h3><p>${esc(game.introParagraph || game.description || `Play ${game.title} online for free.`)}</p></div></a>`).join("\n          ")}
+          ${more.map((game) => `<a class="card" href="/play/${game.slug}/"><img src="${esc(imgUrl(game.thumbnail))}" alt="${esc(game.title)} thumbnail" width="320" height="180" loading="lazy" /><div class="card-body"><h3>${esc(game.title)}</h3><span class="play">Play Now</span></div></a>`).join("\n          ")}
         </div>
       </section>
 
