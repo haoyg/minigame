@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = "https://pokopie.com";
+const ROOT = "https://pokopia.cloud";
 const SCRIPT_DIR = __dirname;
 const ROOT_DIR = path.resolve(SCRIPT_DIR, "..");
 const CATALOG_PATH = path.join(ROOT_DIR, "games-catalog.json");
@@ -139,7 +139,7 @@ function gameCopy(game) {
 
 function renderPage(game, games) {
   const copy = gameCopy(game);
-  const canonicalPath = `/play/${game.slug}`;
+  const canonicalPath = `/play/${game.slug}/`;
   const canonicalUrl = `${ROOT}${canonicalPath}`;
   const image = resolveAssetUrl(game.thumbnail);
   const playUrl = withGdReferrer(game.playUrl, canonicalUrl);
@@ -211,6 +211,7 @@ function renderPage(game, games) {
   <title>Play ${escHtml(copy.name)} Online Free No Download</title>
   <meta name="description" content="${escAttr(description)}" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="icon" type="image/png" href="/assets/pokopie-logo.png" />
   <link rel="canonical" href="${canonicalUrl}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="${canonicalUrl}" />
@@ -271,7 +272,7 @@ function renderPage(game, games) {
           <a class="btn secondary" href="/">Browse More Games</a>
           <button class="btn ghost" id="iframeToggle" type="button" onclick="var f=document.getElementById('gameFrame');var t=this;if(f.classList.contains('visible')){f.classList.remove('visible');t.textContent='Try in Iframe';t.style.borderColor='rgba(148,163,184,.35)'}else{f.classList.add('visible');t.textContent='Close Iframe';t.style.borderColor='rgba(148,163,184,.8)'};window.scrollBy&&f.classList.contains('visible')&&f.scrollIntoView({behavior:'smooth',block:'nearest'})">Try in Iframe</button>
         </div>
-        <iframe id="gameFrame" class="play-frame" src="${escAttr(playUrl)}" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-fullscreen allow-popups"></iframe>
+        <iframe id="gameFrame" class="play-frame" src="${escAttr(playUrl)}" loading="lazy" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups"></iframe>
 
         <p>${escHtml(copy.intro)}</p>
 
@@ -310,7 +311,7 @@ function renderPage(game, games) {
       <aside class="panel">
         <h2>Similar Games</h2>
         <div class="similar">
-          ${similar.map((sim) => `<a class="similar-card" href="/play/${encodeURIComponent(sim.slug)}"><img src="${escAttr(resolveAssetUrl(sim.thumbnail))}" alt="${escAttr(sim.title)} thumbnail" width="82" height="46" loading="lazy" /><span>${escHtml(sim.title)}</span></a>`).join("\n          ")}
+          ${similar.map((sim) => `<a class="similar-card" href="/play/${encodeURIComponent(sim.slug)}/"><img src="${escAttr(resolveAssetUrl(sim.thumbnail))}" alt="${escAttr(sim.title)} thumbnail" width="82" height="46" loading="lazy" /><span>${escHtml(sim.title)}</span></a>`).join("\n          ")}
         </div>
       </aside>
     </div>
@@ -320,27 +321,12 @@ function renderPage(game, games) {
 `;
 }
 
-function updateRedirects(games) {
+function removeGeneratedRedirects() {
   const start = "# BEGIN GENERATED PLAY ROUTES";
   const end = "# END GENERATED PLAY ROUTES";
-  const routes = [
-    start,
-    ...games.flatMap((game) => [
-      `/play/${game.slug}.html /play/${game.slug} 301`,
-      `/play/${game.slug}/ /play/${game.slug} 301`,
-      `/play/${game.slug} /play/${game.slug}/index.html 200`
-    ]),
-    end
-  ].join("\n");
-
   let redirects = fs.readFileSync(REDIRECTS_PATH, "utf8");
-  const block = new RegExp(`${start}[\\s\\S]*?${end}\\n?`);
-  if (block.test(redirects)) {
-    redirects = redirects.replace(block, routes + "\n");
-  } else {
-    redirects = redirects.replace("# Game detail pages - catalog games via /play/ (handled by JS router in app.js)", `${routes}\n\n# Game detail pages - catalog games via /play/ (handled by JS router in app.js)`);
-  }
   redirects = redirects
+    .replace(new RegExp(`${start}[\\s\\S]*?${end}\\n?`), "")
     .replace(/\n# Game detail pages - catalog games via \/play\/ \(handled by JS router in app\.js\)\n\/play\/\* \/index\.html 200\n?/g, "\n");
   fs.writeFileSync(REDIRECTS_PATH, redirects, "utf8");
 }
@@ -362,7 +348,7 @@ function main() {
     fs.mkdirSync(gameDir, { recursive: true });
     fs.writeFileSync(path.join(gameDir, "index.html"), renderPage(game, games), "utf8");
   }
-  updateRedirects(games);
+  removeGeneratedRedirects();
   console.log(`Generated ${games.length} game pages in ${path.relative(ROOT_DIR, PLAY_DIR)}`);
 }
 

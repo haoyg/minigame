@@ -1,4 +1,8 @@
-const ROOT = "https://pokopie.com";
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = "https://pokopia.cloud";
+const ROOT_DIR = path.resolve(__dirname, "..");
 
 function escXml(s) {
   return String(s)
@@ -61,6 +65,16 @@ function main() {
   const builtInGames = ["2048", "breakout", "memory", "minesweeper", "snake", "tetris"];
   for (const g of builtInGames) {
     urls.push({ loc: `${ROOT}/games/${g}/`, changefreq: "monthly", priority: "0.7", lastmod: date });
+  }
+
+  // Generated game detail pages
+  const playDir = path.join(ROOT_DIR, "play");
+  const gameSlugs = fs.readdirSync(playDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && fs.existsSync(path.join(playDir, entry.name, "index.html")))
+    .map((entry) => entry.name)
+    .sort();
+  for (const slug of gameSlugs) {
+    urls.push({ loc: `${ROOT}/play/${slug}/`, changefreq: "monthly", priority: "0.7", lastmod: date });
   }
 
   let out = "";

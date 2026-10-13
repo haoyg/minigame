@@ -343,7 +343,7 @@
 
     function getCanonicalOrigin() {
       const host = (window.location.hostname || "").toLowerCase();
-      if (host === "pokopie.com" || host === "www.pokopie.com") return "https://pokopie.com";
+      if (host === "pokopia.cloud" || host === "www.pokopia.cloud") return "https://pokopia.cloud";
       return window.location.origin;
     }
 
@@ -687,7 +687,7 @@
       try {
         const loc = window.location;
         const host = (loc.hostname || "").toLowerCase();
-        if (host === "pokopie.com" || host === "www.pokopie.com") {
+        if (host === "pokopia.cloud" || host === "www.pokopia.cloud") {
           const href = loc.protocol + "//" + loc.host + loc.pathname + loc.search;
           const params = new URLSearchParams(loc.search || "");
           const isGamePath = (loc.pathname || "").toLowerCase().startsWith("/play/");
@@ -707,7 +707,7 @@
       } catch {
         // ignore
       }
-      return "https://pokopie.com/";
+      return "https://pokopia.cloud/";
     }
 
     function withGdReferrer(url) {
@@ -736,7 +736,7 @@
       // Allow embeds only on the real production hosts.
       try {
         const host = (window.location.hostname || "").toLowerCase();
-        return host === "pokopie.com" || host === "www.pokopie.com";
+        return host === "pokopia.cloud" || host === "www.pokopia.cloud";
       } catch {
         return false;
       }
@@ -1903,6 +1903,7 @@
     }
 
     function renderFeatured() {
+      if (!featuredGrid) return;
       featuredGrid.innerHTML = "";
       const featured = allGames.slice(0, 8);
       // Preload first featured thumbnail to improve LCP
@@ -2104,7 +2105,7 @@
       setSeoForPage({
         title: "Pokopie - 100+ Free Online Browser Games | Play Instantly No Download",
         description:
-          "Play 100+ free HTML5 browser games online at Pokopie.com — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download.",
+          "Play 100+ free HTML5 browser games online at Pokopia.cloud — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download.",
         canonicalPath: "/"
       });
     }

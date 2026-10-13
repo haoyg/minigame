@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pokopie.com/sitemap.xml
+Sitemap: https://pokopia.cloud/sitemap.xml
 
