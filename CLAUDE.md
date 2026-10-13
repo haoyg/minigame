@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Pokopie** (pokopia.cloud) is a free online HTML5 games portal. It aggregates 100+ browser games via the FreeToGame API and hosts 5 built-in canvas games. The site is a pure vanilla HTML/CSS/JS static app with no build system.
+**Pokopia** (pokopia.cloud) is a free online HTML5 games portal. It aggregates 100+ browser games via the FreeToGame API and hosts 5 built-in canvas games. The site is a pure vanilla HTML/CSS/JS static app with no build system.
 
 ## Development
 

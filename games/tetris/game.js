@@ -1,4 +1,4 @@
-// Tetris — Pokopie built-in game
+// Tetris — Pokopia built-in game
 // Pure canvas, no dependencies, CC0/PD-license-compatible
 
 (function () {

@@ -51,7 +51,7 @@ async function main() {
     return {
       id: String(g.id),
       title: title,
-      description: g.description || title + ' — free browser game on Pokopie.',
+      description: g.description || title + ' — free browser game on Pokopia.',
       category: cat,
       thumbnail: g.thumbnail.startsWith('//') ? 'https:' + g.thumbnail : g.thumbnail,
       playUrl: g.game_url || '',

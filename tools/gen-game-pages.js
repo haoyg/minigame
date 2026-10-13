@@ -144,7 +144,7 @@ function renderPage(game, games) {
   const image = resolveAssetUrl(game.thumbnail);
   const playUrl = withGdReferrer(game.playUrl, canonicalUrl);
   const similar = similarGames(game, games);
-  const description = `Play ${copy.name} online for free. No download needed. Learn how to play, controls, tips, and similar ${copy.genre} games on Pokopie.`;
+  const description = `Play ${copy.name} online for free. No download needed. Learn how to play, controls, tips, and similar ${copy.genre} games on Pokopia.`;
   const tips = [
     game.tip1 || "Start slow and learn the core mechanics before chasing a high score.",
     game.tip2 || "Watch patterns carefully and make consistent moves.",
@@ -164,14 +164,14 @@ function renderPage(game, games) {
         "applicationCategory": "Game",
         "operatingSystem": "Web",
         "description": description,
-        "publisher": { "@type": "Organization", "name": "Pokopie", "url": `${ROOT}/` }
+        "publisher": { "@type": "Organization", "name": "Pokopia", "url": `${ROOT}/` }
       },
       {
         "@type": "WebPage",
         "@id": `${canonicalUrl}#webpage`,
         "url": canonicalUrl,
         "name": `Play ${copy.name} Online Free`,
-        "isPartOf": { "@type": "WebSite", "name": "Pokopie", "url": `${ROOT}/` },
+        "isPartOf": { "@type": "WebSite", "name": "Pokopia", "url": `${ROOT}/` },
         "primaryImageOfPage": { "@type": "ImageObject", "url": image },
         "breadcrumb": { "@id": `${canonicalUrl}#breadcrumb` }
       },
@@ -191,7 +191,7 @@ function renderPage(game, games) {
           {
             "@type": "Question",
             "name": `Is ${copy.name} free to play?`,
-            "acceptedAnswer": { "@type": "Answer", "text": `Yes. ${copy.name} is free to play online on Pokopie.` }
+            "acceptedAnswer": { "@type": "Answer", "text": `Yes. ${copy.name} is free to play online on Pokopia.` }
           },
           {
             "@type": "Question",
@@ -217,7 +217,7 @@ function renderPage(game, games) {
   <meta property="og:url" content="${canonicalUrl}" />
   <meta property="og:title" content="Play ${escAttr(copy.name)} Online Free" />
   <meta property="og:description" content="${escAttr(description)}" />
-  <meta property="og:site_name" content="Pokopie" />
+  <meta property="og:site_name" content="Pokopia" />
   <meta property="og:image" content="${escAttr(image)}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Play ${escAttr(copy.name)} Online Free" />
@@ -259,7 +259,7 @@ function renderPage(game, games) {
 <body>
   <div class="wrap">
     <div class="top">
-      <a class="brand" href="/">Pokopie</a>
+      <a class="brand" href="/">Pokopia</a>
       <a class="pill" href="/">Back to all games</a>
     </div>
     <div class="layout">
@@ -300,9 +300,9 @@ function renderPage(game, games) {
         <section class="faq">
           <h2>FAQ</h2>
           <h3>Is ${escHtml(copy.name)} free to play?</h3>
-          <p>Yes. You can play it online for free on Pokopie.</p>
+          <p>Yes. You can play it online for free on Pokopia.</p>
           <h3>Can I play ${escHtml(copy.name)} on mobile?</h3>
-          <p>Yes. Most Pokopie browser games work on phones, tablets, laptops, and desktop computers.</p>
+          <p>Yes. Most Pokopia browser games work on phones, tablets, laptops, and desktop computers.</p>
           <h3>Do I need to install anything?</h3>
           <p>No. ${escHtml(copy.name)} runs directly in your browser.</p>
         </section>

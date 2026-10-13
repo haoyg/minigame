@@ -11,8 +11,8 @@ const categories = [
     slug: "puzzle-games",
     category: "Puzzle",
     title: "Best Puzzle Games Online Free",
-    description: "Play free puzzle games online with no download. Explore tile matching, sorting, mahjong, merge puzzles, logic games, and relaxing brain games on Pokopie.",
-    intro: "Puzzle games are built for players who want a slower, more thoughtful challenge. On Pokopie, this category includes mahjong layouts, merge puzzles, sorting games, logic challenges, and visual matching games that run directly in your browser.",
+    description: "Play free puzzle games online with no download. Explore tile matching, sorting, mahjong, merge puzzles, logic games, and relaxing brain games on Pokopia.",
+    intro: "Puzzle games are built for players who want a slower, more thoughtful challenge. On Pokopia, this category includes mahjong layouts, merge puzzles, sorting games, logic challenges, and visual matching games that run directly in your browser.",
     why: [
       "Good for short breaks because most puzzle games are easy to pause and restart.",
       "Useful for practicing pattern recognition, planning, spatial reasoning, and careful decision-making.",
@@ -25,7 +25,7 @@ const categories = [
     category: "Action",
     title: "Best Shooting and Action Games Online",
     description: "Play free action and shooting games online with no download. Find browser games with missions, waves, aiming, combat, survival, and fast reactions.",
-    intro: "Action games are designed around fast decisions, timing, and pressure. This page collects Pokopie games where you fight enemies, survive waves, complete missions, aim carefully, or react quickly to changing hazards.",
+    intro: "Action games are designed around fast decisions, timing, and pressure. This page collects Pokopia games where you fight enemies, survive waves, complete missions, aim carefully, or react quickly to changing hazards.",
     why: [
       "Good for players who want immediate feedback and short, intense sessions.",
       "Helps practice timing, aiming, reaction speed, movement, and threat prioritization.",
@@ -50,8 +50,8 @@ const categories = [
     slug: "racing-games",
     category: "Racing",
     title: "Best Racing Games Online Free",
-    description: "Play free racing games online with no download. Drive cars, bikes, stunt vehicles, traffic racers, and high-speed browser games on Pokopie.",
-    intro: "Racing games are about speed, control, and clean movement. Pokopie includes traffic racers, stunt-driving games, motorcycle challenges, city driving games, and obstacle-heavy vehicle games that work in modern browsers.",
+    description: "Play free racing games online with no download. Drive cars, bikes, stunt vehicles, traffic racers, and high-speed browser games on Pokopia.",
+    intro: "Racing games are about speed, control, and clean movement. Pokopia includes traffic racers, stunt-driving games, motorcycle challenges, city driving games, and obstacle-heavy vehicle games that work in modern browsers.",
     why: [
       "Good for players who like skill improvement through steering, braking, and timing.",
       "Offers a wide range of play styles, from relaxed city driving to high-pressure traffic dodging.",
@@ -77,7 +77,7 @@ const categories = [
     category: "Strategy",
     title: "Best Idle and Strategy Games Online",
     description: "Play free idle and strategy games online with no download. Build, upgrade, defend, manage resources, and grow browser-based systems over time.",
-    intro: "Idle and strategy games reward planning rather than speed. On Pokopie, this category includes tycoon games, upgrade loops, defense games, management sims, merge strategy, and resource-building games.",
+    intro: "Idle and strategy games reward planning rather than speed. On Pokopia, this category includes tycoon games, upgrade loops, defense games, management sims, merge strategy, and resource-building games.",
     why: [
       "Good for players who enjoy progression, upgrades, resource planning, and long-term growth.",
       "Many games can be played in short check-ins while still giving a sense of progress.",
@@ -160,7 +160,7 @@ function renderPage(config, games) {
         "url": canonical,
         "name": config.title,
         "description": config.description,
-        "isPartOf": { "@type": "WebSite", "name": "Pokopie", "url": `${ROOT}/` },
+        "isPartOf": { "@type": "WebSite", "name": "Pokopia", "url": `${ROOT}/` },
         "breadcrumb": { "@id": `${canonical}#breadcrumb` },
         "mainEntity": { "@id": `${canonical}#itemlist` }
       },
@@ -192,7 +192,7 @@ function renderPage(config, games) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${esc(config.title)} | Pokopie</title>
+  <title>${esc(config.title)} | Pokopia</title>
   <meta name="description" content="${esc(config.description)}" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <link rel="canonical" href="${canonical}" />
@@ -200,7 +200,7 @@ function renderPage(config, games) {
   <meta property="og:url" content="${canonical}" />
   <meta property="og:title" content="${esc(config.title)}" />
   <meta property="og:description" content="${esc(config.description)}" />
-  <meta property="og:site_name" content="Pokopie" />
+  <meta property="og:site_name" content="Pokopia" />
   <meta property="og:image" content="${ROOT}/assets/og.svg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${esc(config.title)}" />
@@ -237,7 +237,7 @@ function renderPage(config, games) {
 <body>
   <div class="wrap">
     <div class="top">
-      <a class="brand" href="/">Pokopie</a>
+      <a class="brand" href="/">Pokopia</a>
       <a class="pill" href="/">Back to all games</a>
     </div>
 

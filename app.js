@@ -40,7 +40,7 @@
           return {
             id: row.id,
             title: title,
-            description: row.description || title + " — free browser game on Pokopie.",
+            description: row.description || title + " — free browser game on Pokopia.",
             category: cat,
             thumbnail: row.thumbnail,
             playUrl: row.playUrl,
@@ -86,7 +86,7 @@
                 allGames.push({
                   id: game.id,
                   title: title,
-                  description: game.description || title + " — free browser game on Pokopie.",
+                  description: game.description || title + " — free browser game on Pokopia.",
                   category: cat,
                   thumbnail: game.thumbnail,
                   playUrl: game.game_url,
@@ -330,7 +330,7 @@
           });
           const right = el("div", "");
           right.appendChild(el("div", "landing-title", { text: g.title }));
-          right.appendChild(el("div", "landing-desc", { text: g.description || `New ${cat.toLowerCase()} game on Pokopie. Play instantly in browser.` }));
+          right.appendChild(el("div", "landing-desc", { text: g.description || `New ${cat.toLowerCase()} game on Pokopia. Play instantly in browser.` }));
           item.appendChild(img);
           item.appendChild(right);
           attachGameLink(item, g);
@@ -398,7 +398,7 @@
           "operatingSystem": "Web",
           "description": description,
           "image": game.thumbnail ? (origin + resolveThumbSrc(String(game.thumbnail))) : undefined,
-          "publisher": { "@type": "Organization", "name": "Pokopie", "url": origin + "/" }
+          "publisher": { "@type": "Organization", "name": "Pokopia", "url": origin + "/" }
         };
         Object.keys(json).forEach((k) => json[k] === undefined && delete json[k]);
         let node = document.getElementById("pokopie-game-jsonld");
@@ -478,7 +478,7 @@
       gameDetailPage.style.display = "block";
 
       if (detailTitle) detailTitle.textContent = "Game not found";
-      if (detailMeta) detailMeta.textContent = "Pokopie game detail";
+      if (detailMeta) detailMeta.textContent = "Pokopia game detail";
       if (detailDescription) {
         detailDescription.textContent =
           "We could not find this game in the current catalog. It may have been renamed, removed, or the game catalog may not have loaded correctly.";
@@ -503,8 +503,8 @@
         };
       }
       setSeoForPage({
-        title: "Game Not Found - Pokopie",
-        description: "This Pokopie game could not be found. Browse free online games and choose another title.",
+        title: "Game Not Found - Pokopia",
+        description: "This Pokopia game could not be found. Browse free online games and choose another title.",
         canonicalPath: "/"
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -558,7 +558,7 @@
       if (detailTitle) detailTitle.textContent = `Play ${game.title} Online Free`;
       if (detailMeta) {
         const cat = game.category || "Arcade";
-        detailMeta.textContent = cat + " • HTML5 browser game on Pokopie";
+        detailMeta.textContent = cat + " • HTML5 browser game on Pokopia";
       }
       if (detailDescription) {
         const genre = (game.category || "Arcade").toLowerCase();
@@ -2103,7 +2103,7 @@
     function setSeoForHome() {
       clearGameSeoJsonLd();
       setSeoForPage({
-        title: "Pokopie - 100+ Free Online Browser Games | Play Instantly No Download",
+        title: "Pokopia - 100+ Free Online Browser Games | Play Instantly No Download",
         description:
           "Play 100+ free HTML5 browser games online at Pokopia.cloud — puzzle, arcade, racing, strategy and more. Instant play on mobile or desktop, no download.",
         canonicalPath: "/"
@@ -2121,8 +2121,8 @@
           .trim() || "games";
       const titleCat = cat === "All" ? "All Games" : cat;
       setSeoForPage({
-        title: `${titleCat} | Free Online ${keyword} - No Download - Pokopie`,
-        description: `Play ${keyword} online for free on Pokopie. Explore top ${keyword} and play instantly in your browser — no download, no signup. Works on mobile and desktop.`,
+        title: `${titleCat} | Free Online ${keyword} - No Download - Pokopia`,
+        description: `Play ${keyword} online for free on Pokopia. Explore top ${keyword} and play instantly in your browser — no download, no signup. Works on mobile and desktop.`,
         canonicalPath
       });
     }
