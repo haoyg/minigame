@@ -1854,15 +1854,15 @@
       renderMainGrid();
     }
 
-    function createGameCard(game, compact) {
+    function createGameCard(game, compact, eager = false, highPriority = false) {
       const card = el("a", "game-card", { href: getGamePath(game) });
       card.setAttribute("data-game-id", game.id);
 
       const thumbWrap = el("div", "game-thumb-wrap");
       const img = createThumbPicture("game-thumb", resolveThumbSrc(game.thumbnail), game.title + " thumbnail", {
-        loading: "lazy",
+        loading: eager ? "eager" : "lazy",
         decoding: "async",
-        fetchpriority: "low"
+        fetchpriority: highPriority ? "high" : eager ? "auto" : "low"
       });
       thumbWrap.appendChild(img);
 
@@ -1950,7 +1950,7 @@
       if (!filteredGames.length) { emptyMessage.hidden = false; return; }
       emptyMessage.hidden = true;
       filteredGames.forEach((g, index) => {
-        mainGrid.appendChild(createGameCard(g, false));
+        mainGrid.appendChild(createGameCard(g, false, index < 4, index === 0));
         if (index === 7) {
           const ad = el("aside", "grid-ad", { "aria-label": "Advertisement" });
           ad.appendChild(el("span", "", { text: "Advertisement" }));

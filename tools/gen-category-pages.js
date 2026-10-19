@@ -243,7 +243,7 @@ function renderPage(config, games) {
 </head>
 <body>
   <header><div class="top">
-    <a class="brand-art" href="/" aria-label="Pokopia home"><img src="/assets/pokopie-logo.png" alt="" width="1536" height="1024" /></a>
+    <a class="brand-art" href="/" aria-label="Pokopia home"><img src="/assets/pokopia-logo-384.webp" alt="" width="384" height="256" /></a>
     <a class="back" href="/">All games</a>
   </div></header>
   <div class="wrap">

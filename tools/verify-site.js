@@ -6,6 +6,7 @@ const failures = [];
 const warnings = [];
 const seenCanonicals = new Map();
 const seenTitles = new Map();
+const knownRoutes = new Set();
 
 function fail(message) { failures.push(message); }
 function warn(message) { warnings.push(message); }
@@ -54,6 +55,19 @@ function inspectHtml(route, relativePath) {
     try { JSON.parse(match[1]); }
     catch (error) { fail(`${relativePath} contains invalid JSON-LD: ${error.message}`); }
   }
+
+  for (const match of html.matchAll(/<a\b[^>]*\shref=["']([^"']+)["']/gi)) {
+    const href = match[1].trim();
+    if (!href || href.startsWith("#") || /^(mailto:|tel:|javascript:)/i.test(href)) continue;
+    let url;
+    try { url = new URL(href, site.baseUrl); }
+    catch (_) { fail(`${relativePath} contains an invalid link: ${href}`); continue; }
+    if (url.origin !== site.baseUrl) continue;
+    const normalized = url.pathname.replace(/\/$/, "") || "/";
+    if (!knownRoutes.has(normalized) && !/\.[a-z0-9]+$/i.test(normalized)) {
+      fail(`${relativePath} links to missing internal route ${url.pathname}`);
+    }
+  }
   if (html.includes("pokopie.com") || html.includes("Pokopie")) fail(`${relativePath} contains the retired domain or brand`);
 }
 
@@ -69,6 +83,11 @@ const gameSlugs = fs.readdirSync(playDir, { withFileTypes: true })
 
 const sitemap = read("sitemap.xml");
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+for (const absoluteUrl of sitemapUrls) knownRoutes.add(new URL(absoluteUrl).pathname.replace(/\/$/, "") || "/");
+for (const line of read("_redirects").split(/\r?\n/)) {
+  const source = line.trim().split(/\s+/)[0];
+  if (source && source.startsWith("/") && !source.includes("*")) knownRoutes.add(source.replace(/\/$/, "") || "/");
+}
 const expectedCount = 1 + site.categoryRoutes.length + site.staticRoutes.length + site.articleRoutes.length + site.builtInGames.length + gameSlugs.length;
 
 if (sitemapUrls.length !== expectedCount) fail(`Expected ${expectedCount} sitemap URLs, found ${sitemapUrls.length}`);

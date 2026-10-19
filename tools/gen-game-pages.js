@@ -266,7 +266,7 @@ function renderPage(game, games) {
 <body>
   <header class="site-header">
     <div class="top">
-      <a class="brand" href="/" aria-label="Pokopia home"><img src="/assets/pokopie-logo.png" alt="Pokopia" /></a>
+      <a class="brand" href="/" aria-label="Pokopia home"><img src="/assets/pokopia-logo-384.webp" alt="Pokopia" width="384" height="256" /></a>
       <a class="pill" href="/">All games</a>
     </div>
   </header>
