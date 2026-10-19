@@ -10,6 +10,6 @@
     "generate": "npm run generate:games && npm run generate:categories && npm run generate:anniversary && npm run generate:sitemap",
     "check": "node tools/verify-site.js",
     "build": "npm run generate && npm run check",
-    "deploy": "npm run build && wrangler pages deploy ."
+    "deploy": "npm run build && npx wrangler pages deploy ."
   }
 }
