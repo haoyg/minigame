@@ -1,0 +1,30 @@
+{
+  "name": "Pokopia",
+  "baseUrl": "https://pokopia.cloud",
+  "language": "en",
+  "cloudflarePagesProject": "pokopiacloud",
+  "categoryRoutes": [
+    "/puzzle-games",
+    "/shooting-games",
+    "/arcade-games",
+    "/racing-games",
+    "/sports-games",
+    "/idle-games"
+  ],
+  "staticRoutes": [
+    "/pokemon-30th-anniversary-2026",
+    "/best-unblocked-games",
+    "/top-idle-games",
+    "/about",
+    "/privacy",
+    "/contact",
+    "/terms",
+    "/fun-quiz"
+  ],
+  "articleRoutes": [
+    "/articles/how-to-play-games-online-without-downloading",
+    "/articles/browser-games-vs-mobile-apps",
+    "/articles/best-game-categories-explained"
+  ],
+  "builtInGames": ["2048", "breakout", "memory", "minesweeper", "snake", "tetris"]
+}

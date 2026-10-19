@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
+const { rootDir: ROOT_DIR, site } = require("./lib/site-config");
 
-const ROOT = "https://pokopia.cloud";
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT = site.baseUrl;
 
 function escXml(s) {
   return String(s)
@@ -25,45 +25,25 @@ function main() {
   urls.push({ loc: `${ROOT}/`, changefreq: "daily", priority: "1.0", lastmod: date });
 
   // Category pages (preferred canonical routes, matching routeKeyForCategory in app.js)
-  const categoryPages = [
-    "/puzzle-games",
-    "/shooting-games",
-    "/arcade-games",
-    "/racing-games",
-    "/sports-games",
-    "/idle-games"
-  ];
+  const categoryPages = site.categoryRoutes;
   for (const p of categoryPages) {
     urls.push({ loc: `${ROOT}${p}`, changefreq: "daily", priority: "0.8", lastmod: date });
   }
 
   // Static pages
-  const staticPages = [
-    "/pokemon-30th-anniversary-2026",
-    "/best-unblocked-games",
-    "/top-idle-games",
-    "/about",
-    "/privacy",
-    "/contact",
-    "/terms",
-    "/fun-quiz"
-  ];
+  const staticPages = site.staticRoutes;
   for (const p of staticPages) {
     urls.push({ loc: `${ROOT}${p}`, changefreq: "monthly", priority: "0.5", lastmod: date });
   }
 
   // Editorial articles
-  const articlePages = [
-    "/articles/how-to-play-games-online-without-downloading",
-    "/articles/browser-games-vs-mobile-apps",
-    "/articles/best-game-categories-explained"
-  ];
+  const articlePages = site.articleRoutes;
   for (const p of articlePages) {
     urls.push({ loc: `${ROOT}${p}`, changefreq: "monthly", priority: "0.6", lastmod: date });
   }
 
   // Built-in games (static directories)
-  const builtInGames = ["2048", "breakout", "memory", "minesweeper", "snake", "tetris"];
+  const builtInGames = site.builtInGames;
   for (const g of builtInGames) {
     urls.push({ loc: `${ROOT}/games/${g}/`, changefreq: "monthly", priority: "0.7", lastmod: date });
   }

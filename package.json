@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "generate:games": "node tools/gen-game-pages.js",
+    "generate:categories": "node tools/gen-category-pages.js",
     "generate:anniversary": "node tools/gen-pokemon-anniversary-page.js",
-    "build": "node tools/gen-pokemon-anniversary-page.js && node tools/verify-site.js"
+    "generate:sitemap": "node tools/gen-sitemap.js --write",
+    "generate": "npm run generate:games && npm run generate:categories && npm run generate:anniversary && npm run generate:sitemap",
+    "check": "node tools/verify-site.js",
+    "build": "npm run generate && npm run check",
+    "deploy": "npm run build && wrangler pages deploy ."
   }
 }

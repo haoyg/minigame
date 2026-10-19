@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
+const { rootDir: ROOT_DIR, site } = require("./lib/site-config");
 
-const ROOT = "https://pokopia.cloud";
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT = site.baseUrl;
 const CATALOG_PATH = path.join(ROOT_DIR, "games-catalog.json");
 const REDIRECTS_PATH = path.join(ROOT_DIR, "_redirects");
 

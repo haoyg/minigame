@@ -1,10 +1,10 @@
 const fs = require("fs");
 const path = require("path");
+const { rootDir: ROOT_DIR, site } = require("./lib/site-config");
 
-const ROOT_DIR = path.resolve(__dirname, "..");
 const DATA_PATH = path.join(ROOT_DIR, "data", "pokemon-30th-anniversary-2026.json");
 const OUTPUT_PATH = path.join(ROOT_DIR, "pokemon-30th-anniversary-2026.html");
-const CANONICAL = "https://pokopia.cloud/pokemon-30th-anniversary-2026";
+const CANONICAL = `${site.baseUrl}/pokemon-30th-anniversary-2026`;
 const TITLE = "Pokémon 30th Anniversary 2026: December Releases, Art Books & Where to Buy";
 const DESCRIPTION = "Explore Pokémon's 30th anniversary December 2026 releases, including art books, TCG collectibles, release dates, prices, official purchase links and updates.";
 
@@ -84,14 +84,14 @@ function main() {
       "datePublished": "2026-10-19",
       "dateModified": data.lastUpdated,
       "mainEntityOfPage": { "@type": "WebPage", "@id": CANONICAL },
-      "author": { "@type": "Organization", "name": "Pokopia", "url": "https://pokopia.cloud/" },
-      "publisher": { "@type": "Organization", "name": "Pokopia", "url": "https://pokopia.cloud/" }
+      "author": { "@type": "Organization", "name": site.name, "url": `${site.baseUrl}/` },
+      "publisher": { "@type": "Organization", "name": site.name, "url": `${site.baseUrl}/` }
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pokopia.cloud/" },
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${site.baseUrl}/` },
         { "@type": "ListItem", "position": 2, "name": "Pokémon 30th Anniversary 2026", "item": CANONICAL }
       ]
     }
