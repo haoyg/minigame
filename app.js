@@ -67,6 +67,13 @@
         statusSource.textContent = "Failed to load catalog";
       }
 
+      // Render the owned catalog immediately. The optional third-party feed must
+      // not delay the first meaningful content or make the homepage dependent on it.
+      if (allGames.length) {
+        statusTotal.textContent = allGames.length + " games available";
+        renderAllSections();
+      }
+
       // Also fetch from FreeToGame API to add more games
       try {
         var ftgRes = await fetch(API_URL);
@@ -1950,7 +1957,7 @@
       if (!filteredGames.length) { emptyMessage.hidden = false; return; }
       emptyMessage.hidden = true;
       filteredGames.forEach((g, index) => {
-        mainGrid.appendChild(createGameCard(g, false, index < 4, index === 0));
+        mainGrid.appendChild(createGameCard(g, false, index < 4, index < 4));
         if (index === 7) {
           const ad = el("aside", "grid-ad", { "aria-label": "Advertisement" });
           ad.appendChild(el("span", "", { text: "Advertisement" }));

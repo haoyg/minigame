@@ -5,9 +5,10 @@
   "scripts": {
     "generate:games": "node tools/gen-game-pages.js",
     "generate:categories": "node tools/gen-category-pages.js",
+    "generate:home": "node tools/gen-home-cards.js",
     "generate:anniversary": "node tools/gen-pokemon-anniversary-page.js",
     "generate:sitemap": "node tools/gen-sitemap.js --write",
-    "generate": "npm run generate:games && npm run generate:categories && npm run generate:anniversary && npm run generate:sitemap",
+    "generate": "npm run generate:games && npm run generate:categories && npm run generate:home && npm run generate:anniversary && npm run generate:sitemap",
     "check": "node tools/verify-site.js",
     "build": "npm run generate && npm run check",
     "deploy": "npm run build && npx wrangler pages deploy ."

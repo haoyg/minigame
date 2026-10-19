@@ -105,6 +105,14 @@ for (const absoluteUrl of sitemapUrls) {
 const catalog = JSON.parse(read("games-catalog.json"));
 if (catalog.length !== gameSlugs.length) fail(`Catalog has ${catalog.length} games but play/ contains ${gameSlugs.length} generated pages`);
 
+const homepage = read("index.html");
+const initialCards = capture(homepage, /<!-- INITIAL_GAME_CARDS_START -->([\s\S]*?)<!-- INITIAL_GAME_CARDS_END -->/i);
+const initialCardCount = (initialCards.match(/class="game-card"/g) || []).length;
+if (initialCardCount !== 8) fail(`Expected 8 static homepage game cards, found ${initialCardCount}`);
+if (!/<img\b[^>]*loading="eager"[^>]*fetchpriority="high"/i.test(initialCards)) {
+  fail("Static homepage cards do not expose a high-priority eager image");
+}
+
 for (const warning of warnings) console.warn(`Warning: ${warning}`);
 if (failures.length) {
   for (const failure of failures) console.error(`Error: ${failure}`);
