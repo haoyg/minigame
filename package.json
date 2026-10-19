@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node tools/verify-site.js"
+    "generate:anniversary": "node tools/gen-pokemon-anniversary-page.js",
+    "build": "node tools/gen-pokemon-anniversary-page.js && node tools/verify-site.js"
   }
 }

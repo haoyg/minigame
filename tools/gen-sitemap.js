@@ -39,6 +39,7 @@ function main() {
 
   // Static pages
   const staticPages = [
+    "/pokemon-30th-anniversary-2026",
     "/best-unblocked-games",
     "/top-idle-games",
     "/about",
@@ -90,7 +91,12 @@ function main() {
   }
   out += `</urlset>\n`;
 
-  process.stdout.write(out);
+  if (process.argv.includes("--write")) {
+    fs.writeFileSync(path.join(ROOT_DIR, "sitemap.xml"), out, "utf8");
+    console.log(`Wrote ${urls.length} URLs to sitemap.xml`);
+  } else {
+    process.stdout.write(out);
+  }
 }
 
 main();

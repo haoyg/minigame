@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const root = path.resolve(__dirname, "..");
-const requiredFiles = ["index.html", "app.js", "games-catalog.json", "sitemap.xml", "_worker.js"];
+const requiredFiles = ["index.html", "app.js", "games-catalog.json", "sitemap.xml", "_worker.js", "pokemon-30th-anniversary-2026.html"];
 
 for (const file of requiredFiles) {
   if (!fs.existsSync(path.join(root, file))) {
@@ -20,8 +20,11 @@ if (gamePages.length !== 180) {
 
 const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
 const sitemapUrls = (sitemap.match(/<url>/g) || []).length;
-if (sitemapUrls !== 203) {
-  throw new Error(`Expected 203 sitemap URLs, found ${sitemapUrls}`);
+if (sitemapUrls !== 204) {
+  throw new Error(`Expected 204 sitemap URLs, found ${sitemapUrls}`);
+}
+if (!sitemap.includes("https://pokopia.cloud/pokemon-30th-anniversary-2026")) {
+  throw new Error("Anniversary guide is missing from sitemap.xml");
 }
 
 const filesToCheck = [
@@ -30,6 +33,7 @@ const filesToCheck = [
   "404.html",
   "about.html",
   "games-catalog.json",
+  "pokemon-30th-anniversary-2026.html",
   "tools/gen-game-pages.js"
 ];
 
@@ -39,4 +43,15 @@ for (const file of filesToCheck) {
   if (content.includes("Pokopie")) throw new Error(`Old brand remains in ${file}`);
 }
 
-console.log(`Verified Pokopia static site: ${gamePages.length} game pages, ${sitemapUrls} sitemap URLs.`);
+const guide = fs.readFileSync(path.join(root, "pokemon-30th-anniversary-2026.html"), "utf8");
+for (const required of [
+  '<link rel="canonical" href="https://pokopia.cloud/pokemon-30th-anniversary-2026"',
+  '<meta name="robots" content="index,follow',
+  '"@type":"Article"',
+  '"@type":"BreadcrumbList"',
+  "Pokémon 30th Anniversary 2026: December Release Guide"
+]) {
+  if (!guide.includes(required)) throw new Error(`Anniversary guide is missing required SEO content: ${required}`);
+}
+
+console.log(`Verified Pokopia static site: ${gamePages.length} game pages, ${sitemapUrls} sitemap URLs, anniversary guide SEO.`);

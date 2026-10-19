@@ -1,0 +1,69 @@
+{
+  "lastUpdated": "2026-10-19",
+  "products": [
+    {
+      "id": "tcg-binder-collection",
+      "name": "Pokémon TCG: 30th Celebration Binder Collection",
+      "category": "Trading Card Game",
+      "releaseDate": "2026-12-04",
+      "releaseDateLabel": "December 4, 2026",
+      "releaseDateStatus": "unconfirmed_due_to_source_conflict",
+      "price": null,
+      "currency": null,
+      "region": "English-language markets; allocation varies by market",
+      "officialSourceUrl": "https://www.pokemon.com/uk/pokemon-tcg/product-gallery/30th-celebration-binder-collection",
+      "purchaseUrl": null,
+      "lastVerified": "2026-10-19",
+      "summary": "The official product page confirms a 9-pocket binder and five 30th Celebration booster packs. The same page currently displays a September 2026 launch, so the widely reported December 4 date is not treated as confirmed here.",
+      "contents": "9-pocket binder and five Pokémon TCG: 30th Celebration booster packs"
+    },
+    {
+      "id": "moncolle-paldea-legendary-set",
+      "name": "Moncolle 30th Anniversary Paldea Legendary Set",
+      "category": "Collectibles",
+      "releaseDate": "2026-12",
+      "releaseDateLabel": "Early December 2026",
+      "releaseDateStatus": "official_window",
+      "price": 3520,
+      "currency": "JPY",
+      "region": "Japan",
+      "officialSourceUrl": "https://www.takaratomy.co.jp/products/pokemon/moncolle_ex/lineup/pokemon_30th/009_densetsu.html",
+      "purchaseUrl": null,
+      "lastVerified": "2026-10-19",
+      "summary": "Takara Tomy's official product page lists the Paldea Legendary Set for an early-December release. An exact calendar day and an official online purchase listing were not available at verification time.",
+      "contents": "Paldea-region Legendary Pokémon figure set"
+    },
+    {
+      "id": "visual-art-books",
+      "name": "Pokémon Visual Art Book: 30th Anniversary",
+      "category": "Books",
+      "releaseDate": "2026-12-18",
+      "releaseDateLabel": "December 18, 2026",
+      "releaseDateStatus": "confirmed",
+      "price": 5500,
+      "currency": "JPY",
+      "region": "Japan; Japanese-language editions",
+      "officialSourceUrl": "https://over-lap.co.jp/book/30th-book/Default.aspx",
+      "purchaseUrl": "https://over-lap.co.jp/book/30th-book/Default.aspx",
+      "lastVerified": "2026-10-19",
+      "summary": "Publisher Overlap confirms three B5, full-color volumes released simultaneously. The listed price is per volume, not for a three-book set.",
+      "contents": "BOOK1, BOOK2 and BOOK3; approximately 1,500 pages total planned"
+    },
+    {
+      "id": "pokemon-kids-anniversary",
+      "name": "Pokémon Kids 30th Anniversary Collection",
+      "category": "Collectibles",
+      "releaseDate": "2026-12",
+      "releaseDateLabel": "December 2026",
+      "releaseDateStatus": "month_confirmed_day_pending",
+      "price": null,
+      "currency": "JPY",
+      "region": "Japan",
+      "officialSourceUrl": "https://www.bandai.co.jp/candy/brand/brand88/index.html",
+      "purchaseUrl": null,
+      "lastVerified": "2026-10-19",
+      "summary": "Bandai Candy lists the anniversary collection for December 2026. The exact release day, final retail availability and purchase links remain unannounced.",
+      "contents": "Anniversary soft-vinyl figure assortment with one card and one piece of gum per item"
+    }
+  ]
+}
